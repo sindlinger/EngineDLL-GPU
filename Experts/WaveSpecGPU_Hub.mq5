@@ -9,6 +9,7 @@
 #property strict
 
 #include <WaveSpecGPU/GpuEngine.mqh>
+#include <WaveSpecGPU/WaveSpecShared.mqh>
 
 //--- configuração básica do hub
 input int    InpGPUDevice     = 0;
@@ -30,6 +31,8 @@ struct PendingJob
    ulong    handle;
    ulong    user_tag;
    datetime submitted_at;
+   int      frame_count;
+   int      frame_length;
   };
 
 CGpuEngineClient g_engine;
@@ -51,10 +54,10 @@ int OnInit()
      }
 
    EventSetTimer(InpTimerPeriodMs/1000.0);
-   ArrayResize(g_wave_shared,    InpFFTWindow);
-   ArrayResize(g_preview_shared, InpFFTWindow);
-   ArrayResize(g_cycles_shared,  InpFFTWindow*12);
-   ArrayResize(g_noise_shared,   InpFFTWindow);
+   ArrayResize(g_wave_shared,    0);
+   ArrayResize(g_preview_shared, 0);
+   ArrayResize(g_cycles_shared,  0);
+   ArrayResize(g_noise_shared,   0);
 
    PrintFormat("[Hub] Inicializado | GPU=%d | window=%d | hop=%d | batch=%d",
                InpGPUDevice, InpFFTWindow, InpHop, InpBatchSize);
@@ -109,6 +112,12 @@ void PollCompletedJobs()
       if(status == GPU_ENGINE_READY)
         {
          GpuEngineResultInfo info;
+         const int total = g_jobs[i].frame_count * g_jobs[i].frame_length;
+         ArrayResize(g_wave_shared,    total);
+         ArrayResize(g_preview_shared, total);
+         ArrayResize(g_cycles_shared,  total);
+         ArrayResize(g_noise_shared,   total);
+
          if(g_engine.FetchResult(g_jobs[i].handle,
                                  g_wave_shared,
                                  g_preview_shared,
@@ -117,7 +126,11 @@ void PollCompletedJobs()
                                  info))
            {
             g_lastUpdateTime = TimeCurrent();
-            DispatchSignals(info);
+            DispatchSignals(info,
+                             g_wave_shared,
+                             g_preview_shared,
+                             g_noise_shared,
+                             g_cycles_shared);
            }
 
          ArrayRemove(g_jobs, i);
@@ -126,10 +139,14 @@ void PollCompletedJobs()
   }
 
 //+------------------------------------------------------------------+
-void DispatchSignals(const GpuEngineResultInfo &info)
+void DispatchSignals(const GpuEngineResultInfo &info,
+                     const double &wave[],
+                     const double &preview[],
+                     const double &noise[],
+                     const double &cycles[])
   {
-   // TODO: publicar os buffers em uma estrutura compartilhada e/ou
-   // disparar eventos para indicadores / EAs auxiliares.
+   WaveSpecShared::Publish(wave, preview, noise, cycles, info);
+   // TODO: disparar eventos ou sinalizar variáveis globais, se necessário.
    PrintFormat("[Hub] Job %I64u concluído | frames=%d | elapsed=%.2f ms",
                info.user_tag, info.frame_count, info.elapsed_ms);
   }
@@ -152,6 +169,8 @@ bool EnqueueJobSample()
    job.handle       = handle;
    job.user_tag     = tag;
    job.submitted_at = TimeCurrent();
+   job.frame_count  = frames;
+   job.frame_length = InpFFTWindow;
    ArrayPush(g_jobs, job);
    return true;
   }
