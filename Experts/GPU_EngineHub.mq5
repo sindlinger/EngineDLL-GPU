@@ -436,7 +436,7 @@ void OnDeinit(const int reason)
    if(g_waveVisible)
       CSubwindowController::Detach(0, InpWaveSubwindow, g_handleWaveViz, WAVE_IND_SHORTNAME);
    if(g_phaseVisible)
-      CSubwindowController::Detach(0, InpPhaseSubwindow, g_handlePhaseViz, "PhaseViz GPU");
+      CSubwindowController::Detach(0, InpPhaseSubwindow, g_handlePhaseViz, PHASE_IND_SHORTNAME);
    g_waveVisible  = false;
    g_phaseVisible = false;
    Comment("");
