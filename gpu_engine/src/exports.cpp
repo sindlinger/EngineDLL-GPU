@@ -1,3 +1,4 @@
+#include "GpuEngineExports.h"
 #include "GpuEngineCore.h"
 
 #include <vector>

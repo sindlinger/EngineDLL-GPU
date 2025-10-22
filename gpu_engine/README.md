@@ -11,6 +11,7 @@ Key components:
 - `include/GpuEngineCore.h` – `gpuengine::Engine` class managing the queue and workers.
 - `src/GpuEngineCore.cpp` – placeholder implementation (copies input to output).
 - `src/exports.cpp` – `extern "C"` interface for the DLL expected by MQL.
+- `docs/GpuEngine_Streams.md` – visão das futuras otimizações com streams CUDA.
 
 To complete the implementation you need to replace the placeholder processing in
 `CopyFramesToOutput()` with the actual CUDA pipeline (cuFFT, masks, IFFT, etc.),
