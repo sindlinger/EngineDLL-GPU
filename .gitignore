@@ -1,0 +1,4 @@
+# Build artifacts
+gpu_engine/build/
+# PowerShell execution transcripts (if any)
+*.ps1xml

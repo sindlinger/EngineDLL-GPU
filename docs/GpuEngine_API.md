@@ -99,3 +99,5 @@ Será criado em `Include/WaveSpecGPU/GpuEngine.mqh`, com classes `GpuEngineConfi
 1. Implementar a DLL (C++/CUDA) com fila, buffers pinados, cuFFT.
 2. Criar wrapper MQL e um EA de teste (“WaveSpec_Hub”).
 3. Ajustar indicadores para consumir os buffers do Hub.
+4. Para distribuir `GpuEngine.dll` para múltiplos agentes, usar o script descrito em
+   [`docs/DeployGpuDLL.md`](DeployGpuDLL.md).

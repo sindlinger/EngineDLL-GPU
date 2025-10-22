@@ -1,0 +1,8 @@
+# Each line is a base directory. The script copies GpuEngine.dll into
+# <base>\Libraries and <base>\MQL5\Libraries if they exist (creating them if needed).
+# Remove the sample paths and place your actual agents/terminal directories here.
+
+# Examples:
+# C:\Program Files\MetaTrader 5
+# C:\Program Files\MetaTrader 5\Tester\Agent-0.0.0.0-2000
+
