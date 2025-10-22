@@ -3,7 +3,7 @@
 //| Visualizador da fase/amplitude/ETA fornecidas pela GPU.         |
 //+------------------------------------------------------------------+
 #property copyright "2025"
-#property version   "0.20"
+#property version   "1.000"
 #property indicator_separate_window
 #property indicator_buffers 7
 #property indicator_plots   7

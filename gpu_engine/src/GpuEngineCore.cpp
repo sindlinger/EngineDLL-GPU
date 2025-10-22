@@ -14,6 +14,7 @@ namespace gpuengine
 namespace
 {
 constexpr int kDefaultWorkerCount = 2;
+constexpr double kEmptyValueSentinel = 2147483647.0; // mirrors EMPTY_VALUE in MQL5
 constexpr double kPi    = 3.14159265358979323846;
 constexpr double kTwoPi = 6.28318530717958647692;
 
@@ -290,15 +291,22 @@ int Engine::SubmitJob(const JobDesc& desc, JobHandle& out_handle)
     record->desc = desc;
     const int total = desc.frame_count * desc.frame_length;
     record->input_copy.assign(desc.frames, desc.frames + total);
-    if(desc.preview_mask != nullptr)
+    const bool has_preview_mask = (desc.preview_mask != nullptr && desc.preview_mask[0] != kEmptyValueSentinel);
+    if(has_preview_mask)
     {
         const int freq_bins = desc.frame_length / 2 + 1;
         record->preview_mask.assign(desc.preview_mask,
                                     desc.preview_mask + freq_bins);
         record->desc.preview_mask = record->preview_mask.data();
     }
+    else
+    {
+        record->preview_mask.clear();
+        record->desc.preview_mask = nullptr;
+    }
 
-    if(desc.cycles.count > 0)
+    const bool has_cycle_periods = (desc.cycles.count > 0 && desc.cycles.periods != nullptr && desc.cycles.periods[0] != kEmptyValueSentinel);
+    if(has_cycle_periods)
     {
         record->cycle_periods.assign(desc.cycles.periods,
                                      desc.cycles.periods + desc.cycles.count);

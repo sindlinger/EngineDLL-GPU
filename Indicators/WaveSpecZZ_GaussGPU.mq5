@@ -4,7 +4,7 @@
 //| Lê WaveSpecShared e desenha linha filtrada, ruído e 12 ciclos.   |
 //+------------------------------------------------------------------+
 #property copyright "2025"
-#property version   "1.00"
+#property version   "1.000"
 #property indicator_separate_window
 #property indicator_buffers 14
 #property indicator_plots   14
@@ -75,21 +75,88 @@ input int  InpMaxCycles   = 12;
 
 double g_bufWave[];
 double g_bufNoise[];
-double g_bufCycle[12][];
+double g_bufCycle1[];
+double g_bufCycle2[];
+double g_bufCycle3[];
+double g_bufCycle4[];
+double g_bufCycle5[];
+double g_bufCycle6[];
+double g_bufCycle7[];
+double g_bufCycle8[];
+double g_bufCycle9[];
+double g_bufCycle10[];
+double g_bufCycle11[];
+double g_bufCycle12[];
 
 //+------------------------------------------------------------------+
+void ClearCycleBuffers()
+  {
+   ArrayInitialize(g_bufCycle1, EMPTY_VALUE);
+   ArrayInitialize(g_bufCycle2, EMPTY_VALUE);
+   ArrayInitialize(g_bufCycle3, EMPTY_VALUE);
+   ArrayInitialize(g_bufCycle4, EMPTY_VALUE);
+   ArrayInitialize(g_bufCycle5, EMPTY_VALUE);
+   ArrayInitialize(g_bufCycle6, EMPTY_VALUE);
+   ArrayInitialize(g_bufCycle7, EMPTY_VALUE);
+   ArrayInitialize(g_bufCycle8, EMPTY_VALUE);
+   ArrayInitialize(g_bufCycle9, EMPTY_VALUE);
+   ArrayInitialize(g_bufCycle10, EMPTY_VALUE);
+   ArrayInitialize(g_bufCycle11, EMPTY_VALUE);
+   ArrayInitialize(g_bufCycle12, EMPTY_VALUE);
+  }
+
+void SetCycleValue(const int index,
+                   const int bar_index,
+                   const double value)
+  {
+   switch(index)
+     {
+      case 0: g_bufCycle1[bar_index]  = value; break;
+      case 1: g_bufCycle2[bar_index]  = value; break;
+      case 2: g_bufCycle3[bar_index]  = value; break;
+      case 3: g_bufCycle4[bar_index]  = value; break;
+      case 4: g_bufCycle5[bar_index]  = value; break;
+      case 5: g_bufCycle6[bar_index]  = value; break;
+      case 6: g_bufCycle7[bar_index]  = value; break;
+      case 7: g_bufCycle8[bar_index]  = value; break;
+      case 8: g_bufCycle9[bar_index]  = value; break;
+      case 9: g_bufCycle10[bar_index] = value; break;
+      case 10:g_bufCycle11[bar_index] = value; break;
+      case 11:g_bufCycle12[bar_index] = value; break;
+     }
+  }
+
 int OnInit()
   {
    SetIndexBuffer(0, g_bufWave,  INDICATOR_DATA);
    SetIndexBuffer(1, g_bufNoise, INDICATOR_DATA);
-
-   for(int i=0; i<12; ++i)
-      SetIndexBuffer(i+2, g_bufCycle[i], INDICATOR_DATA);
+   SetIndexBuffer(2, g_bufCycle1,  INDICATOR_DATA);
+   SetIndexBuffer(3, g_bufCycle2,  INDICATOR_DATA);
+   SetIndexBuffer(4, g_bufCycle3,  INDICATOR_DATA);
+   SetIndexBuffer(5, g_bufCycle4,  INDICATOR_DATA);
+   SetIndexBuffer(6, g_bufCycle5,  INDICATOR_DATA);
+   SetIndexBuffer(7, g_bufCycle6,  INDICATOR_DATA);
+   SetIndexBuffer(8, g_bufCycle7,  INDICATOR_DATA);
+   SetIndexBuffer(9, g_bufCycle8,  INDICATOR_DATA);
+   SetIndexBuffer(10,g_bufCycle9,  INDICATOR_DATA);
+   SetIndexBuffer(11,g_bufCycle10, INDICATOR_DATA);
+   SetIndexBuffer(12,g_bufCycle11, INDICATOR_DATA);
+   SetIndexBuffer(13,g_bufCycle12, INDICATOR_DATA);
 
    ArraySetAsSeries(g_bufWave,  true);
    ArraySetAsSeries(g_bufNoise, true);
-   for(int i=0; i<12; ++i)
-      ArraySetAsSeries(g_bufCycle[i], true);
+   ArraySetAsSeries(g_bufCycle1,  true);
+   ArraySetAsSeries(g_bufCycle2,  true);
+   ArraySetAsSeries(g_bufCycle3,  true);
+   ArraySetAsSeries(g_bufCycle4,  true);
+   ArraySetAsSeries(g_bufCycle5,  true);
+   ArraySetAsSeries(g_bufCycle6,  true);
+   ArraySetAsSeries(g_bufCycle7,  true);
+   ArraySetAsSeries(g_bufCycle8,  true);
+   ArraySetAsSeries(g_bufCycle9,  true);
+   ArraySetAsSeries(g_bufCycle10, true);
+   ArraySetAsSeries(g_bufCycle11, true);
+   ArraySetAsSeries(g_bufCycle12, true);
 
    IndicatorSetString(INDICATOR_SHORTNAME, "WaveSpecZZ GPU");
 
@@ -115,8 +182,7 @@ int OnCalculate(const int rates_total,
 
    ArrayInitialize(g_bufWave,  EMPTY_VALUE);
    ArrayInitialize(g_bufNoise, EMPTY_VALUE);
-   for(int c=0; c<12; ++c)
-      ArrayInitialize(g_bufCycle[c], EMPTY_VALUE);
+   ClearCycleBuffers();
 
    if(frame_length <= 0 || frame_count <= 0 || rates_total <= 0)
       return rates_total;
@@ -137,11 +203,11 @@ int OnCalculate(const int rates_total,
          g_bufNoise[i] = WaveSpecShared::noise[src_index];
       if(InpShowCycles && cycle_count > 0 && ArraySize(WaveSpecShared::cycles) >= total_span * cycle_count)
         {
-         for(int c=0; c<cycle_count; ++c)
-           {
+        for(int c=0; c<cycle_count; ++c)
+          {
             const int cycle_base = c * total_span;
-            g_bufCycle[c][i] = WaveSpecShared::cycles[cycle_base + src_index];
-           }
+            SetCycleValue(c, i, WaveSpecShared::cycles[cycle_base + src_index]);
+          }
         }
      }
 

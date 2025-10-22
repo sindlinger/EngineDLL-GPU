@@ -5,13 +5,20 @@
 //| integração com o wrapper GpuEngine (DLL ainda em desenvolvimento)|
 //+------------------------------------------------------------------+
 #property copyright "2025"
-#property version   "0.01"
+#property version   "1.000"
 #property strict
 
 #include <WaveSpecGPU/GpuEngine.mqh>
 #include <WaveSpecGPU/WaveSpecShared.mqh>
 #include <WaveSpecGPU/HotkeyManager.mqh>
 #include <WaveSpecGPU/SubwindowController.mqh>
+
+enum ZigzagFeedMode
+  {
+   Feed_PivotHold = 0,
+   Feed_PivotBridge = 1,
+   Feed_PivotMidpoint = 2
+  };
 
 //--- configuração básica do hub
 input int    InpGPUDevice     = 0;
@@ -493,7 +500,7 @@ void SubmitPendingBatches()
    if(cycle_count == 0)
       ArrayResize(g_cyclePeriods, 0); // garante array vazio
 
-   ulong handle;
+   ulong handle = 0;
    ulong tag = (ulong)TimeCurrent();
    bool submitted = false;
 
@@ -508,7 +515,7 @@ void SubmitPendingBatches()
                                        frame_count,
                                        tag,
                                        JOB_FLAG_STFT|JOB_FLAG_CYCLES,
-                                       NULL,
+                                       g_gpuEmptyPreviewMask,
                                        g_cyclePeriods,
                                        cycle_count,
                                        InpCycleWidth,
@@ -525,7 +532,7 @@ void SubmitPendingBatches()
                                        phase_max,
                                        phase_snr_floor,
                                        phase_frames_snr,
-                                        handle);
+                                       handle);
      }
    else
      {
@@ -533,8 +540,8 @@ void SubmitPendingBatches()
                                        frame_count,
                                        tag,
                                        JOB_FLAG_STFT,
-                                       NULL,
-                                       NULL,
+                                       g_gpuEmptyPreviewMask,
+                                       g_gpuEmptyCyclePeriods,
                                        0,
                                        InpCycleWidth,
                                        InpGaussSigmaPeriod,
@@ -550,7 +557,7 @@ void SubmitPendingBatches()
                                        phase_max,
                                        phase_snr_floor,
                                        phase_frames_snr,
-                                        handle);
+                                       handle);
      }
 
    if(!submitted)
@@ -596,7 +603,7 @@ void PollCompletedJobs()
          ArrayResize(g_amp_delta_shared,   total);
 
          bool fetched = false;
-         if(expected_cycles > 0)
+        if(expected_cycles > 0)
             fetched = g_engine.FetchResult(g_jobs[i].handle,
                                            g_wave_shared,
                                            g_preview_shared,
@@ -610,11 +617,11 @@ void PollCompletedJobs()
                                            g_confidence_shared,
                                            g_amp_delta_shared,
                                            info);
-         else
+        else
             fetched = g_engine.FetchResult(g_jobs[i].handle,
                                            g_wave_shared,
                                            g_preview_shared,
-                                           NULL,
+                                           g_cycles_shared,
                                            g_noise_shared,
                                            g_phase_shared,
                                            g_amplitude_shared,

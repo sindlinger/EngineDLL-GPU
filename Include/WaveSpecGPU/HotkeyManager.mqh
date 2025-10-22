@@ -8,10 +8,8 @@
 class CHotkeyManager
   {
 private:
-   static const int MAX_KEYS = 16;
-   int   m_keys[MAX_KEYS];
-   int   m_actions[MAX_KEYS];
-   int   m_count;
+   int m_keys[];
+   int m_actions[];
 
 public:
             CHotkeyManager()
@@ -21,12 +19,8 @@ public:
 
    void     Reset()
             {
-               m_count = 0;
-               for(int i=0; i<MAX_KEYS; ++i)
-                 {
-                  m_keys[i]    = 0;
-                  m_actions[i] = -1;
-                 }
+               ArrayResize(m_keys, 0);
+               ArrayResize(m_actions, 0);
             }
 
    bool     Register(const int key_code,
@@ -35,7 +29,8 @@ public:
                if(key_code <= 0)
                   return false;
 
-               for(int i=0; i<m_count; ++i)
+               const int count = ArraySize(m_keys);
+               for(int i=0; i<count; ++i)
                  {
                   if(m_keys[i] == key_code)
                     {
@@ -44,12 +39,11 @@ public:
                     }
                  }
 
-               if(m_count >= MAX_KEYS)
-                  return false;
-
-               m_keys[m_count]    = key_code;
-               m_actions[m_count] = action_id;
-               ++m_count;
+               const int new_size = count + 1;
+               ArrayResize(m_keys, new_size);
+               ArrayResize(m_actions, new_size);
+               m_keys[new_size-1]    = key_code;
+               m_actions[new_size-1] = action_id;
                return true;
             }
 
@@ -60,7 +54,8 @@ public:
                   return -1;
 
                const int key = (int)lparam;
-               for(int i=0; i<m_count; ++i)
+               const int count = ArraySize(m_keys);
+               for(int i=0; i<count; ++i)
                  {
                   if(m_keys[i] == key)
                      return m_actions[i];
