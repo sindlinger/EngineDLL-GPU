@@ -29,6 +29,16 @@ Depois de compilar a DLL (`gpu_engine/build/Release/GpuEngine.dll`), use o scrip
 4. O script registra os destinos e cria as pastas se necessário. 
    Se alguma linha do `targets.txt` não existir, ele mostra um aviso e continua.
 
+### Alternativa em Python
+
+Se preferir, execute a versão em Python (requer Python 3.8+ instalado):
+
+```powershell
+python scripts\deploy_gpu_dll.py
+```
+
+Os parâmetros `--source` e `--targets` seguem a mesma lógica do script PowerShell.
+
 ## Parâmetros opcionais
 ```
 powershell -ExecutionPolicy Bypass -File scripts/DeployGpuDLL.ps1 `

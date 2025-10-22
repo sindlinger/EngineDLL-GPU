@@ -1,8 +1,43 @@
 # Each line is a base directory. The script copies GpuEngine.dll into
 # <base>\Libraries and <base>\MQL5\Libraries if they exist (creating them if needed).
-# Remove the sample paths and place your actual agents/terminal directories here.
 
-# Examples:
-# C:\Program Files\MetaTrader 5
-# C:\Program Files\MetaTrader 5\Tester\Agent-0.0.0.0-2000
-
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Terminal\3CA1B4AB7DFED5C81B1C7F1007926D06.worktree
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Terminal\3CA1B4AB7DFED5C81B1C7F1007926D06_backup
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Terminal\3CA1B4AB7DFED5C81B1C7F1007926D06
+C:\Program Files\MetaTrader 5\Tester\Agent-0.0.0.0-2008
+C:\Program Files\MetaTrader 5\Tester\Agent-0.0.0.0-2009
+C\Program Files\MetaTrader 5\Tester\Agent-0.0.0.0-2010
+C:\Program Files\MetaTrader 5\Tester\Agent-0.0.0.0-2011
+C:\Program Files\MetaTrader 5\Tester\Agent-0.0.0.0-2012
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Terminal\3CA1B4AB7DFED5C81B1C7F1007926D06_backup\MQL5\Experts\#FFT-X\C\Program Files\MetaTrader 5\Tester\Agent-0.0.0.0-2012
+C:\Program Files\MetaTrader 5\Tester\Agent-0.0.0.0-2013
+C:\Program Files\MetaTrader 5\Tester\Agent-0.0.0.0-2014
+C:\Program Files\MetaTrader 5\Tester\Agent-0.0.0.0-2015
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\3CA1B4AB7DFED5C81B1C7F1007926D06\Agent-127.0.0.1-3000
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3000
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\3CA1B4AB7DFED5C81B1C7F1007926D06\Agent-127.0.0.1-3001
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3001
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\3CA1B4AB7DFED5C81B1C7F1007926D06\Agent-127.0.0.1-3002
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3002
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3003
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3004
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3005
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3006
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3007
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3008
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3009
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3010
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3011
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3012
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3013
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3014
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3015
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3016
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3017
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3018
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3019
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3020
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3021
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3022
+C:\Users\pichau\AppData\Roaming\MetaQuotes\Tester\D0E8209F77C8CF37AD8BF550E51FF075\Agent-127.0.0.1-3023
