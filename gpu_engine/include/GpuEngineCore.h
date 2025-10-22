@@ -14,6 +14,8 @@
 
 namespace gpuengine
 {
+class CudaProcessor;
+
 class Engine
 {
 public:
@@ -30,6 +32,13 @@ public:
                      double* preview_out,
                      double* cycles_out,
                      double* noise_out,
+                     double* phase_out,
+                     double* amplitude_out,
+                     double* period_out,
+                     double* eta_out,
+                     double* recon_out,
+                     double* confidence_out,
+                     double* amp_delta_out,
                      ResultInfo& info);
 
     int  GetStats(double& avg_ms, double& max_ms);
@@ -60,6 +69,8 @@ private:
     // error handling
     mutable std::mutex m_error_mutex;
     std::string        m_last_error;
+
+    std::unique_ptr<CudaProcessor> m_processor;
 };
 
 Engine& GetEngine();

@@ -33,13 +33,14 @@ o stream volta para o pool.
 2. cudaMemcpyAsync(pinned_input, device_input, stream)
 3. launch kernel detrend (stream)
 4. launch kernel janela    (stream)
-5. cufftExecZ2Z(plan_fwd, stream)
+5. cufftExecD2Z(plan_fwd, stream)
 6. launch kernel máscara   (stream)
-7. cufftExecZ2Z(plan_inv, stream)
-8. launch kernel métricas  (stream)  // opcional (magnitude, ciclos, etc.)
+7. cufftExecZ2D(plan_inv, stream)
+8. launch kernel ciclos    (stream)  // aplica máscaras por banda e executa Z2D adicionais
 9. cudaMemcpyAsync(device_output, pinned_output, stream)
 10. cudaEventRecord(stream_event)
-11. scheduler marca job como `RUNNING(stream)`
+11. no host, após o evento sinalizar, roda-se o PLL (Adaptive Notch) com os parâmetros do job
+12. scheduler marca job como `RUNNING(stream)`
 ```
 
 O worker em `GpuEngineCore` passa a:
@@ -48,18 +49,19 @@ O worker em `GpuEngineCore` passa a:
 - Armazenar `cudaEvent_t` no `JobRecord`.
 - Periodicamente consultar `cudaEventQuery` para mudar o status para `READY` sem bloquear.
 
-## Flags de job sugeridas
-- `JOB_FLAG_STFT` (FFT completa + IFFT + Wave/Preview)
-- `JOB_FLAG_CYCLES` (cálculo de cada banda/ciclo)
-- `JOB_FLAG_SUPDEM`, `JOB_FLAG_WAVELET`, etc.
+## Flags de job (atual)
+- `JOB_FLAG_STFT` — executa FFT/IFFT para gerar Wave/Preview/Noise.
+- `JOB_FLAG_CYCLES` — ativa a etapa de máscaras gaussianas por banda e os `cufftExecZ2D`
+  adicionais para cada ciclo informado.
 
-Cada flag habilita kernels adicionais após a FFT.
+Flags futuros podem ser adicionados seguindo o mesmo padrão (habilitando kernels extras após
+a FFT principal).
 
 ## Tratamento de erro
 - `cudaGetLastError` após cada etapa.
 - Em caso de falha, o job é marcado como `STATUS_ERROR` e o log armazena o contexto.
 
-## Próximos passos
-1. Implementar `StreamContext` em C++.
-2. Substituir o placeholder atual (copia de input->output) pela sequência real de kernels.
-3. Expor estatísticas por stream (tempo médio, throughput).
+## Observações finais
+- O uso de streams hoje permite sobrepor transferência e cálculo espectral; o PLL roda na etapa host após o evento de conclusão de cada stream.
+- Estatísticas de tempo médio/máximo por job podem ser consultadas via `GpuEngine_GetStats`.
+- Caso novos kernels sejam adicionados (ex.: detecção de suportes, wavelets), basta inseri-los entre os passos 6 e 9 mantendo a mesma estrutura de streams.

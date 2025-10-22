@@ -4,7 +4,13 @@ Depois de compilar a DLL (`gpu_engine/build/Release/GpuEngine.dll`), use o scrip
 `scripts/DeployGpuDLL.ps1` para copiá-la em lote para todas as instâncias/agents do MetaTrader 5.
 
 ## Passos
-1. **Compile** a DLL (conforme `docs/GpuEngine_API.md`). O arquivo final fica em:
+1. **Compile** a DLL com CMake + CUDA Toolkit (11.8+). Exemplo rápido:
+   ```powershell
+   cd gpu_engine
+   cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+   cmake --build build --config Release
+   ```
+   O artefato final fica em:
    ```
    gpu_engine\build\Release\GpuEngine.dll
    ```

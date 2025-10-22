@@ -1,4 +1,3 @@
-# Build artifacts
 gpu_engine/build/
-# PowerShell execution transcripts (if any)
-*.ps1xml
+gpu_engine/build-wsl/
+grepo/

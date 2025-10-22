@@ -1,103 +1,174 @@
-# GpuEngine.dll – Assíncrona para WaveSpec
+# GpuEngine.dll – Referência de API
 
 ## Objetivo
-Centralizar todo o pipeline CUDA (FFT batelada, filtragem espectral, reconstrução, métricas) em uma única DLL assíncrona. A DLL expõe uma fila de jobs; o EA Hub envia dados crus, a DLL processa em background (GPU + threads C++), e os resultados são buscados sob demanda.
+Documentar a API pública exposta por `GpuEngine.dll` após a refatoração CUDA/STFT. A DLL atua como motor assíncrono batelado: recebe frames do EA Hub (`WaveSpecGPU_Hub`), processa FFT + máscaras + ciclos na GPU e devolve buffers consolidados para os indicadores.
 
-## Fluxo de Alto Nível
-1. `GpuEngine_Init(const GpuEngineConfig* cfg)` cria o contexto CUDA, aloca buffers pinados e threads de worker.
-2. O EA empacota janelas STFT (ou outros sinais) e chama `GpuEngine_SubmitJob`.
-3. As threads da DLL movem dados para a GPU (via `cudaMemcpyAsync`), executam kernels (cuFFT, máscaras, IFFT, métricas) e escrevem o resultado num buffer de saída associado ao job.
-4. O EA verifica com `GpuEngine_PollStatus(handle)` se o job terminou. Quando terminar, chama `GpuEngine_FetchResult` para copiar os dados filtrados/ciclos/etc. para os arrays MQL5.
-5. `GpuEngine_Shutdown()` fecha a fila, sincroniza as threads e libera recursos.
+## Estruturas Principais
 
-## Estruturas C++ (lado DLL)
 ```cpp
-struct GpuEngineConfig {
-    int device_id;          // GPU física (0 = default)
-    int window_size;        // Tamanho da janela FFT (potência de 2)
-    int hop_size;           // Passo entre janelas
-    int max_batch_size;     // Número máximo de frames por job
-    int overlap_mode;       // Futuro (OLA, OLS, etc.)
-    bool enable_profiling;  // Coletar métricas internas
+namespace gpuengine {
+
+struct Config {
+    int  device_id        = 0;
+    int  window_size      = 0;
+    int  hop_size         = 0;
+    int  max_batch_size   = 0;
+    int  max_cycle_count  = 12;
+    int  stream_count     = 2;
+    bool enable_profiling = false;
 };
 
-struct GpuEngineJobDesc {
-    const double* host_input;  // ponteiro para sinais (múltiplas janelas concatenadas)
-    int frame_count;           // quantas janelas há nesse job
-    int input_stride;          // opcional (caso frames não sejam contíguos)
-    uint64_t user_tag;         // identificador arbitrário do chamador
-    uint32_t flags;            // bits (ex.: aplicar detrend, calcular ciclos)
+struct MaskParams {
+    double sigma_period = 48.0;
+    double threshold    = 0.05;
+    double softness     = 0.20;
 };
 
-struct GpuEngineJobHandle {
-    uint64_t internal_id;      // id interno (fila)
-    uint64_t user_tag;         // ecoado do job
+struct CycleParams {
+    const double* periods = nullptr;
+    int           count   = 0;
+    double        width   = 0.25;
 };
 
-struct GpuEngineResultInfo {
-    uint64_t user_tag;         // identificação
-    int frame_count;           // frames processados
-    int window_size;           // confirma window size
-    double elapsed_ms;         // tempo GPU
+struct PhaseParams {
+    double blend            = 0.65;
+    double phase_gain       = 0.08;
+    double freq_gain        = 0.002;
+    double amp_gain         = 0.08;
+    double freq_prior_blend = 0.15;
+    double min_period       = 8.0;
+    double max_period       = 512.0;
+    double snr_floor        = 0.25;
+    int    frames_for_snr   = 1;
 };
+
+struct JobDesc {
+    const double* frames        = nullptr;
+    const double* preview_mask  = nullptr;
+    int           frame_count   = 0;
+    int           frame_length  = 0;
+    std::uint64_t user_tag      = 0ULL;
+    std::uint32_t flags         = 0U;
+    int           upscale       = 1;
+    MaskParams    mask{};
+    CycleParams   cycles{};
+    PhaseParams   phase{};
+};
+
+struct ResultInfo {
+    std::uint64_t user_tag    = 0ULL;
+    int           frame_count = 0;
+    int           frame_length= 0;
+    int           cycle_count = 0;
+    int           dominant_cycle = -1;
+    double        dominant_period = 0.0;
+    double        dominant_snr = 0.0;
+    double        pll_phase_deg = 0.0;
+    double        pll_amplitude = 0.0;
+    double        pll_period = 0.0;
+    double        pll_eta = 0.0;
+    double        pll_confidence = 0.0;
+    double        pll_reconstructed = 0.0;
+    double        elapsed_ms  = 0.0;
+    int           status      = STATUS_ERROR;
+};
+
+} // namespace gpuengine
 ```
 
-### Estado Interno
-- **GpuContext**: cuFFT plans, streams, buffers device/host (pinados).
-- **Worker threads**: cada job entra em uma `std::queue`; as threads pegam, executam e marcam status.
-- **Job table**: vetor com `RUNNING / READY / FAILED`; ponteiros para buffers de saída.
+## Funções Exportadas (C)
 
-### Sequência de Kernels (job STFT)
-1. `cudaMemcpyAsync` para buffer device.
-2. Kernel detrend/detrend EMA (opcional).
-3. Kernel de janela (Hamming/Hann/etc.).
-4. `cuFFT` batelado (`cufftPlanMany`)
-5. Kernel de máscara espectral (por período) + fades.
-6. `cuFFT` inverso.
-7. Kernel OLA (opcional) ou deixa para MQL.
-8. Kernel de cálculo de magnitude/ciclos (opcional).
-9. `cudaMemcpyAsync` de saída para host.
-10. `cudaStreamSynchronize` → marca job concluído.
-
-## API Exportada (C)
 ```cpp
 extern "C" {
-    // Inicialização / finalização
-    DLL_EXPORT int  GpuEngine_Init(const GpuEngineConfig* cfg);
-    DLL_EXPORT void GpuEngine_Shutdown();
 
-    // Submissão / polling
-    DLL_EXPORT int  GpuEngine_SubmitJob(const GpuEngineJobDesc* job,
-                                        GpuEngineJobHandle* out_handle);
-    DLL_EXPORT int  GpuEngine_PollStatus(const GpuEngineJobHandle* handle,
-                                         int* out_status);
-    DLL_EXPORT int  GpuEngine_Wait(const GpuEngineJobHandle* handle,
-                                   double timeout_ms);
+GPU_EXPORT int  GpuEngine_Init(int device_id,
+                               int window_size,
+                               int hop_size,
+                               int max_batch_size,
+                               bool enable_profiling);
 
-    // Resultado (cópia host)
-    DLL_EXPORT int  GpuEngine_FetchResult(const GpuEngineJobHandle* handle,
-                                          GpuEngineResultInfo* info,
-                                          double* wave_out,
-                                          double* preview_out,
-                                          double* cycles_out,
-                                          double* noise_out);
+GPU_EXPORT void GpuEngine_Shutdown();
 
-    // Profiling opcional
-    DLL_EXPORT int  GpuEngine_GetLastError(char* buffer, int buffer_len);
-    DLL_EXPORT int  GpuEngine_GetStats(double* avg_ms, double* max_ms);
+GPU_EXPORT int  GpuEngine_SubmitJob(const double* frames,
+                                    int frame_count,
+                                    int frame_length,
+                                    std::uint64_t user_tag,
+                                    std::uint32_t flags,
+                                    const double* preview_mask,
+                                    double mask_sigma_period,
+                                    double mask_threshold,
+                                    double mask_softness,
+                                    int upscale_factor,
+                                    const double* cycle_periods,
+                                    int cycle_count,
+                                    double cycle_width,
+                                    double phase_blend,
+                                    double phase_gain,
+                                    double freq_gain,
+                                    double amp_gain,
+                                    double freq_prior_blend,
+                                    double min_period,
+                                    double max_period,
+                                    double snr_floor,
+                                    int    frames_for_snr,
+                                    std::uint64_t* out_handle);
+
+GPU_EXPORT int  GpuEngine_PollStatus(std::uint64_t handle_value,
+                                     int* out_status);
+
+GPU_EXPORT int  GpuEngine_FetchResult(std::uint64_t handle_value,
+                                      double* wave_out,
+                                      double* preview_out,
+                                      double* cycles_out,
+                                      double* noise_out,
+                                      double* phase_out,
+                                      double* amplitude_out,
+                                      double* period_out,
+                                      double* eta_out,
+                                      double* recon_out,
+                                      double* confidence_out,
+                                      double* amp_delta_out,
+                                      gpuengine::ResultInfo* info);
+
+GPU_EXPORT int  GpuEngine_GetStats(double* avg_ms,
+                                   double* max_ms);
+
+GPU_EXPORT int  GpuEngine_GetLastError(char* buffer,
+                                       int buffer_len);
 }
 ```
-`out_status`: 0 = running, 1 = ready, <0 = erro (usar `GetLastError`).
 
-## Wrapper MQL5
-Será criado em `Include/WaveSpecGPU/GpuEngine.mqh`, com classes `GpuEngineConfig`, `GpuEngineJob`, `CGpuEngineClient`. O EA Hub chamará:
-1. `CGpuEngineClient::Initialize(config)`
-2. `SubmitStftJob(t`, data[])` retornando `GpuJobHandle`.
-3. `Poll(handle)` até `JOB_READY`, então `Fetch(handle, out_struct)`.
+### Convenções e Notas
+- `frame_length` deve casar com `window_size` definido em `GpuEngine_Init`.
+- `frames` deve conter `frame_count * frame_length` amostras contíguas (frames ordenados do mais antigo para o mais recente).
+- `preview_mask` pode ser `nullptr`; a DLL gera automaticamente uma máscara gaussiana baseada em `mask_sigma_period`, `mask_threshold` e `mask_softness`.
+- `cycle_periods` pode ser `nullptr` quando `cycle_count == 0`.
+- O chamador deve garantir que `cycles_out` tenha `frame_count * frame_length * cycle_count` posições. Quando `cycle_count == 0`, passe `nullptr`.
+- Parâmetros adicionais (phase"): `phase_blend`, `phase_gain`, `freq_gain`, `amp_gain`, `freq_prior_blend`, `min_period`, `max_period`, `snr_floor` e `frames_for_snr` controlam o PLL embarcado que gera fase/amplitude/ETA.
+- Os buffers `phase_out`, `amplitude_out`, `period_out`, `eta_out`, `recon_out`, `confidence_out` e `amp_delta_out` devem ter `frame_count * frame_length` posições; passe `nullptr` para omitir alguma cópia.
+- `flags` aceita `JOB_FLAG_STFT (1)` e `JOB_FLAG_CYCLES (2)`; novos bits podem ser adicionados no futuro.
 
-## Próximos Passos
-1. Implementar a DLL (C++/CUDA) com fila, buffers pinados, cuFFT.
-2. Criar wrapper MQL e um EA de teste (“WaveSpec_Hub”).
-3. Ajustar indicadores para consumir os buffers do Hub.
-4. Para distribuir `GpuEngine.dll` para múltiplos agentes, usar o script descrito em
-   [`docs/DeployGpuDLL.md`](DeployGpuDLL.md).
+### Status
+- `STATUS_OK (0)` — operação concluída.
+- `STATUS_READY (1)` — job finalizado (usado em `PollStatus`).
+- `STATUS_IN_PROGRESS (2)` — job em andamento.
+- Negativos indicam erro (`STATUS_INVALID_CONFIG`, `STATUS_NOT_INITIALISED`, `STATUS_QUEUE_FULL`, etc.). Utilize `GpuEngine_GetLastError` para strings diagnósticas.
+
+## Sequência Interna (Resumo)
+1. Cópia host→device (`cudaMemcpyAsync`) para o lote.
+2. Execução do plano `cuFFT_D2Z` batelado.
+3. Aplicação da máscara adaptativa ou personalizada (`preview_mask`).
+4. Reconstrução com `cuFFT_Z2D`, normalização e cálculo do ruído (original − filtrado).
+5. Para cada ciclo configurado: aplica-se máscara gaussiana centrada no bin do período e executa-se `cuFFT_Z2D` dedicado.
+6. No host, a DLL avalia o SNR de cada ciclo, seleciona o dominante e roda o PLL/Adaptive Notch com os parâmetros enviados (blend, ganhos, limites de período). Isso gera fase, amplitude, período instantâneo, ETA, linha reconstruída, confiança e Δamplitude para cada amostra do frame.
+7. Cópia device→host e atualização de `ResultInfo`, incluindo métricas do ciclo dominante.
+
+## Integração MQL5
+- `Include/WaveSpecGPU/GpuEngine.mqh` implementa `CGpuEngineClient::SubmitJobEx`, alinhada ao protótipo acima.
+- O EA `WaveSpecGPU_Hub.mq5` prepara as janelas a partir do ZigZag, monta os parâmetros (incluindo a configuração do PLL) e publica todos os buffers em `WaveSpecShared`.
+- `WaveSpecZZ_GaussGPU.mq5` visualiza Wave/Noise/Ciclos; `PhaseViz_GPU.mq5` consome diretamente os buffers de fase/amplitude/ETA/confiança gerados pela DLL.
+
+## Referências Relacionadas
+- [`docs/GpuEngine_Architecture.md`](GpuEngine_Architecture.md) — visão detalhada de buffers, threads e sincronização.
+- [`docs/GpuEngine_Streams.md`](GpuEngine_Streams.md) — estratégias de stream/batching.
+- [`docs/DeployGpuDLL.md`](DeployGpuDLL.md) — distribuição da DLL para múltiplos agentes MetaTrader.
