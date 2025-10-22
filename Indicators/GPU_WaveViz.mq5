@@ -1,7 +1,7 @@
 //+------------------------------------------------------------------+
-//| WaveSpecZZ_GaussGPU                                             |
-//| Visualizador dos buffers publicados pelo EA WaveSpecGPU_Hub.    |
-//| Lê WaveSpecShared e desenha linha filtrada, ruído e 12 ciclos.   |
+//| GPU_WaveViz                                                     |
+//| Visualizador dos buffers publicados pelo EA GPU_EngineHub.      |
+//| Lê GPU_Shared e desenha linha filtrada, ruído e 12 ciclos.       |
 //+------------------------------------------------------------------+
 #property copyright "2025"
 #property version   "1.000"
@@ -67,7 +67,7 @@
 #property indicator_type14  DRAW_LINE
 #property indicator_color14 clrSlateBlue
 
-#include <WaveSpecGPU/WaveSpecShared.mqh>
+#include <GPU/GPU_Shared.mqh>
 
 input bool InpShowNoise   = true;
 input bool InpShowCycles  = true;
@@ -158,7 +158,7 @@ int OnInit()
    ArraySetAsSeries(g_bufCycle11, true);
    ArraySetAsSeries(g_bufCycle12, true);
 
-   IndicatorSetString(INDICATOR_SHORTNAME, "WaveSpecZZ GPU");
+   IndicatorSetString(INDICATOR_SHORTNAME, "GPU WaveViz");
 
    return(INIT_SUCCEEDED);
   }
@@ -175,10 +175,10 @@ int OnCalculate(const int rates_total,
                 const long &volume[],
                 const int &spread[])
   {
-   const int frame_length = WaveSpecShared::frame_length;
-   const int frame_count  = WaveSpecShared::frame_count;
-   const int total_span   = frame_length * frame_count;
-   const int cycle_count  = MathMin(WaveSpecShared::cycle_count, MathMax(InpMaxCycles, 0));
+   const int frame_length = GPUShared::frame_length;
+    const int frame_count  = GPUShared::frame_count;
+    const int total_span   = frame_length * frame_count;
+    const int cycle_count  = MathMin(GPUShared::cycle_count, MathMax(InpMaxCycles, 0));
 
    ArrayInitialize(g_bufWave,  EMPTY_VALUE);
    ArrayInitialize(g_bufNoise, EMPTY_VALUE);
@@ -187,8 +187,8 @@ int OnCalculate(const int rates_total,
    if(frame_length <= 0 || frame_count <= 0 || rates_total <= 0)
       return rates_total;
 
-   if(ArraySize(WaveSpecShared::wave) < total_span ||
-      ArraySize(WaveSpecShared::noise) < total_span)
+   if(ArraySize(GPUShared::wave) < total_span ||
+      ArraySize(GPUShared::noise) < total_span)
       return rates_total;
 
    const int samples_total = frame_length;
@@ -198,16 +198,16 @@ int OnCalculate(const int rates_total,
    for(int i=0; i<available; ++i)
      {
       const int src_index = frame_offset + i;
-      g_bufWave[i] = WaveSpecShared::wave[src_index];
+      g_bufWave[i] = GPUShared::wave[src_index];
       if(InpShowNoise)
-         g_bufNoise[i] = WaveSpecShared::noise[src_index];
-      if(InpShowCycles && cycle_count > 0 && ArraySize(WaveSpecShared::cycles) >= total_span * cycle_count)
+         g_bufNoise[i] = GPUShared::noise[src_index];
+      if(InpShowCycles && cycle_count > 0 && ArraySize(GPUShared::cycles) >= total_span * cycle_count)
         {
-        for(int c=0; c<cycle_count; ++c)
-          {
+         for(int c=0; c<cycle_count; ++c)
+           {
             const int cycle_base = c * total_span;
-            SetCycleValue(c, i, WaveSpecShared::cycles[cycle_base + src_index]);
-          }
+            SetCycleValue(c, i, GPUShared::cycles[cycle_base + src_index]);
+           }
         }
      }
 

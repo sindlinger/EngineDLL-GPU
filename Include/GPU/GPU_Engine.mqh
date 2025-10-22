@@ -1,7 +1,6 @@
 //+------------------------------------------------------------------+
-//| WaveSpecGPU - GPU Engine Client Wrapper                         |
-//| Defines the asynchronous interface used by the EA hub to        |
-//| communicate with the CUDA backend (GpuEngine.dll).              |
+//| GPU_Engine.mqh - GPU Engine Client Wrapper                      |
+//| Interface assíncrona utilizada pelo hub para falar com a DLL.   |
 //+------------------------------------------------------------------+
 #ifndef __WAVESPEC_GPU_ENGINE_MQH__
 #define __WAVESPEC_GPU_ENGINE_MQH__

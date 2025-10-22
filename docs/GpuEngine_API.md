@@ -1,7 +1,7 @@
 # GpuEngine.dll – Referência de API
 
 ## Objetivo
-Documentar a API pública exposta por `GpuEngine.dll` após a refatoração CUDA/STFT. A DLL atua como motor assíncrono batelado: recebe frames do EA Hub (`WaveSpecGPU_Hub`), processa FFT + máscaras + ciclos na GPU e devolve buffers consolidados para os indicadores.
+Documentar a API pública exposta por `GpuEngine.dll` após a refatoração CUDA/STFT. A DLL atua como motor assíncrono batelado: recebe frames do EA Hub (`GPU_EngineHub`), processa FFT + máscaras + ciclos na GPU e devolve buffers consolidados para os indicadores.
 
 ## Estruturas Principais
 
@@ -164,9 +164,9 @@ GPU_EXPORT int  GpuEngine_GetLastError(char* buffer,
 7. Cópia device→host e atualização de `ResultInfo`, incluindo métricas do ciclo dominante.
 
 ## Integração MQL5
-- `Include/WaveSpecGPU/GpuEngine.mqh` implementa `CGpuEngineClient::SubmitJobEx`, alinhada ao protótipo acima.
-- O EA `WaveSpecGPU_Hub.mq5` prepara as janelas a partir do ZigZag, monta os parâmetros (incluindo a configuração do PLL) e publica todos os buffers em `WaveSpecShared`.
-- `WaveSpecZZ_GaussGPU.mq5` visualiza Wave/Noise/Ciclos; `PhaseViz_GPU.mq5` consome diretamente os buffers de fase/amplitude/ETA/confiança gerados pela DLL.
+- `Include/GPU/GPU_Engine.mqh` implementa `CGpuEngineClient::SubmitJobEx`, alinhada ao protótipo acima.
+- O EA `GPU_EngineHub.mq5` prepara as janelas a partir do ZigZag, monta os parâmetros (incluindo a configuração do PLL) e publica todos os buffers em `GPUShared`.
+- `GPU_WaveViz.mq5` visualiza Wave/Noise/Ciclos; `GPU_PhaseViz.mq5` consome diretamente os buffers de fase/amplitude/ETA/confiança gerados pela DLL.
 
 ## Referências Relacionadas
 - [`docs/GpuEngine_Architecture.md`](GpuEngine_Architecture.md) — visão detalhada de buffers, threads e sincronização.

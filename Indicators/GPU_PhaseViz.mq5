@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
-//|                                             PhaseViz_GPU.mq5     |
-//| Visualizador da fase/amplitude/ETA fornecidas pela GPU.         |
+//|                                             GPU_PhaseViz.mq5     |
+//| Visualizador da fase/amplitude/ETA fornecidas pela DLL.         |
 //+------------------------------------------------------------------+
 #property copyright "2025"
 #property version   "1.000"
@@ -37,7 +37,7 @@
 #property indicator_type7   DRAW_LINE
 #property indicator_color7  clrMediumVioletRed
 
-#include <WaveSpecGPU/WaveSpecShared.mqh>
+#include <GPU/GPU_Shared.mqh>
 
 double g_bufPhase[];
 double g_bufAmplitude[];
@@ -65,7 +65,7 @@ int OnInit()
    ArraySetAsSeries(g_bufConfidence, true);
    ArraySetAsSeries(g_bufAmpDelta,   true);
 
-   IndicatorSetString(INDICATOR_SHORTNAME, "PhaseViz GPU");
+   IndicatorSetString(INDICATOR_SHORTNAME, "GPU PhaseViz");
 
    return(INIT_SUCCEEDED);
   }
@@ -84,8 +84,8 @@ int OnCalculate(const int rates_total,
    if(rates_total <= 0)
       return prev_calculated;
 
-   const int frame_count  = WaveSpecShared::frame_count;
-   const int frame_length = WaveSpecShared::frame_length;
+   const int frame_count  = GPUShared::frame_count;
+   const int frame_length = GPUShared::frame_length;
    if(frame_count <= 0 || frame_length <= 0)
      {
       g_bufPhase[0]      = EMPTY_VALUE;
@@ -99,18 +99,18 @@ int OnCalculate(const int rates_total,
      }
 
    const int total = frame_count * frame_length;
-   if(ArraySize(WaveSpecShared::phase) < total ||
-      ArraySize(WaveSpecShared::amplitude) < total ||
-      ArraySize(WaveSpecShared::period) < total ||
-      ArraySize(WaveSpecShared::eta) < total ||
-      ArraySize(WaveSpecShared::recon) < total ||
-      ArraySize(WaveSpecShared::confidence) < total ||
-      ArraySize(WaveSpecShared::amp_delta) < total)
+   if(ArraySize(GPUShared::phase) < total ||
+      ArraySize(GPUShared::amplitude) < total ||
+      ArraySize(GPUShared::period) < total ||
+      ArraySize(GPUShared::eta) < total ||
+      ArraySize(GPUShared::recon) < total ||
+      ArraySize(GPUShared::confidence) < total ||
+      ArraySize(GPUShared::amp_delta) < total)
      {
       return rates_total;
      }
 
-   if(WaveSpecShared::last_info.dominant_cycle < 0)
+   if(GPUShared::last_info.dominant_cycle < 0)
      {
       g_bufPhase[0]      = EMPTY_VALUE;
       g_bufAmplitude[0]  = EMPTY_VALUE;
@@ -124,13 +124,13 @@ int OnCalculate(const int rates_total,
 
    const int src_index = total - 1;
 
-   g_bufPhase[0]      = WaveSpecShared::phase[src_index];
-   g_bufAmplitude[0]  = WaveSpecShared::amplitude[src_index];
-   g_bufPeriod[0]     = WaveSpecShared::period[src_index];
-   g_bufEta[0]        = WaveSpecShared::eta[src_index];
-   g_bufRecon[0]      = WaveSpecShared::recon[src_index];
-   g_bufConfidence[0] = WaveSpecShared::confidence[src_index];
-   g_bufAmpDelta[0]   = WaveSpecShared::amp_delta[src_index];
+   g_bufPhase[0]      = GPUShared::phase[src_index];
+   g_bufAmplitude[0]  = GPUShared::amplitude[src_index];
+   g_bufPeriod[0]     = GPUShared::period[src_index];
+   g_bufEta[0]        = GPUShared::eta[src_index];
+   g_bufRecon[0]      = GPUShared::recon[src_index];
+   g_bufConfidence[0] = GPUShared::confidence[src_index];
+   g_bufAmpDelta[0]   = GPUShared::amp_delta[src_index];
 
    return rates_total;
   }

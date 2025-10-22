@@ -1,17 +1,16 @@
 //+------------------------------------------------------------------+
-//| WaveSpecGPU Hub                                                  |
+//| GPU Engine Hub                                                   |
 //| EA responsável por orquestrar o pipeline GPU assíncrono.         |
-//| Nesta fase inicial apenas define a estrutura do hub e a          |
-//| integração com o wrapper GpuEngine (DLL ainda em desenvolvimento)|
+//| Integração direta com a DLL GPU_Engine e os visualizadores.      |
 //+------------------------------------------------------------------+
 #property copyright "2025"
 #property version   "1.000"
 #property strict
 
-#include <WaveSpecGPU/GpuEngine.mqh>
-#include <WaveSpecGPU/WaveSpecShared.mqh>
-#include <WaveSpecGPU/HotkeyManager.mqh>
-#include <WaveSpecGPU/SubwindowController.mqh>
+#include <GPU/GPU_Engine.mqh>
+#include <GPU/GPU_Shared.mqh>
+#include <GPU/GPU_Hotkeys.mqh>
+#include <GPU/GPU_Subwindows.mqh>
 
 enum ZigzagFeedMode
   {
@@ -131,8 +130,8 @@ enum HubActions
    HubAction_TogglePhase = 2
   };
 
-const string WAVE_IND_SHORTNAME  = "WaveSpecZZ GPU";
-const string PHASE_IND_SHORTNAME = "PhaseViz GPU";
+const string WAVE_IND_SHORTNAME  = "GPU WaveViz";
+const string PHASE_IND_SHORTNAME = "GPU PhaseViz";
 
 void ToggleWaveView();
 void TogglePhaseView();
@@ -287,7 +286,7 @@ void UpdateHud()
    string line1 = StringFormat("Jobs pendentes: %d | Último update: %s",
                                ArraySize(g_jobs), TimeToString(g_lastUpdateTime, TIME_SECONDS));
    string line2 = StringFormat("GPU avg %.2f ms | max %.2f ms", g_lastAvgMs, g_lastMaxMs);
-   GpuEngineResultInfo info = WaveSpecShared::last_info;
+   GpuEngineResultInfo info = GPUShared::last_info;
    string line3 = StringFormat("Dominante idx=%d | período=%.2f | SNR=%.3f | Conf=%.2f",
                                info.dominant_cycle, info.dominant_period, info.dominant_snr, info.pll_confidence);
    Comment(line1, "\n", line2, "\n", line3);
@@ -300,28 +299,28 @@ void ToggleWaveView()
    if(!g_waveVisible)
      {
       const int max_cycles = (int)MathMax(1, MathMin(12, InpWaveMaxCycles));
-      g_handleWaveViz = iCustom(_Symbol, _Period, "WaveSpecZZ_GaussGPU",
+      g_handleWaveViz = iCustom(_Symbol, _Period, "GPU_WaveViz",
                                 InpWaveShowNoise, InpWaveShowCycles, max_cycles);
       if(g_handleWaveViz == INVALID_HANDLE)
         {
-         Print("[Hub] Falha ao criar WaveSpecZZ_GaussGPU via iCustom");
+         Print("[Hub] Falha ao criar GPU_WaveViz via iCustom");
          return;
         }
       if(!CSubwindowController::Attach(chart_id, InpWaveSubwindow, g_handleWaveViz))
         {
          IndicatorRelease(g_handleWaveViz);
          g_handleWaveViz = INVALID_HANDLE;
-         Print("[Hub] ChartIndicatorAdd falhou para WaveSpecZZ_GaussGPU");
+         Print("[Hub] ChartIndicatorAdd falhou para GPU_WaveViz");
          return;
         }
       g_waveVisible = true;
-      PrintFormat("[Hub] WaveSpec view ON (sub janela %d)", InpWaveSubwindow);
+      PrintFormat("[Hub] GPU WaveViz ON (sub janela %d)", InpWaveSubwindow);
      }
    else
      {
       CSubwindowController::Detach(chart_id, InpWaveSubwindow, g_handleWaveViz, WAVE_IND_SHORTNAME);
       g_waveVisible = false;
-      Print("[Hub] WaveSpec view OFF");
+      Print("[Hub] GPU WaveViz OFF");
      }
   }
 
@@ -331,27 +330,27 @@ void TogglePhaseView()
    const long chart_id = ChartID();
    if(!g_phaseVisible)
      {
-      g_handlePhaseViz = iCustom(_Symbol, _Period, "PhaseViz_GPU");
+      g_handlePhaseViz = iCustom(_Symbol, _Period, "GPU_PhaseViz");
       if(g_handlePhaseViz == INVALID_HANDLE)
         {
-         Print("[Hub] Falha ao criar PhaseViz_GPU via iCustom");
+         Print("[Hub] Falha ao criar GPU_PhaseViz via iCustom");
          return;
         }
       if(!CSubwindowController::Attach(chart_id, InpPhaseSubwindow, g_handlePhaseViz))
         {
          IndicatorRelease(g_handlePhaseViz);
          g_handlePhaseViz = INVALID_HANDLE;
-         Print("[Hub] ChartIndicatorAdd falhou para PhaseViz_GPU");
+         Print("[Hub] ChartIndicatorAdd falhou para GPU_PhaseViz");
          return;
         }
       g_phaseVisible = true;
-      PrintFormat("[Hub] PhaseViz view ON (sub janela %d)", InpPhaseSubwindow);
+      PrintFormat("[Hub] GPU PhaseViz ON (sub janela %d)", InpPhaseSubwindow);
      }
    else
      {
       CSubwindowController::Detach(chart_id, InpPhaseSubwindow, g_handlePhaseViz, PHASE_IND_SHORTNAME);
       g_phaseVisible = false;
-      Print("[Hub] PhaseViz view OFF");
+      Print("[Hub] GPU PhaseViz OFF");
      }
   }
 
@@ -435,7 +434,7 @@ void OnDeinit(const int reason)
    ArrayFree(g_confidence_shared);
    ArrayFree(g_amp_delta_shared);
    if(g_waveVisible)
-      CSubwindowController::Detach(0, InpWaveSubwindow, g_handleWaveViz, "WaveSpecZZ GPU");
+      CSubwindowController::Detach(0, InpWaveSubwindow, g_handleWaveViz, WAVE_IND_SHORTNAME);
    if(g_phaseVisible)
       CSubwindowController::Detach(0, InpPhaseSubwindow, g_handlePhaseViz, "PhaseViz GPU");
    g_waveVisible  = false;
@@ -676,19 +675,19 @@ void DispatchSignals(const GpuEngineResultInfo &info,
                      const double &noise[],
                      const double &cycles[])
   {
-   WaveSpecShared::Publish(wave,
-                           preview,
-                           noise,
-                           cycles,
-                           g_cyclePeriods,
-                           g_phase_shared,
-                           g_amplitude_shared,
-                           g_period_shared,
-                           g_eta_shared,
-                           g_recon_shared,
-                           g_confidence_shared,
-                           g_amp_delta_shared,
-                           info);
+   GPUShared::Publish(wave,
+                      preview,
+                      noise,
+                      cycles,
+                      g_cyclePeriods,
+                      g_phase_shared,
+                      g_amplitude_shared,
+                      g_period_shared,
+                      g_eta_shared,
+                      g_recon_shared,
+                      g_confidence_shared,
+                      g_amp_delta_shared,
+                      info);
    // TODO: disparar eventos ou sinalizar variáveis globais, se necessário.
    PrintFormat("[Hub] Job %I64u concluído | frames=%d | elapsed=%.2f ms",
                info.user_tag, info.frame_count, info.elapsed_ms);

@@ -1,13 +1,13 @@
 //+------------------------------------------------------------------+
-//| WaveSpecShared                                                   |
-//| Shared buffers published by the GPU hub for viewers/agents.     |
+//| GPU_Shared                                                       |
+//| Shared buffers publicados pelo hub para indicadores/agents.     |
 //+------------------------------------------------------------------+
 #ifndef __WAVESPEC_SHARED_MQH__
 #define __WAVESPEC_SHARED_MQH__
 
-#include <WaveSpecGPU/GpuEngine.mqh>
+#include <GPU/GPU_Engine.mqh>
 
-namespace WaveSpecShared
+namespace GPUShared
   {
    datetime last_update   = 0;
    int      frame_count   = 0;

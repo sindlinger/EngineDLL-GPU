@@ -18,16 +18,16 @@ indicadores, agentes) e como evoluir os módulos CUDA.
    - No host (parte da DLL) calcula energia/SNR, seleciona o ciclo dominante e roda o PLL/Adaptive Notch para gerar fase, amplitude, período instantâneo, ETA, linha reconstruída, confiança e Δamplitude.
    - Expõe API assíncrona: `Init`, `SubmitJob`, `PollStatus`, `FetchResult`, `Shutdown`.
 
-2. **EA Hub (ex.: `WaveSpecGPU_Hub.mq5`)**
+2. **EA Hub (ex.: `GPU_EngineHub.mq5`)**
    - Único responsável por conversar com a DLL.
    - Monta batches (frames STFT), chama `SubmitJob`, monitora `PollStatus`, e publica os
-     buffers prontos em estruturas compartilhadas (`WaveSpecShared` ou variáveis globais).
+     buffers prontos em estruturas compartilhadas (`GPUShared` ou variáveis globais).
    - Pode gerar eventos (`EventChartCustom`) para outros módulos.
 
 3. **Indicadores / Agentes de Negociação**
    - Consumidores dos dados publicados; não falam com a GPU.
-   - `WaveSpecZZ_GaussGPU` mostra Wave/Noise/Ciclos; `PhaseViz_GPU` exibe fase/amplitude/ETA/confiança.
-   - Outros agentes podem ler `WaveSpecShared` para usar as mesmas métricas.
+   - `GPU_WaveViz` mostra Wave/Noise/Ciclos; `GPU_PhaseViz` exibe fase/amplitude/ETA/confiança.
+   - Outros agentes podem ler `GPUShared` para usar as mesmas métricas.
 
 ## API Exposta pela DLL (resumo)
 
@@ -90,7 +90,7 @@ int  GpuEngine_GetLastError(char* buffer, int buffer_len);
   - Submeter jobs em `OnTick`/`OnTimer` sem bloquear (não usar `GpuEngine_Wait`).
   - Publicar os buffers resultantes antes de sinalizar indicadores/agentes.
 - **Consumidores**
-  - Ler `WaveSpecShared::last_update` e somente redesenhar/atuar quando houver mudança.
+  - Ler `GPUShared::last_update` e somente redesenhar/atuar quando houver mudança.
   - Não fazer cálculos pesados; quem processa é a GPU.
 - **Eventos/Globais**
   - Caso use `EventChartCustom`, mande o `user_tag` do job para permitir sincronização.
