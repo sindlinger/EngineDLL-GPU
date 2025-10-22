@@ -507,7 +507,9 @@ void SubmitPendingBatches()
    const double phase_min = MathMax(1.0, InpPhaseMinPeriod);
    const double phase_max = MathMax(phase_min, InpPhaseMaxPeriod);
    const double phase_snr_floor = MathMax(0.0, InpPhaseSnrFloor);
-   const int    phase_frames_snr = (int)MathMax(1, InpPhaseFramesForSnr);
+   int phase_frames_snr = InpPhaseFramesForSnr;
+   if(phase_frames_snr < 1)
+      phase_frames_snr = 1;
 
    if(cycle_count > 0)
      {
@@ -603,7 +605,8 @@ void PollCompletedJobs()
          ArrayResize(g_amp_delta_shared,   total);
 
          bool fetched = false;
-        if(expected_cycles > 0)
+         if(expected_cycles > 0)
+           {
             fetched = g_engine.FetchResult(g_jobs[i].handle,
                                            g_wave_shared,
                                            g_preview_shared,
@@ -617,7 +620,9 @@ void PollCompletedJobs()
                                            g_confidence_shared,
                                            g_amp_delta_shared,
                                            info);
-        else
+           }
+         else
+           {
             fetched = g_engine.FetchResult(g_jobs[i].handle,
                                            g_wave_shared,
                                            g_preview_shared,
@@ -631,6 +636,7 @@ void PollCompletedJobs()
                                            g_confidence_shared,
                                            g_amp_delta_shared,
                                            info);
+           }
 
          if(fetched)
            {

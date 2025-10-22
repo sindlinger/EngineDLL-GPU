@@ -6,8 +6,8 @@
 #ifndef __WAVESPEC_GPU_ENGINE_MQH__
 #define __WAVESPEC_GPU_ENGINE_MQH__
 
-double g_gpuEmptyPreviewMask[] = {EMPTY_VALUE};
-double g_gpuEmptyCyclePeriods[] = {EMPTY_VALUE};
+double g_gpuEmptyPreviewMask[] = { EMPTY_VALUE };
+double g_gpuEmptyCyclePeriods[] = { EMPTY_VALUE };
 
 struct GpuEngineResultInfo
   {
@@ -201,25 +201,18 @@ public:
                if(!m_ready)
                   return false;
 
-               const bool has_mask    = !(ArraySize(preview_mask) == 1 && preview_mask[0] == EMPTY_VALUE);
-               const bool has_periods = (cycle_count > 0 && !(ArraySize(cycle_periods) == 1 && cycle_periods[0] == EMPTY_VALUE));
-
-               const double &mask_ref[]    = has_mask    ? preview_mask    : g_gpuEmptyPreviewMask;
-               const double &periods_ref[] = has_periods ? cycle_periods   : g_gpuEmptyCyclePeriods;
-               const int cycles_to_send = has_periods ? cycle_count : 0;
-
                int status = GpuEngine_SubmitJob(frames,
                                                 frame_count,
                                                 m_window_size,
                                                 user_tag,
                                                 flags,
-                                                mask_ref,
+                                                preview_mask,
                                                 mask_sigma_period,
                                                 mask_threshold,
                                                 mask_softness,
                                                 upscale_factor,
-                                                periods_ref,
-                                                cycles_to_send,
+                                                cycle_periods,
+                                                cycle_count,
                                                 cycle_width,
                                                 phase_blend,
                                                 phase_gain,
