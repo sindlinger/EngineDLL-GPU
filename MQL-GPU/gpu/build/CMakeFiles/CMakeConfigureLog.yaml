@@ -1,0 +1,664 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The system is: Windows - 10.0.26100 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      Vers├úo do MSBuild 17.14.23+b0019275e para .NET Framework
+      Compila├º├úo de 18/10/2025 11:31:40 iniciada.
+      
+      Projeto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCXX\\CompilerIdCXX.vcxproj" no n├│ 1 (destinos padr├úo).
+      PrepareForBuild:
+        Criando o diret├│rio "Debug\\".
+        A sa├¡da estruturada est├í habilitada. A formata├º├úo do diagn├│stico do compilador refletir├í a hierarquia de erros. Consulte https://aka.ms/cpp/structured-output para obter mais detalhes.
+        Criando o diret├│rio "Debug\\CompilerIdCXX.tlog\\".
+      InitializeBuildStatus:
+        Criando "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild" porque "AlwaysCreate" foi especificado.
+        Tocando "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
+      ClCompile:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TP /FC /errorReport:queue CMakeCXXCompilerId.cpp
+        CMakeCXXCompilerId.cpp
+      Link:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCXX.lib" /MACHINE:X64 Debug\\CMakeCXXCompilerId.obj
+        CompilerIdCXX.vcxproj -> C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCXX\\CompilerIdCXX.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_CXX_COMPILER=C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        Excluindo o arquivo "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
+        Tocando "Debug\\CompilerIdCXX.tlog\\CompilerIdCXX.lastbuildstate".
+      Projeto de compila├º├úo pronto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCXX\\CompilerIdCXX.vcxproj" (destinos padr├úo).
+      
+      Compila├º├úo com ├¬xito.
+          0 Aviso(s)
+          0 Erro(s)
+      
+      Tempo Decorrido 00:00:00.35
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+      
+      The CXX compiler identification is MSVC, found in:
+        C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/3.31.6-msvc6/CompilerIdCXX/CompilerIdCXX.exe
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:53 (__determine_compiler_id_test)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCUDACompiler.cmake:131 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CUDA compiler identification source file "CMakeCUDACompilerId.cu" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags: --keep;--keep-dir;tmp -v
+      
+      The output was:
+      0
+      Vers├úo do MSBuild 17.14.23+b0019275e para .NET Framework
+      Compila├º├úo de 18/10/2025 11:31:41 iniciada.
+      
+      Projeto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" no n├│ 1 (destinos padr├úo).
+      PrepareForBuild:
+        Criando o diret├│rio "Debug\\".
+        A sa├¡da estruturada est├í habilitada. A formata├º├úo do diagn├│stico do compilador refletir├í a hierarquia de erros. Consulte https://aka.ms/cpp/structured-output para obter mais detalhes.
+        Criando o diret├│rio "Debug\\CompilerIdCUDA.tlog\\".
+      InitializeBuildStatus:
+        Criando "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild" porque "AlwaysCreate" foi especificado.
+        Tocando "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild".
+      AddCudaCompileDeps:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /D__CUDACC_VER_MAJOR__=13 /D__CUDACC_VER_MINOR__=0 /D_MBCS /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\x64" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include" /I. /FIcuda_runtime.h /c C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu 
+      O projeto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (1) est├í compilando "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (1:2) no n├│ 1 (CudaBuildCore destino(s)).
+      CudaBuildCore:
+        Compiling CUDA source file CMakeCUDACompilerId.cu...
+        Criando o diret├│rio "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug".
+        cmd.exe /C "C:\\Users\\pichau\\AppData\\Local\\Temp\\tmp2b140656b2ad415c82cc97724d1785ea.cmd"
+        "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe" -gencode=arch=compute_75,code=\\"sm_75,compute_75\\" --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu   -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include" -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include"  -G   --keep-dir CompilerIdCUDA\\x64\\Debug  -maxrregcount=0    --machine 64 --compile -cudart static -v -allow-unsupported-compiler -g  -D_MBCS -Xcompiler "/EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdDebug\\vc143.pdb" -o C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu"
+        
+        C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA>"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe" -gencode=arch=compute_75,code=\\"sm_75,compute_75\\" --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu   -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include" -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include"  -G   --keep-dir CompilerIdCUDA\\x64\\Debug  -maxrregcount=0    --machine 64 --compile -cudart static -v -allow-unsupported-compiler -g  -D_MBCS -Xcompiler "/EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdDebug\\vc143.pdb" -o C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" 
+        #$ _NVVM_BRANCH_=nvvm
+        #$ _SPACE_= 
+        #$ _CUDART_=cudart
+        #$ _HERE_=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin
+        #$ _THERE_=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin
+        #$ _TARGET_SIZE_=
+        #$ _TARGET_DIR_=
+        #$ _TARGET_SIZE_=64
+        #$ _WIN_PLATFORM_=x64
+        #$ TOP=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/..
+        #$ CICC_PATH=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../nvvm/bin
+        #$ NVVMIR_LIBRARY_DIR=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../nvvm/libdevice
+        #$ PATH=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../nvvm/bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../lib;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x64;;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x86;;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\tools;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\ide;C:\\Program Files (x86)\\HTML Help Workshop;;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\amd64;C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\;C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319\\;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin;C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319\\;;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\VC\\VCPackages;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\TestWindow;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\bin\\Roslyn;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Team Tools\\DiagnosticsHub\\Collector;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\Extensions\\Microsoft\\CodeCoverage.Console;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\\\x64;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\\\x64;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\\\MSBuild\\Current\\Bin\\amd64;C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\Tools\\;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;c:\\Users\\pichau\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files (x86)\\Microsoft\\Edge\\Application;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\Program Files (x86)\\gnupg\\bin;C:\\Users\\pichau\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\Git\\cmd;C:\\Program Files\\Git\\usr\\bin;C:\\ProgramData\\chocoportable\\bin;C:\\Program Files\\nodejs\\;c:\\Users\\pichau\\AppData\\Roaming\\Cursor\\User\\globalStorage\\github.copilot-chat\\debugCommand;C:\\ProgramData\\chocolatey\\bin;c:\\Users\\pichau\\AppData\\Roaming\\Cursor\\;C:\\path;C:\\Program Files (x86)\\ZeroTier\\One\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\cloudflared\\;C:\\Users\\pichau\\.console-ninja\\.bin;C:\\Users\\pichau\\AppData\\Local\\npm-cache\\_npx\\4b4c857f6efdfb61\\node_modules\\.bin;C:\\Users\\pichau\\AppData\\Local\\AnthropicClaude\\app-0.9.3\\node_modules\\.bin;C:\\Users\\pichau\\AppData\\Local\\AnthropicClaude\\node_modules\\.bin;C:\\Users\\pichau\\AppData\\Local\\node_modules\\.bin;C:\\Users\\pichau\\AppData\\node_modules\\.bin;C:\\Users\\pichau\\node_modules\\.bin;C:\\Users\\node_modules\\.bin;C:\\node_modules\\.bin;C:\\curl\\curl-8.5.0_3-win64-mingw\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Program Files\\dotnet\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Cloudflare\\Cloudflare WARP\\;C:\\Users\\pichau\\.local\\bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin;C:\\Program Files\\Eclipse Adoptium\\jdk-8.0.462.8-hotspot\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Program Files\\Amazon Corretto\\jdk1.8.0_462\\bin;C:\\Program Files (x86)\\Microsoft SDKs\\Azure\\CLI2\\wbin;C:\\Program Files\\Git\\mingw64\\bin;C:\\Program File;C:\\Users\\pichau\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;c:\\Users\\pichau;C:\\Users\\pichau\\AppData\\Local\\GitHubDesktop\\bin;e:\\Users\\pichau\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\VC\\Linux\\bin\\ConnectionManagerExe;
+        #$ INCLUDES="-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include/cccl"  
+        #$ SYSTEM_INCLUDES= 
+        #$ LIBRARIES=  "/LIBPATH:C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../lib/x64"
+        #$ CUDAFE_FLAGS=--sdk_dir "C:\\Program Files (x86)\\Windows Kits\\10"
+        #$ PTXAS_FLAGS=
+        CMakeCUDACompilerId.cu
+        #$ resource file C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-8.res: [-D__CUDA_ARCH_LIST__=750 -nologo -E -TP -EHsc -D__CUDACC__ -D__NVCC__ -D__CUDACC_DEBUG__  /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include/cccl"      -D "_MBCS" -D__CUDACC_VER_MAJOR__=13 -D__CUDACC_VER_MINOR__=0 -D__CUDACC_VER_BUILD__=48 -D__CUDA_API_VER_MAJOR__=13 -D__CUDA_API_VER_MINOR__=0 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -D__CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -FI "cuda_runtime.h" -Zi "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]
+        #$ cl.exe -D__NV_NO_HOST_COMPILER_CHECK=1 @"C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-8.res" > "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-6_CMakeCUDACompilerId.cpp4.ii" 
+        CMakeCUDACompilerId.cu
+        #$ erase C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-8.res
+        #$ cudafe++ --ms_c++14 --static-host-stub --device-hidden-visibility --microsoft_version=1944 --msvc_target_version=1944 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/../../../../../../.." --sdk_dir "C:/Program Files (x86)/Windows Kits/10/" --display_error_number --orig_src_file_name "C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/3.31.6-msvc6/CompilerIdCUDA/CMakeCUDACompilerId.cu" --orig_src_path_name "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" --allow_managed --debug_mode --sdk_dir "C:\\Program Files (x86)\\Windows Kits\\10" --m64 --parse_templates --gen_c_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.cpp" --stub_file_name "tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.stub.c" --gen_module_id_file --module_id_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-5_CMakeCUDACompilerId.module_id" "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-6_CMakeCUDACompilerId.cpp4.ii" 
+        #$ resource file C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-10.res: [-D__CUDA_ARCH__=750 -D__CUDA_ARCH_LIST__=750 -nologo -E -TP  -DCUDA_DOUBLE_MATH_FUNCTIONS -EHsc -D__CUDACC__ -D__NVCC__ -D__CUDACC_DEBUG__  /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include/cccl"      -D "_MBCS" -D__CUDACC_VER_MAJOR__=13 -D__CUDACC_VER_MINOR__=0 -D__CUDACC_VER_BUILD__=48 -D__CUDA_API_VER_MAJOR__=13 -D__CUDA_API_VER_MINOR__=0 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -D__CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -FI "cuda_runtime.h" -Zi "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]
+        #$ cl.exe -D__NV_NO_HOST_COMPILER_CHECK=1 @"C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-10.res" > "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-9_CMakeCUDACompilerId.cpp1.ii" 
+        CMakeCUDACompilerId.cu
+        #$ erase C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-10.res
+        #$ ""%CICC_PATH%\\cicc" --ms_c++14 --static-host-stub --device-hidden-visibility --microsoft_version=1944 --msvc_target_version=1944 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/../../../../../../.." --sdk_dir "C:/Program Files (x86)/Windows Kits/10/" --display_error_number --orig_src_file_name "C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/3.31.6-msvc6/CompilerIdCUDA/CMakeCUDACompilerId.cu" --orig_src_path_name "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" --allow_managed --debug_mode --sdk_dir "C:\\Program Files (x86)\\Windows Kits\\10"  -arch compute_75 -m64 --no-version-ident -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "tmpxft_00008a50_00000000-4_CMakeCUDACompilerId.fatbin.c" -g -O0 -tused --module_id_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-5_CMakeCUDACompilerId.module_id" --gen_c_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.c" --stub_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.stub.c" --gen_device_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.gpu"  "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-9_CMakeCUDACompilerId.cpp1.ii" -o "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.ptx""
+        #$ ptxas -arch=sm_75 -m64 -g --dont-merge-basicblocks --return-at-end "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.ptx"  -o "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-11_CMakeCUDACompilerId.sm_75.cubin" 
+        #$ fatbinary -64 --ident="C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/3.31.6-msvc6/CompilerIdCUDA/CMakeCUDACompilerId.cu" --cmdline="-g --dont-merge-basicblocks --return-at-end " --cicc-cmdline="-ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 " -g "--image3=kind=elf,sm=75,file=C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-11_CMakeCUDACompilerId.sm_75.cubin" "--image3=kind=ptx,sm=75,file=C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.ptx" --embedded-fatbin="C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-4_CMakeCUDACompilerId.fatbin.c" 
+        #$ erase C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-4_CMakeCUDACompilerId.fatbin
+        #$ resource file C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-12.res: [-D__CUDA_ARCH__=750 -D__CUDA_ARCH_LIST__=750 -nologo -c -TP  -DCUDA_DOUBLE_MATH_FUNCTIONS -EHsc /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include/cccl"     -Zi "C:\\Users\\pichau\\AppData\\Local\\Temp\\tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.cpp" ]
+        #$ cl.exe @"C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-12.res" -Fo"C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/3.31.6-msvc6/CompilerIdCUDA/CompilerIdCUDA/x64/Debug/CMakeCUDACompilerId.cu.obj" 
+        tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.cpp
+        #$ erase C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-12.res
+      Projeto de compila├º├úo pronto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (CudaBuildCore destino(s)).
+      Link:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCUDA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\lib\\x64" cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCUDA.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCUDA.lib" /MACHINE:X64 "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj"
+           Criando biblioteca .\\CompilerIdCUDA.lib e objeto .\\CompilerIdCUDA.exp
+      LINK : warning LNK4098: defaultlib 'LIBCMT' conflita com uso de outras bibliotecas; use /NODEFAULTLIB:library [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj]
+        CompilerIdCUDA.vcxproj -> C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.exe
+      PostBuildEvent:
+        echo CMAKE_CUDA_COMPILER=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe
+        :VCEnd
+        CMAKE_CUDA_COMPILER=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe
+      FinalizeBuildStatus:
+        Excluindo o arquivo "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild".
+        Tocando "Debug\\CompilerIdCUDA.tlog\\CompilerIdCUDA.lastbuildstate".
+      Projeto de compila├º├úo pronto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (destinos padr├úo).
+      
+      Compila├º├úo com ├¬xito.
+      
+      "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (destino padr├úo) (1) ->
+      (Link destino) -> 
+        LINK : warning LNK4098: defaultlib 'LIBCMT' conflita com uso de outras bibliotecas; use /NODEFAULTLIB:library [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj]
+      
+          1 Aviso(s)
+          0 Erro(s)
+      
+      Tempo Decorrido 00:00:01.52
+      
+      
+      Compilation of the CUDA compiler identification source "CMakeCUDACompilerId.cu" produced "CompilerIdCUDA.exe"
+      
+      Compilation of the CUDA compiler identification source "CMakeCUDACompilerId.cu" produced "CompilerIdCUDA.exp"
+      
+      Compilation of the CUDA compiler identification source "CMakeCUDACompilerId.cu" produced "CompilerIdCUDA.lib"
+      
+      Compilation of the CUDA compiler identification source "CMakeCUDACompilerId.cu" produced "CompilerIdCUDA.vcxproj"
+      
+      The CUDA compiler identification is NVIDIA, found in:
+        C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/3.31.6-msvc6/CompilerIdCUDA/CompilerIdCUDA.exe
+      The host compiler identification is MSVC
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Internal/CMakeNVCCParseImplicitInfo.cmake:128 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCUDACompiler.cmake:242 (cmake_nvcc_parse_implicit_info)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CUDA nvcc implicit link information:
+        found 'PATH=' string: [C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../nvvm/bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../lib;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x64;;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x86;;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\tools;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\ide;C:\\Program Files (x86)\\HTML Help Workshop;;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\amd64;C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\;C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319\\;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin;C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319\\;;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\VC\\VCPackages;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\TestWindow;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\bin\\Roslyn;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Team Tools\\DiagnosticsHub\\Collector;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\Extensions\\Microsoft\\CodeCoverage.Console;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\\\x64;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\\\x64;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\\\MSBuild\\Current\\Bin\\amd64;C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\Tools\\;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;c:\\Users\\pichau\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files (x86)\\Microsoft\\Edge\\Application;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\Program Files (x86)\\gnupg\\bin;C:\\Users\\pichau\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\Git\\cmd;C:\\Program Files\\Git\\usr\\bin;C:\\ProgramData\\chocoportable\\bin;C:\\Program Files\\nodejs\\;c:\\Users\\pichau\\AppData\\Roaming\\Cursor\\User\\globalStorage\\github.copilot-chat\\debugCommand;C:\\ProgramData\\chocolatey\\bin;c:\\Users\\pichau\\AppData\\Roaming\\Cursor\\;C:\\path;C:\\Program Files (x86)\\ZeroTier\\One\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\cloudflared\\;C:\\Users\\pichau\\.console-ninja\\.bin;C:\\Users\\pichau\\AppData\\Local\\npm-cache\\_npx\\4b4c857f6efdfb61\\node_modules\\.bin;C:\\Users\\pichau\\AppData\\Local\\AnthropicClaude\\app-0.9.3\\node_modules\\.bin;C:\\Users\\pichau\\AppData\\Local\\AnthropicClaude\\node_modules\\.bin;C:\\Users\\pichau\\AppData\\Local\\node_modules\\.bin;C:\\Users\\pichau\\AppData\\node_modules\\.bin;C:\\Users\\pichau\\node_modules\\.bin;C:\\Users\\node_modules\\.bin;C:\\node_modules\\.bin;C:\\curl\\curl-8.5.0_3-win64-mingw\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Program Files\\dotnet\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Cloudflare\\Cloudflare WARP\\;C:\\Users\\pichau\\.local\\bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin;C:\\Program Files\\Eclipse Adoptium\\jdk-8.0.462.8-hotspot\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Program Files\\Amazon Corretto\\jdk1.8.0_462\\bin;C:\\Program Files (x86)\\Microsoft SDKs\\Azure\\CLI2\\wbin;C:\\Program Files\\Git\\mingw64\\bin;C:\\Program File;C:\\Users\\pichau\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;c:\\Users\\pichau;C:\\Users\\pichau\\AppData\\Local\\GitHubDesktop\\bin;e:\\Users\\pichau\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\VC\\Linux\\bin\\ConnectionManagerExe;]
+        found 'LIBRARIES=' string: ["/LIBPATH:C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../lib/x64"]
+        found 'INCLUDES=' string: ["-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include/cccl"  ]
+        considering line: [Vers├úo do MSBuild 17.14.23+b0019275e para .NET Framework]
+        considering line: [Compila├º├úo de 18/10/2025 11:31:41 iniciada.]
+        considering line: [Projeto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" no n├│ 1 (destinos padr├úo).]
+        considering line: [PrepareForBuild:]
+        considering line: [  Criando o diret├│rio "Debug\\".]
+        considering line: [  A sa├¡da estruturada est├í habilitada. A formata├º├úo do diagn├│stico do compilador refletir├í a hierarquia de erros. Consulte https://aka.ms/cpp/structured-output para obter mais detalhes.]
+        considering line: [  Criando o diret├│rio "Debug\\CompilerIdCUDA.tlog\\".]
+        considering line: [InitializeBuildStatus:]
+        considering line: [  Criando "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild" porque "AlwaysCreate" foi especificado.]
+        considering line: [  Tocando "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild".]
+        considering line: [AddCudaCompileDeps:]
+        considering line: [  C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /D__CUDACC_VER_MAJOR__=13 /D__CUDACC_VER_MINOR__=0 /D_MBCS /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\x64" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include" /I. /FIcuda_runtime.h /c C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu ]
+        considering line: [O projeto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (1) est├í compilando "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (1:2) no n├│ 1 (CudaBuildCore destino(s)).]
+        considering line: [CudaBuildCore:]
+        considering line: [  Compiling CUDA source file CMakeCUDACompilerId.cu...]
+        considering line: [  Criando o diret├│rio "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug".]
+        considering line: [  cmd.exe /C "C:\\Users\\pichau\\AppData\\Local\\Temp\\tmp2b140656b2ad415c82cc97724d1785ea.cmd"]
+        considering line: [  "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe" -gencode=arch=compute_75,code=\\"sm_75,compute_75\\" --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu   -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include" -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include"  -G   --keep-dir CompilerIdCUDA\\x64\\Debug  -maxrregcount=0    --machine 64 --compile -cudart static -v -allow-unsupported-compiler -g  -D_MBCS -Xcompiler "/EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdDebug\\vc143.pdb" -o C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu"]
+        considering line: [  ]
+        considering line: [  C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA>"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe" -gencode=arch=compute_75,code=\\"sm_75,compute_75\\" --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu   -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include" -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include"  -G   --keep-dir CompilerIdCUDA\\x64\\Debug  -maxrregcount=0    --machine 64 --compile -cudart static -v -allow-unsupported-compiler -g  -D_MBCS -Xcompiler "/EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdDebug\\vc143.pdb" -o C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]
+        considering line: [                                      CMakeCUDACompilerId.cu]
+        considering line: [  #$ resource file C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-8.res: [-D__CUDA_ARCH_LIST__=750 -nologo -E -TP -EHsc -D__CUDACC__ -D__NVCC__ -D__CUDACC_DEBUG__  /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include/cccl"      -D "_MBCS" -D__CUDACC_VER_MAJOR__=13 -D__CUDACC_VER_MINOR__=0 -D__CUDACC_VER_BUILD__=48 -D__CUDA_API_VER_MAJOR__=13 -D__CUDA_API_VER_MINOR__=0 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -D__CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -FI "cuda_runtime.h" -Zi "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]]
+        considering line: [  #$ cl.exe -D__NV_NO_HOST_COMPILER_CHECK=1 @"C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-8.res" > "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-6_CMakeCUDACompilerId.cpp4.ii" ]
+        considering line: [  CMakeCUDACompilerId.cu]
+        considering line: [  #$ erase C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-8.res]
+        considering line: [  #$ cudafe++ --ms_c++14 --static-host-stub --device-hidden-visibility --microsoft_version=1944 --msvc_target_version=1944 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/../../../../../../.." --sdk_dir "C:/Program Files (x86)/Windows Kits/10/" --display_error_number --orig_src_file_name "C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/3.31.6-msvc6/CompilerIdCUDA/CMakeCUDACompilerId.cu" --orig_src_path_name "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" --allow_managed --debug_mode --sdk_dir "C:\\Program Files (x86)\\Windows Kits\\10" --m64 --parse_templates --gen_c_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.cpp" --stub_file_name "tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.stub.c" --gen_module_id_file --module_id_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-5_CMakeCUDACompilerId.module_id" "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-6_CMakeCUDACompilerId.cpp4.ii" ]
+        considering line: [  #$ resource file C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-10.res: [-D__CUDA_ARCH__=750 -D__CUDA_ARCH_LIST__=750 -nologo -E -TP  -DCUDA_DOUBLE_MATH_FUNCTIONS -EHsc -D__CUDACC__ -D__NVCC__ -D__CUDACC_DEBUG__  /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include/cccl"      -D "_MBCS" -D__CUDACC_VER_MAJOR__=13 -D__CUDACC_VER_MINOR__=0 -D__CUDACC_VER_BUILD__=48 -D__CUDA_API_VER_MAJOR__=13 -D__CUDA_API_VER_MINOR__=0 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -D__CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -FI "cuda_runtime.h" -Zi "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]]
+        considering line: [  #$ cl.exe -D__NV_NO_HOST_COMPILER_CHECK=1 @"C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-10.res" > "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-9_CMakeCUDACompilerId.cpp1.ii" ]
+        considering line: [  CMakeCUDACompilerId.cu]
+        considering line: [  #$ erase C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-10.res]
+        considering line: [  #$ ""%CICC_PATH%\\cicc" --ms_c++14 --static-host-stub --device-hidden-visibility --microsoft_version=1944 --msvc_target_version=1944 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/../../../../../../.." --sdk_dir "C:/Program Files (x86)/Windows Kits/10/" --display_error_number --orig_src_file_name "C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/3.31.6-msvc6/CompilerIdCUDA/CMakeCUDACompilerId.cu" --orig_src_path_name "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" --allow_managed --debug_mode --sdk_dir "C:\\Program Files (x86)\\Windows Kits\\10"  -arch compute_75 -m64 --no-version-ident -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "tmpxft_00008a50_00000000-4_CMakeCUDACompilerId.fatbin.c" -g -O0 -tused --module_id_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-5_CMakeCUDACompilerId.module_id" --gen_c_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.c" --stub_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.stub.c" --gen_device_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.gpu"  "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-9_CMakeCUDACompilerId.cpp1.ii" -o "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.ptx""]
+        considering line: [  #$ ptxas -arch=sm_75 -m64 -g --dont-merge-basicblocks --return-at-end "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.ptx"  -o "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-11_CMakeCUDACompilerId.sm_75.cubin" ]
+        considering line: [  #$ fatbinary -64 --ident="C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/3.31.6-msvc6/CompilerIdCUDA/CMakeCUDACompilerId.cu" --cmdline="-g --dont-merge-basicblocks --return-at-end " --cicc-cmdline="-ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 " -g "--image3=kind=elf,sm=75,file=C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-11_CMakeCUDACompilerId.sm_75.cubin" "--image3=kind=ptx,sm=75,file=C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.ptx" --embedded-fatbin="C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-4_CMakeCUDACompilerId.fatbin.c" ]
+        considering line: [  #$ erase C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-4_CMakeCUDACompilerId.fatbin]
+        considering line: [  #$ resource file C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-12.res: [-D__CUDA_ARCH__=750 -D__CUDA_ARCH_LIST__=750 -nologo -c -TP  -DCUDA_DOUBLE_MATH_FUNCTIONS -EHsc /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include/cccl"     -Zi "C:\\Users\\pichau\\AppData\\Local\\Temp\\tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.cpp" ]]
+        considering line: [  #$ cl.exe @"C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-12.res" -Fo"C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/3.31.6-msvc6/CompilerIdCUDA/CompilerIdCUDA/x64/Debug/CMakeCUDACompilerId.cu.obj" ]
+        considering line: [  tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.cpp]
+        considering line: [  #$ erase C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-12.res]
+        considering line: [Projeto de compila├º├úo pronto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (CudaBuildCore destino(s)).]
+        considering line: [Link:]
+        considering line: [  C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCUDA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\lib\\x64" cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCUDA.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCUDA.lib" /MACHINE:X64 "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj"]
+          extracted link line: [link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCUDA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\lib\\x64" cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCUDA.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCUDA.lib" /MACHINE:X64 "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj"]
+        considering line: [     Criando biblioteca .\\CompilerIdCUDA.lib e objeto .\\CompilerIdCUDA.exp]
+        considering line: [LINK : warning LNK4098: defaultlib 'LIBCMT' conflita com uso de outras bibliotecas]
+        considering line: [ use /NODEFAULTLIB:library [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj]]
+        considering line: [  CompilerIdCUDA.vcxproj -> C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.exe]
+        considering line: [PostBuildEvent:]
+        considering line: [  echo CMAKE_CUDA_COMPILER=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe]
+        considering line: [  :VCEnd]
+        considering line: [  CMAKE_CUDA_COMPILER=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe]
+        considering line: [FinalizeBuildStatus:]
+        considering line: [  Excluindo o arquivo "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild".]
+        considering line: [  Tocando "Debug\\CompilerIdCUDA.tlog\\CompilerIdCUDA.lastbuildstate".]
+        considering line: [Projeto de compila├º├úo pronto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (destinos padr├úo).]
+        considering line: [Compila├º├úo com ├¬xito.]
+        considering line: ["C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (destino padr├úo) (1) ->]
+        considering line: [(Link destino) -> ]
+        considering line: [  LINK : warning LNK4098: defaultlib 'LIBCMT' conflita com uso de outras bibliotecas]
+        considering line: [ use /NODEFAULTLIB:library [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj]]
+        considering line: [    1 Aviso(s)]
+        considering line: [    0 Erro(s)]
+        considering line: [Tempo Decorrido 00:00:01.52]
+        considering line: []
+      
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        link line: [cuda-fake-ld link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCUDA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\lib\\x64" cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCUDA.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCUDA.lib" /MACHINE:X64 "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj"]
+          arg [cuda-fake-ld] ==> ignore
+          arg [link.exe] ==> ignore
+          arg [/ERRORREPORT:QUEUE] ==> ignore
+          arg [/OUT:.\\CompilerIdCUDA.exe] ==> ignore
+          arg [/INCREMENTAL:NO] ==> ignore
+          arg [/NOLOGO] ==> ignore
+          arg [/LIBPATH:C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\lib\\x64] ==> dir [C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\lib\\x64]
+          arg [cudart_static.lib] ==> lib [cudart_static.lib]
+          arg [/MANIFEST] ==> ignore
+          arg [/MANIFESTUAC:level='asInvoker' uiAccess='false'] ==> ignore
+          arg [/manifest:embed] ==> ignore
+          arg [/PDB:.\\CompilerIdCUDA.pdb] ==> ignore
+          arg [/SUBSYSTEM:CONSOLE] ==> ignore
+          arg [/TLBID:1] ==> ignore
+          arg [/DYNAMICBASE] ==> ignore
+          arg [/NXCOMPAT] ==> ignore
+          arg [/IMPLIB:.\\CompilerIdCUDA.lib] ==> ignore MSVC link option
+          arg [/MACHINE:X64] ==> ignore
+          arg [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj] ==> ignore
+        collapse library dir [C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\lib\\x64] ==> [C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/lib/x64]
+        implicit libs: [cudart_static.lib]
+        implicit objs: []
+        implicit dirs: [C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/lib/x64]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Internal/CMakeNVCCParseImplicitInfo.cmake:146 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCUDACompiler.cmake:242 (cmake_nvcc_parse_implicit_info)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CUDA nvcc include information:
+        found 'PATH=' string: [C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../nvvm/bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../lib;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x64;;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x86;;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\tools;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\ide;C:\\Program Files (x86)\\HTML Help Workshop;;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\amd64;C:\\WINDOWS\\Microsoft.NET\\Framework64\\v4.0.30319\\;C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319\\;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin;C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319\\;;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\VC\\VCPackages;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\TestWindow;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\bin\\Roslyn;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Team Tools\\DiagnosticsHub\\Collector;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\Extensions\\Microsoft\\CodeCoverage.Console;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\\\x64;C:\\Program Files (x86)\\Windows Kits\\10\\bin\\\\x64;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\\\MSBuild\\Current\\Bin\\amd64;C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\Tools\\;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;c:\\Users\\pichau\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files (x86)\\Microsoft\\Edge\\Application;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\Program Files (x86)\\gnupg\\bin;C:\\Users\\pichau\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\Git\\cmd;C:\\Program Files\\Git\\usr\\bin;C:\\ProgramData\\chocoportable\\bin;C:\\Program Files\\nodejs\\;c:\\Users\\pichau\\AppData\\Roaming\\Cursor\\User\\globalStorage\\github.copilot-chat\\debugCommand;C:\\ProgramData\\chocolatey\\bin;c:\\Users\\pichau\\AppData\\Roaming\\Cursor\\;C:\\path;C:\\Program Files (x86)\\ZeroTier\\One\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\cloudflared\\;C:\\Users\\pichau\\.console-ninja\\.bin;C:\\Users\\pichau\\AppData\\Local\\npm-cache\\_npx\\4b4c857f6efdfb61\\node_modules\\.bin;C:\\Users\\pichau\\AppData\\Local\\AnthropicClaude\\app-0.9.3\\node_modules\\.bin;C:\\Users\\pichau\\AppData\\Local\\AnthropicClaude\\node_modules\\.bin;C:\\Users\\pichau\\AppData\\Local\\node_modules\\.bin;C:\\Users\\pichau\\AppData\\node_modules\\.bin;C:\\Users\\pichau\\node_modules\\.bin;C:\\Users\\node_modules\\.bin;C:\\node_modules\\.bin;C:\\curl\\curl-8.5.0_3-win64-mingw\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Program Files\\dotnet\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Cloudflare\\Cloudflare WARP\\;C:\\Users\\pichau\\.local\\bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin;C:\\Program Files\\Eclipse Adoptium\\jdk-8.0.462.8-hotspot\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Program Files\\Amazon Corretto\\jdk1.8.0_462\\bin;C:\\Program Files (x86)\\Microsoft SDKs\\Azure\\CLI2\\wbin;C:\\Program Files\\Git\\mingw64\\bin;C:\\Program File;C:\\Users\\pichau\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;c:\\Users\\pichau;C:\\Users\\pichau\\AppData\\Local\\GitHubDesktop\\bin;e:\\Users\\pichau\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja;C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\VC\\Linux\\bin\\ConnectionManagerExe;]
+        found 'LIBRARIES=' string: ["/LIBPATH:C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../lib/x64"]
+        found 'INCLUDES=' string: ["-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include/cccl"  ]
+        considering line: [Vers├úo do MSBuild 17.14.23+b0019275e para .NET Framework]
+        considering line: [Compila├º├úo de 18/10/2025 11:31:41 iniciada.]
+        considering line: [Projeto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" no n├│ 1 (destinos padr├úo).]
+        considering line: [PrepareForBuild:]
+        considering line: [  Criando o diret├│rio "Debug\\".]
+        considering line: [  A sa├¡da estruturada est├í habilitada. A formata├º├úo do diagn├│stico do compilador refletir├í a hierarquia de erros. Consulte https://aka.ms/cpp/structured-output para obter mais detalhes.]
+        considering line: [  Criando o diret├│rio "Debug\\CompilerIdCUDA.tlog\\".]
+        considering line: [InitializeBuildStatus:]
+        considering line: [  Criando "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild" porque "AlwaysCreate" foi especificado.]
+        considering line: [  Tocando "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild".]
+        considering line: [AddCudaCompileDeps:]
+        considering line: [  C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /D__CUDACC_VER_MAJOR__=13 /D__CUDACC_VER_MINOR__=0 /D_MBCS /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\x64" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include" /I. /FIcuda_runtime.h /c C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu ]
+        considering line: [O projeto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (1) est├í compilando "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (1:2) no n├│ 1 (CudaBuildCore destino(s)).]
+        considering line: [CudaBuildCore:]
+        considering line: [  Compiling CUDA source file CMakeCUDACompilerId.cu...]
+        considering line: [  Criando o diret├│rio "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug".]
+        considering line: [  cmd.exe /C "C:\\Users\\pichau\\AppData\\Local\\Temp\\tmp2b140656b2ad415c82cc97724d1785ea.cmd"]
+        considering line: [  "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe" -gencode=arch=compute_75,code=\\"sm_75,compute_75\\" --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu   -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include" -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include"  -G   --keep-dir CompilerIdCUDA\\x64\\Debug  -maxrregcount=0    --machine 64 --compile -cudart static -v -allow-unsupported-compiler -g  -D_MBCS -Xcompiler "/EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdDebug\\vc143.pdb" -o C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu"]
+        considering line: [  ]
+        considering line: [  C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA>"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe" -gencode=arch=compute_75,code=\\"sm_75,compute_75\\" --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu   -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include" -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include"  -G   --keep-dir CompilerIdCUDA\\x64\\Debug  -maxrregcount=0    --machine 64 --compile -cudart static -v -allow-unsupported-compiler -g  -D_MBCS -Xcompiler "/EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdDebug\\vc143.pdb" -o C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]
+        considering line: [                                      CMakeCUDACompilerId.cu]
+        considering line: [  #$ resource file C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-8.res: [-D__CUDA_ARCH_LIST__=750 -nologo -E -TP -EHsc -D__CUDACC__ -D__NVCC__ -D__CUDACC_DEBUG__  /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include/cccl"      -D "_MBCS" -D__CUDACC_VER_MAJOR__=13 -D__CUDACC_VER_MINOR__=0 -D__CUDACC_VER_BUILD__=48 -D__CUDA_API_VER_MAJOR__=13 -D__CUDA_API_VER_MINOR__=0 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -D__CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -FI "cuda_runtime.h" -Zi "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]]
+        considering line: [  #$ cl.exe -D__NV_NO_HOST_COMPILER_CHECK=1 @"C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-8.res" > "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-6_CMakeCUDACompilerId.cpp4.ii" ]
+        considering line: [  CMakeCUDACompilerId.cu]
+        considering line: [  #$ erase C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-8.res]
+        considering line: [  #$ cudafe++ --ms_c++14 --static-host-stub --device-hidden-visibility --microsoft_version=1944 --msvc_target_version=1944 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/../../../../../../.." --sdk_dir "C:/Program Files (x86)/Windows Kits/10/" --display_error_number --orig_src_file_name "C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/3.31.6-msvc6/CompilerIdCUDA/CMakeCUDACompilerId.cu" --orig_src_path_name "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" --allow_managed --debug_mode --sdk_dir "C:\\Program Files (x86)\\Windows Kits\\10" --m64 --parse_templates --gen_c_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.cpp" --stub_file_name "tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.stub.c" --gen_module_id_file --module_id_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-5_CMakeCUDACompilerId.module_id" "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-6_CMakeCUDACompilerId.cpp4.ii" ]
+        considering line: [  #$ resource file C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-10.res: [-D__CUDA_ARCH__=750 -D__CUDA_ARCH_LIST__=750 -nologo -E -TP  -DCUDA_DOUBLE_MATH_FUNCTIONS -EHsc -D__CUDACC__ -D__NVCC__ -D__CUDACC_DEBUG__  /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include/cccl"      -D "_MBCS" -D__CUDACC_VER_MAJOR__=13 -D__CUDACC_VER_MINOR__=0 -D__CUDACC_VER_BUILD__=48 -D__CUDA_API_VER_MAJOR__=13 -D__CUDA_API_VER_MINOR__=0 -D__NVCC_DIAG_PRAGMA_SUPPORT__=1 -D__CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -FI "cuda_runtime.h" -Zi "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" ]]
+        considering line: [  #$ cl.exe -D__NV_NO_HOST_COMPILER_CHECK=1 @"C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-10.res" > "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-9_CMakeCUDACompilerId.cpp1.ii" ]
+        considering line: [  CMakeCUDACompilerId.cu]
+        considering line: [  #$ erase C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-10.res]
+        considering line: [  #$ ""%CICC_PATH%\\cicc" --ms_c++14 --static-host-stub --device-hidden-visibility --microsoft_version=1944 --msvc_target_version=1944 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/../../../../../../.." --sdk_dir "C:/Program Files (x86)/Windows Kits/10/" --display_error_number --orig_src_file_name "C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/3.31.6-msvc6/CompilerIdCUDA/CMakeCUDACompilerId.cu" --orig_src_path_name "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CMakeCUDACompilerId.cu" --allow_managed --debug_mode --sdk_dir "C:\\Program Files (x86)\\Windows Kits\\10"  -arch compute_75 -m64 --no-version-ident -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "tmpxft_00008a50_00000000-4_CMakeCUDACompilerId.fatbin.c" -g -O0 -tused --module_id_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-5_CMakeCUDACompilerId.module_id" --gen_c_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.c" --stub_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.stub.c" --gen_device_file_name "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.gpu"  "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-9_CMakeCUDACompilerId.cpp1.ii" -o "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.ptx""]
+        considering line: [  #$ ptxas -arch=sm_75 -m64 -g --dont-merge-basicblocks --return-at-end "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.ptx"  -o "C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-11_CMakeCUDACompilerId.sm_75.cubin" ]
+        considering line: [  #$ fatbinary -64 --ident="C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/3.31.6-msvc6/CompilerIdCUDA/CMakeCUDACompilerId.cu" --cmdline="-g --dont-merge-basicblocks --return-at-end " --cicc-cmdline="-ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 " -g "--image3=kind=elf,sm=75,file=C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-11_CMakeCUDACompilerId.sm_75.cubin" "--image3=kind=ptx,sm=75,file=C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.ptx" --embedded-fatbin="C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-4_CMakeCUDACompilerId.fatbin.c" ]
+        considering line: [  #$ erase C:/Users/pichau/AppData/Local/Temp/tmpxft_00008a50_00000000-4_CMakeCUDACompilerId.fatbin]
+        considering line: [  #$ resource file C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-12.res: [-D__CUDA_ARCH__=750 -D__CUDA_ARCH_LIST__=750 -nologo -c -TP  -DCUDA_DOUBLE_MATH_FUNCTIONS -EHsc /EHsc /W0 /nologo /Od /FS /Zi /RTC1 /MDd /FdDebug\\vc143.pdb -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include" "-IC:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin/../include/cccl"     -Zi "C:\\Users\\pichau\\AppData\\Local\\Temp\\tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.cpp" ]]
+        considering line: [  #$ cl.exe @"C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-12.res" -Fo"C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/3.31.6-msvc6/CompilerIdCUDA/CompilerIdCUDA/x64/Debug/CMakeCUDACompilerId.cu.obj" ]
+        considering line: [  tmpxft_00008a50_00000000-7_CMakeCUDACompilerId.cudafe1.cpp]
+        considering line: [  #$ erase C:\\Users\\pichau\\AppData\\Local\\Temp/tmpxft_00008a50_00000000-12.res]
+        considering line: [Projeto de compila├º├úo pronto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (CudaBuildCore destino(s)).]
+        considering line: [Link:]
+        considering line: [  C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCUDA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\lib\\x64" cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCUDA.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCUDA.lib" /MACHINE:X64 "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj"]
+          extracted link line: [link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCUDA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\lib\\x64" cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCUDA.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCUDA.lib" /MACHINE:X64 "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj"]
+        considering line: [     Criando biblioteca .\\CompilerIdCUDA.lib e objeto .\\CompilerIdCUDA.exp]
+        considering line: [LINK : warning LNK4098: defaultlib 'LIBCMT' conflita com uso de outras bibliotecas]
+        considering line: [ use /NODEFAULTLIB:library [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj]]
+        considering line: [  CompilerIdCUDA.vcxproj -> C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.exe]
+        considering line: [PostBuildEvent:]
+        considering line: [  echo CMAKE_CUDA_COMPILER=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe]
+        considering line: [  :VCEnd]
+        considering line: [  CMAKE_CUDA_COMPILER=C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe]
+        considering line: [FinalizeBuildStatus:]
+        considering line: [  Excluindo o arquivo "Debug\\CompilerIdCUDA.tlog\\unsuccessfulbuild".]
+        considering line: [  Tocando "Debug\\CompilerIdCUDA.tlog\\CompilerIdCUDA.lastbuildstate".]
+        considering line: [Projeto de compila├º├úo pronto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (destinos padr├úo).]
+        considering line: [Compila├º├úo com ├¬xito.]
+        considering line: ["C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj" (destino padr├úo) (1) ->]
+        considering line: [(Link destino) -> ]
+        considering line: [  LINK : warning LNK4098: defaultlib 'LIBCMT' conflita com uso de outras bibliotecas]
+        considering line: [ use /NODEFAULTLIB:library [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA.vcxproj]]
+        considering line: [    1 Aviso(s)]
+        considering line: [    0 Erro(s)]
+        considering line: [Tempo Decorrido 00:00:01.52]
+        considering line: []
+      
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        link line: [cuda-fake-ld link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCUDA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\lib\\x64" cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCUDA.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCUDA.lib" /MACHINE:X64 "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj"]
+          arg [cuda-fake-ld] ==> ignore
+          arg [link.exe] ==> ignore
+          arg [/ERRORREPORT:QUEUE] ==> ignore
+          arg [/OUT:.\\CompilerIdCUDA.exe] ==> ignore
+          arg [/INCREMENTAL:NO] ==> ignore
+          arg [/NOLOGO] ==> ignore
+          arg [/LIBPATH:C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\lib\\x64] ==> dir [C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\lib\\x64]
+          arg [cudart_static.lib] ==> lib [cudart_static.lib]
+          arg [/MANIFEST] ==> ignore
+          arg [/MANIFESTUAC:level='asInvoker' uiAccess='false'] ==> ignore
+          arg [/manifest:embed] ==> ignore
+          arg [/PDB:.\\CompilerIdCUDA.pdb] ==> ignore
+          arg [/SUBSYSTEM:CONSOLE] ==> ignore
+          arg [/TLBID:1] ==> ignore
+          arg [/DYNAMICBASE] ==> ignore
+          arg [/NXCOMPAT] ==> ignore
+          arg [/IMPLIB:.\\CompilerIdCUDA.lib] ==> ignore MSVC link option
+          arg [/MACHINE:X64] ==> ignore
+          arg [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCUDA\\CompilerIdCUDA\\x64\\Debug\\CMakeCUDACompilerId.cu.obj] ==> ignore
+        collapse library dir [C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\lib\\x64] ==> [C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/lib/x64]
+        implicit libs: [cudart_static.lib]
+        implicit objs: []
+        implicit dirs: [C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/lib/x64]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-ftpg1i"
+      binary: "C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-ftpg1i"
+    cmakeVariables:
+      CMAKE_CUDA_ARCHITECTURES: "75"
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-ftpg1i'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_5bbe9.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Vers├úo do MSBuild 17.14.23+b0019275e para .NET Framework
+        Compila├º├úo de 18/10/2025 11:31:42 iniciada.
+        
+        Projeto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ftpg1i\\cmTC_5bbe9.vcxproj" no n├│ 1 (destinos padr├úo).
+        PrepareForBuild:
+          Criando o diret├│rio "cmTC_5bbe9.dir\\Debug\\".
+          A sa├¡da estruturada est├í habilitada. A formata├º├úo do diagn├│stico do compilador refletir├í a hierarquia de erros. Consulte https://aka.ms/cpp/structured-output para obter mais detalhes.
+          Criando o diret├│rio "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ftpg1i\\Debug\\".
+          Criando o diret├│rio "cmTC_5bbe9.dir\\Debug\\cmTC_5bbe9.tlog\\".
+        InitializeBuildStatus:
+          Criando "cmTC_5bbe9.dir\\Debug\\cmTC_5bbe9.tlog\\unsuccessfulbuild" porque "AlwaysCreate" foi especificado.
+          Tocando "cmTC_5bbe9.dir\\Debug\\cmTC_5bbe9.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_5bbe9.dir\\Debug\\\\" /Fd"cmTC_5bbe9.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
+          Microsoft (R) C/C++ Optimizing Compiler Vers├úo 19.44.35217 para x64
+          Copyright (C) Microsoft Corporation. Todos os direitos reservados.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_5bbe9.dir\\Debug\\\\" /Fd"cmTC_5bbe9.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
+          CMakeCXXCompilerABI.cpp
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ftpg1i\\Debug\\cmTC_5bbe9.exe" /INCREMENTAL /ILK:"cmTC_5bbe9.dir\\Debug\\cmTC_5bbe9.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-ftpg1i/Debug/cmTC_5bbe9.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-ftpg1i/Debug/cmTC_5bbe9.lib" /MACHINE:X64  /machine:x64 cmTC_5bbe9.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_5bbe9.vcxproj -> C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ftpg1i\\Debug\\cmTC_5bbe9.exe
+        FinalizeBuildStatus:
+          Excluindo o arquivo "cmTC_5bbe9.dir\\Debug\\cmTC_5bbe9.tlog\\unsuccessfulbuild".
+          Tocando "cmTC_5bbe9.dir\\Debug\\cmTC_5bbe9.tlog\\cmTC_5bbe9.lastbuildstate".
+        Projeto de compila├º├úo pronto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ftpg1i\\cmTC_5bbe9.vcxproj" (destinos padr├úo).
+        
+        Compila├º├úo com ├¬xito.
+            0 Aviso(s)
+            0 Erro(s)
+        
+        Tempo Decorrido 00:00:00.35
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'CXX': C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Running the CXX compiler's linker: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCUDACompiler.cmake:19 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CUDA compiler ABI info"
+    directories:
+      source: "C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-q3z7jf"
+      binary: "C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-q3z7jf"
+    cmakeVariables:
+      CMAKE_CUDA_ARCHITECTURES: "75"
+      CMAKE_CUDA_FLAGS: "-D_WINDOWS -Xcompiler=\" /EHsc\""
+      CMAKE_CUDA_FLAGS_DEBUG: "-Xcompiler=\" -Zi -Ob0 -Od /RTC1\""
+      CMAKE_CUDA_RUNTIME_LIBRARY: "Static"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_CUDA_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-q3z7jf'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_1606f.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Vers├úo do MSBuild 17.14.23+b0019275e para .NET Framework
+        Compila├º├úo de 18/10/2025 11:31:43 iniciada.
+        
+        Projeto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" no n├│ 1 (destinos padr├úo).
+        PrepareForBuild:
+          Criando o diret├│rio "cmTC_1606f.dir\\Debug\\".
+          A sa├¡da estruturada est├í habilitada. A formata├º├úo do diagn├│stico do compilador refletir├í a hierarquia de erros. Consulte https://aka.ms/cpp/structured-output para obter mais detalhes.
+          Criando o diret├│rio "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\Debug\\".
+          Criando o diret├│rio "cmTC_1606f.dir\\Debug\\cmTC_1606f.tlog\\".
+        InitializeBuildStatus:
+          Criando "cmTC_1606f.dir\\Debug\\cmTC_1606f.tlog\\unsuccessfulbuild" porque "AlwaysCreate" foi especificado.
+          Tocando "cmTC_1606f.dir\\Debug\\cmTC_1606f.tlog\\unsuccessfulbuild".
+        AddCudaCompileDeps:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /D__CUDACC_VER_MAJOR__=13 /D__CUDACC_VER_MINOR__=0 /D_WINDOWS /DCMAKE_INTDIR="Debug" /D_MBCS /DCMAKE_INTDIR="Debug" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\x64" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include" /I. /FIcuda_runtime.h /c "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCUDACompilerABI.cu" 
+        O projeto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" (1) est├í compilando "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" (1:2) no n├│ 1 (CudaBuildCore destino(s)).
+        CudaBuildCore:
+          Compiling CUDA source file ..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCUDACompilerABI.cu...
+          cmd.exe /C "C:\\Users\\pichau\\AppData\\Local\\Temp\\tmpba0568ed7f7e4d3dbd964a9bdd27a29b.cmd"
+          "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe"  --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu    -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include"     --keep-dir cmTC_1606f\\x64\\Debug  -maxrregcount=0    --machine 64 --compile -cudart static --generate-code=arch=compute_75,code=[compute_75,sm_75] -Xcompiler="/EHsc -Zi -Ob0 -v" -g  -D_WINDOWS -D"CMAKE_INTDIR=\\"Debug\\"" -D_MBCS -D"CMAKE_INTDIR=\\"Debug\\"" -Xcompiler "/EHsc /W1 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdcmTC_1606f.dir\\Debug\\vc143.pdb" -o cmTC_1606f.dir\\Debug\\CMakeCUDACompilerABI.obj "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCUDACompilerABI.cu"
+          
+          C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf>"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe"  --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu    -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include"     --keep-dir cmTC_1606f\\x64\\Debug  -maxrregcount=0    --machine 64 --compile -cudart static --generate-code=arch=compute_75,code=[compute_75,sm_75] -Xcompiler="/EHsc -Zi -Ob0 -v" -g  -D_WINDOWS -D"CMAKE_INTDIR=\\"Debug\\"" -D_MBCS -D"CMAKE_INTDIR=\\"Debug\\"" -Xcompiler "/EHsc /W1 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdcmTC_1606f.dir\\Debug\\vc143.pdb" -o cmTC_1606f.dir\\Debug\\CMakeCUDACompilerABI.obj "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCUDACompilerABI.cu" 
+        cl : Linha de comando warning D9002: ignorando op├º├úo desconhecida '-v' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]
+          CMakeCUDACompilerABI.cu
+        cl : Linha de comando warning D9002: ignorando op├º├úo desconhecida '-v' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]
+          CMakeCUDACompilerABI.cu
+          CMakeCUDACompilerABI.cu
+        cl : Linha de comando warning D9002: ignorando op├º├úo desconhecida '-v' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]
+          tmpxft_0000109c_00000000-7_CMakeCUDACompilerABI.cudafe1.cpp
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCompilerCUDAArch.h(10): warning C4305: 'return': truncamento de 'int' para 'bool' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]
+        Projeto de compila├º├úo pronto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" (CudaBuildCore destino(s)).
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\Debug\\cmTC_1606f.exe" /INCREMENTAL /ILK:"cmTC_1606f.dir\\Debug\\cmTC_1606f.ilk" /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\lib\\x64" cudadevrt.lib cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-q3z7jf/Debug/cmTC_1606f.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-q3z7jf/Debug/cmTC_1606f.lib" /MACHINE:X64  /machine:x64 -v cmTC_1606f.dir\\Debug\\CMakeCUDACompilerABI.obj
+        LINK : warning LNK4044: op├º├úo n├úo reconhecida '/v'; ignorada [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]
+             Criando biblioteca C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-q3z7jf/Debug/cmTC_1606f.lib e objeto C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-q3z7jf/Debug/cmTC_1606f.exp
+        LINK : warning LNK4098: defaultlib 'LIBCMT' conflita com uso de outras bibliotecas; use /NODEFAULTLIB:library [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]
+          cmTC_1606f.vcxproj -> C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\Debug\\cmTC_1606f.exe
+        FinalizeBuildStatus:
+          Excluindo o arquivo "cmTC_1606f.dir\\Debug\\cmTC_1606f.tlog\\unsuccessfulbuild".
+          Tocando "cmTC_1606f.dir\\Debug\\cmTC_1606f.tlog\\cmTC_1606f.lastbuildstate".
+        Projeto de compila├º├úo pronto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" (destinos padr├úo).
+        
+        Compila├º├úo com ├¬xito.
+        
+        "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" (destino padr├úo) (1) ->
+        "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" (CudaBuildCore destino) (1:2) ->
+        (CudaBuildCore destino) -> 
+          cl : Linha de comando warning D9002: ignorando op├º├úo desconhecida '-v' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]
+          cl : Linha de comando warning D9002: ignorando op├º├úo desconhecida '-v' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]
+          cl : Linha de comando warning D9002: ignorando op├º├úo desconhecida '-v' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCompilerCUDAArch.h(10): warning C4305: 'return': truncamento de 'int' para 'bool' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]
+        
+        
+        "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" (destino padr├úo) (1) ->
+        (Link destino) -> 
+          LINK : warning LNK4044: op├º├úo n├úo reconhecida '/v'; ignorada [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]
+          LINK : warning LNK4098: defaultlib 'LIBCMT' conflita com uso de outras bibliotecas; use /NODEFAULTLIB:library [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]
+        
+            6 Aviso(s)
+            0 Erro(s)
+        
+        Tempo Decorrido 00:00:01.59
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCUDACompiler.cmake:19 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CUDA implicit include dir info: rv=start
+        warn: unable to parse implicit include dirs!
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCUDACompiler.cmake:19 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CUDA implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        ignore line: [Change Dir: 'C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-q3z7jf']
+        ignore line: []
+        ignore line: [Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_1606f.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n]
+        ignore line: [Vers├úo do MSBuild 17.14.23+b0019275e para .NET Framework]
+        ignore line: [Compila├º├úo de 18/10/2025 11:31:43 iniciada.]
+        ignore line: []
+        ignore line: [Projeto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" no n├│ 1 (destinos padr├úo).]
+        ignore line: [PrepareForBuild:]
+        ignore line: [  Criando o diret├│rio "cmTC_1606f.dir\\Debug\\".]
+        ignore line: [  A sa├¡da estruturada est├í habilitada. A formata├º├úo do diagn├│stico do compilador refletir├í a hierarquia de erros. Consulte https://aka.ms/cpp/structured-output para obter mais detalhes.]
+        ignore line: [  Criando o diret├│rio "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\Debug\\".]
+        ignore line: [  Criando o diret├│rio "cmTC_1606f.dir\\Debug\\cmTC_1606f.tlog\\".]
+        ignore line: [InitializeBuildStatus:]
+        ignore line: [  Criando "cmTC_1606f.dir\\Debug\\cmTC_1606f.tlog\\unsuccessfulbuild" porque "AlwaysCreate" foi especificado.]
+        ignore line: [  Tocando "cmTC_1606f.dir\\Debug\\cmTC_1606f.tlog\\unsuccessfulbuild".]
+        ignore line: [AddCudaCompileDeps:]
+        ignore line: [  C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /D__CUDACC_VER_MAJOR__=13 /D__CUDACC_VER_MINOR__=0 /D_WINDOWS /DCMAKE_INTDIR="Debug" /D_MBCS /DCMAKE_INTDIR="Debug" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\x64" /I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include" /I. /FIcuda_runtime.h /c "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCUDACompilerABI.cu" ]
+        ignore line: [O projeto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" (1) est├í compilando "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" (1:2) no n├│ 1 (CudaBuildCore destino(s)).]
+        ignore line: [CudaBuildCore:]
+        ignore line: [  Compiling CUDA source file ..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCUDACompilerABI.cu...]
+        ignore line: [  cmd.exe /C "C:\\Users\\pichau\\AppData\\Local\\Temp\\tmpba0568ed7f7e4d3dbd964a9bdd27a29b.cmd"]
+        ignore line: [  "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe"  --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu    -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include"     --keep-dir cmTC_1606f\\x64\\Debug  -maxrregcount=0    --machine 64 --compile -cudart static --generate-code=arch=compute_75 code=[compute_75 sm_75] -Xcompiler="/EHsc -Zi -Ob0 -v" -g  -D_WINDOWS -D"CMAKE_INTDIR=\\"Debug\\"" -D_MBCS -D"CMAKE_INTDIR=\\"Debug\\"" -Xcompiler "/EHsc /W1 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdcmTC_1606f.dir\\Debug\\vc143.pdb" -o cmTC_1606f.dir\\Debug\\CMakeCUDACompilerABI.obj "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCUDACompilerABI.cu"]
+        ignore line: [  ]
+        ignore line: [  C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf>"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\bin\\nvcc.exe"  --use-local-env -ccbin "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64" -x cu    -I"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\include"     --keep-dir cmTC_1606f\\x64\\Debug  -maxrregcount=0    --machine 64 --compile -cudart static --generate-code=arch=compute_75 code=[compute_75 sm_75] -Xcompiler="/EHsc -Zi -Ob0 -v" -g  -D_WINDOWS -D"CMAKE_INTDIR=\\"Debug\\"" -D_MBCS -D"CMAKE_INTDIR=\\"Debug\\"" -Xcompiler "/EHsc /W1 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdcmTC_1606f.dir\\Debug\\vc143.pdb" -o cmTC_1606f.dir\\Debug\\CMakeCUDACompilerABI.obj "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCUDACompilerABI.cu" ]
+        ignore line: [cl : Linha de comando warning D9002: ignorando op├º├úo desconhecida '-v' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]]
+        ignore line: [  CMakeCUDACompilerABI.cu]
+        ignore line: [cl : Linha de comando warning D9002: ignorando op├º├úo desconhecida '-v' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]]
+        ignore line: [  CMakeCUDACompilerABI.cu]
+        ignore line: [  CMakeCUDACompilerABI.cu]
+        ignore line: [cl : Linha de comando warning D9002: ignorando op├º├úo desconhecida '-v' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]]
+        ignore line: [  tmpxft_0000109c_00000000-7_CMakeCUDACompilerABI.cudafe1.cpp]
+        ignore line: [C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCompilerCUDAArch.h(10): warning C4305: 'return': truncamento de 'int' para 'bool' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]]
+        ignore line: [Projeto de compila├º├úo pronto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" (CudaBuildCore destino(s)).]
+        ignore line: [Link:]
+        ignore line: [  C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\Debug\\cmTC_1606f.exe" /INCREMENTAL /ILK:"cmTC_1606f.dir\\Debug\\cmTC_1606f.ilk" /NOLOGO /LIBPATH:"C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v13.0\\lib\\x64" cudadevrt.lib cudart_static.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-q3z7jf/Debug/cmTC_1606f.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-q3z7jf/Debug/cmTC_1606f.lib" /MACHINE:X64  /machine:x64 -v cmTC_1606f.dir\\Debug\\CMakeCUDACompilerABI.obj]
+        ignore line: [LINK : warning LNK4044: op├º├úo n├úo reconhecida '/v']
+        ignore line: [ ignorada [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]]
+        ignore line: [     Criando biblioteca C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-q3z7jf/Debug/cmTC_1606f.lib e objeto C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/CMakeScratch/TryCompile-q3z7jf/Debug/cmTC_1606f.exp]
+        ignore line: [LINK : warning LNK4098: defaultlib 'LIBCMT' conflita com uso de outras bibliotecas]
+        ignore line: [ use /NODEFAULTLIB:library [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]]
+        ignore line: [  cmTC_1606f.vcxproj -> C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\Debug\\cmTC_1606f.exe]
+        ignore line: [FinalizeBuildStatus:]
+        ignore line: [  Excluindo o arquivo "cmTC_1606f.dir\\Debug\\cmTC_1606f.tlog\\unsuccessfulbuild".]
+        ignore line: [  Tocando "cmTC_1606f.dir\\Debug\\cmTC_1606f.tlog\\cmTC_1606f.lastbuildstate".]
+        ignore line: [Projeto de compila├º├úo pronto "C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" (destinos padr├úo).]
+        ignore line: []
+        ignore line: [Compila├º├úo com ├¬xito.]
+        ignore line: []
+        ignore line: ["C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" (destino padr├úo) (1) ->]
+        ignore line: ["C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" (CudaBuildCore destino) (1:2) ->]
+        ignore line: [(CudaBuildCore destino) -> ]
+        ignore line: [  cl : Linha de comando warning D9002: ignorando op├º├úo desconhecida '-v' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]]
+        ignore line: [  cl : Linha de comando warning D9002: ignorando op├º├úo desconhecida '-v' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]]
+        ignore line: [  cl : Linha de comando warning D9002: ignorando op├º├úo desconhecida '-v' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]]
+        ignore line: [  C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCompilerCUDAArch.h(10): warning C4305: 'return': truncamento de 'int' para 'bool' [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]]
+        ignore line: []
+        ignore line: []
+        ignore line: ["C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj" (destino padr├úo) (1) ->]
+        ignore line: [(Link destino) -> ]
+        ignore line: [  LINK : warning LNK4044: op├º├úo n├úo reconhecida '/v']
+        ignore line: [ ignorada [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]]
+        ignore line: [  LINK : warning LNK4098: defaultlib 'LIBCMT' conflita com uso de outras bibliotecas]
+        ignore line: [ use /NODEFAULTLIB:library [C:\\Users\\pichau\\AppData\\Roaming\\MetaQuotes\\Terminal\\MQL-GPU\\gpu\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q3z7jf\\cmTC_1606f.vcxproj]]
+        ignore line: []
+        ignore line: [    6 Aviso(s)]
+        ignore line: [    0 Erro(s)]
+        ignore line: []
+        ignore line: [Tempo Decorrido 00:00:01.59]
+        ignore line: []
+        ignore line: []
+        linker tool for 'CUDA': C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeTestCUDACompiler.cmake:19 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Running the CUDA compiler's linker: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+...

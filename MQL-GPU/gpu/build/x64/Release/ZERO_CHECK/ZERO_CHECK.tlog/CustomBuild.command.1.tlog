@@ -1,0 +1,10 @@
+^C:\USERS\PICHAU\APPDATA\ROAMING\METAQUOTES\TERMINAL\MQL-GPU\GPU\BUILD\CMAKEFILES\5ECFC8C0C627E53372716B12AED5FFEC\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu -BC:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/GpuBridge.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

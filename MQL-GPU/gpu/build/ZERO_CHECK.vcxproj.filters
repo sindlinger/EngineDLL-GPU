@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\pichau\AppData\Roaming\MetaQuotes\Terminal\MQL-GPU\gpu\build\CMakeFiles\5ecfc8c0c627e53372716b12aed5ffec\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{B5C021B6-34A9-3C93-9407-1E38EA824941}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

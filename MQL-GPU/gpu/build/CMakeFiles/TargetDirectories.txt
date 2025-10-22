@@ -1,0 +1,3 @@
+C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/GpuBridge.dir
+C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/pichau/AppData/Roaming/MetaQuotes/Terminal/MQL-GPU/gpu/build/CMakeFiles/ZERO_CHECK.dir

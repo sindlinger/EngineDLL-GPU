@@ -1,0 +1,576 @@
+//+------------------------------------------------------------------+
+//| GpuParallelProcessor.mqh                                          |
+//| High-Performance Parallel GPU Processing Manager                  |
+//+------------------------------------------------------------------+
+#property copyright "GPU Parallel Processing Framework"
+#property version   "1.00"
+#property strict
+
+#include <FFT\GpuBridgeExtended.mqh>
+
+//+------------------------------------------------------------------+
+//| Performance Configuration                                          |
+//+------------------------------------------------------------------+
+#define GPU_DEFAULT_BATCH_SIZE        512
+#define GPU_MIN_BATCH_SIZE            32
+#define GPU_MAX_BATCH_SIZE            2048
+#define GPU_OPTIMAL_WINDOW_SIZE       512
+
+//+------------------------------------------------------------------+
+//| Batch Result Structure                                            |
+//+------------------------------------------------------------------+
+struct GpuBatchResult {
+    double real_data[];
+    double imag_data[];
+    int    processed_count;
+    int    window_size;
+    int    batch_size;
+    ulong  execution_time_us;
+    bool   success;
+};
+
+//+------------------------------------------------------------------+
+//| Processing Configuration                                          |
+//+------------------------------------------------------------------+
+struct GpuProcessingConfig {
+    int    batch_size;
+    int    window_size;
+    bool   enable_profiling;
+    int    gpu_device_id;
+
+    GpuProcessingConfig() {
+        batch_size = GPU_DEFAULT_BATCH_SIZE;
+        window_size = GPU_OPTIMAL_WINDOW_SIZE;
+        enable_profiling = false;
+        gpu_device_id = 0;
+    }
+};
+
+//+------------------------------------------------------------------+
+//| Buffer Pool - Gerenciamento de memória reutilizável              |
+//+------------------------------------------------------------------+
+class GpuBufferPool {
+private:
+    double m_input_buffer[];
+    double m_real_buffer[];
+    double m_imag_buffer[];
+    
+    int m_current_capacity;
+    int m_window_size;
+    int m_batch_size;
+    bool m_is_allocated;
+    
+public:
+    GpuBufferPool() {
+        m_current_capacity = 0;
+        m_window_size = 0;
+        m_batch_size = 0;
+        m_is_allocated = false;
+    }
+    
+    ~GpuBufferPool() {
+        Release();
+    }
+    
+    bool Allocate(int window_size, int batch_size) {
+        if(window_size <= 0 || batch_size <= 0) {
+            return false;
+        }
+        
+        int required_capacity = window_size * batch_size;
+        
+        if(m_is_allocated && 
+           m_current_capacity >= required_capacity &&
+           m_window_size == window_size) {
+            m_batch_size = batch_size;
+            return true;
+        }
+        
+        Release();
+        
+        if(ArrayResize(m_input_buffer, required_capacity) != required_capacity) {
+            return false;
+        }
+        if(ArrayResize(m_real_buffer, required_capacity) != required_capacity) {
+            return false;
+        }
+        if(ArrayResize(m_imag_buffer, required_capacity) != required_capacity) {
+            return false;
+        }
+        
+        m_current_capacity = required_capacity;
+        m_window_size = window_size;
+        m_batch_size = batch_size;
+        m_is_allocated = true;
+        
+        ArrayInitialize(m_input_buffer, 0.0);
+        ArrayInitialize(m_real_buffer, 0.0);
+        ArrayInitialize(m_imag_buffer, 0.0);
+        
+        return true;
+    }
+    
+    void Release() {
+        if(!m_is_allocated) return;
+        
+        ArrayFree(m_input_buffer);
+        ArrayFree(m_real_buffer);
+        ArrayFree(m_imag_buffer);
+        
+        m_current_capacity = 0;
+        m_window_size = 0;
+        m_batch_size = 0;
+        m_is_allocated = false;
+    }
+    
+    void GetInputBuffer(double &buffer[]) { ArrayCopy(buffer, m_input_buffer); }
+    void GetRealBuffer(double &buffer[]) { ArrayCopy(buffer, m_real_buffer); }
+    void GetImagBuffer(double &buffer[]) { ArrayCopy(buffer, m_imag_buffer); }
+
+    // Direct access to internal buffers (use with care)
+    void SetInputValue(int index, double value) { m_input_buffer[index] = value; }
+    double GetRealValue(int index) const { return m_real_buffer[index]; }
+    double GetImagValue(int index) const { return m_imag_buffer[index]; }
+
+    // Access for batch operations
+    bool CopyToInputBuffer(const double &source[], int src_offset, int dst_offset, int count) {
+        if(dst_offset + count > m_current_capacity) return false;
+        for(int i = 0; i < count; i++) {
+            m_input_buffer[dst_offset + i] = source[src_offset + i];
+        }
+        return true;
+    }
+
+    bool CopyFromOutputBuffers(double &real_dest[], double &imag_dest[], int count) {
+        if(count > m_current_capacity) return false;
+        ArrayResize(real_dest, count);
+        ArrayResize(imag_dest, count);
+        ArrayCopy(real_dest, m_real_buffer, 0, 0, count);
+        ArrayCopy(imag_dest, m_imag_buffer, 0, 0, count);
+        return true;
+    }
+
+    // Get references to internal arrays for DLL calls
+    void GetInternalArrays(double &input[], double &real[], double &imag[]) {
+        // Just resize to point to the same data (shallow copy for DLL)
+        ArrayCopy(input, m_input_buffer);
+        ArrayCopy(real, m_real_buffer);
+        ArrayCopy(imag, m_imag_buffer);
+    }
+
+    int GetCapacity() const { return m_current_capacity; }
+    int GetWindowSize() const { return m_window_size; }
+    int GetBatchSize() const { return m_batch_size; }
+    bool IsAllocated() const { return m_is_allocated; }
+};
+
+//+------------------------------------------------------------------+
+//| Main Parallel Processor Class                                    |
+//+------------------------------------------------------------------+
+class CGpuParallelProcessor {
+private:
+    GpuBufferPool      m_buffer_pool;
+    GpuProcessingConfig m_config;
+    bool               m_gpu_initialized;
+    bool               m_gpu_configured;
+    
+    ulong              m_total_processed;
+    ulong              m_total_batches;
+    ulong              m_total_execution_time_us;
+    
+    bool InitializeGpu() {
+        if(m_gpu_initialized) {
+            return true;
+        }
+        
+        int status = GpuSessionInit(m_config.gpu_device_id);
+        if(!GpuStatusIsOk(status)) {
+            return false;
+        }
+        
+        m_gpu_initialized = true;
+        return true;
+    }
+    
+    bool ConfigureGpuForWindow() {
+        if(!m_gpu_initialized) {
+            return false;
+        }
+        
+        if(m_gpu_configured && m_buffer_pool.GetWindowSize() == m_config.window_size) {
+            return true;
+        }
+        
+        int status = GpuConfigureWaveform(m_config.window_size);
+        if(!GpuStatusIsOk(status)) {
+            return false;
+        }
+        
+        m_gpu_configured = true;
+        return true;
+    }
+    
+    bool PrepareBuffers() {
+        return m_buffer_pool.Allocate(m_config.window_size, m_config.batch_size);
+    }
+    
+public:
+    CGpuParallelProcessor() {
+        m_gpu_initialized = false;
+        m_gpu_configured = false;
+        m_total_processed = 0;
+        m_total_batches = 0;
+        m_total_execution_time_us = 0;
+    }
+    
+    ~CGpuParallelProcessor() {
+        Shutdown();
+    }
+    
+    bool Initialize(const GpuProcessingConfig &config) {
+        m_config = config;
+        
+        if(m_config.batch_size < GPU_MIN_BATCH_SIZE) {
+            m_config.batch_size = GPU_MIN_BATCH_SIZE;
+        }
+        if(m_config.batch_size > GPU_MAX_BATCH_SIZE) {
+            m_config.batch_size = GPU_MAX_BATCH_SIZE;
+        }
+        
+        if(!InitializeGpu()) {
+            return false;
+        }
+        
+        if(!ConfigureGpuForWindow()) {
+            return false;
+        }
+        
+        if(!PrepareBuffers()) {
+            return false;
+        }
+        
+        m_total_processed = 0;
+        m_total_batches = 0;
+        m_total_execution_time_us = 0;
+        
+        return true;
+    }
+    
+    bool ProcessBatch(const double &source_data[], 
+                      int start_offset,
+                      int batch_count,
+                      GpuBatchResult &result) {
+        
+        if(!m_gpu_initialized || !m_gpu_configured) {
+            result.success = false;
+            return false;
+        }
+        
+        if(batch_count <= 0 || batch_count > m_config.batch_size) {
+            result.success = false;
+            return false;
+        }
+        
+        int total_source_size = ArraySize(source_data);
+        int required_data_points = start_offset + ((batch_count - 1) + m_config.window_size);
+        
+        if(required_data_points > total_source_size) {
+            result.success = false;
+            return false;
+        }
+        
+        double* input_buf = m_buffer_pool.GetInputBuffer();
+        double* real_buf = m_buffer_pool.GetRealBuffer();
+        double* imag_buf = m_buffer_pool.GetImagBuffer();
+        
+        for(int batch_idx = 0; batch_idx < batch_count; batch_idx++) {
+            int src_offset = start_offset + batch_idx;
+            int dst_offset = batch_idx * m_config.window_size;
+            
+            for(int i = 0; i < m_config.window_size; i++) {
+                input_buf[dst_offset + i] = source_data[src_offset + i];
+            }
+        }
+        
+        ulong start_time = m_config.enable_profiling ? GetMicrosecondCount() : 0;
+        
+        int status = RunWaveformFftBatch(
+            input_buf,
+            real_buf,
+            imag_buf,
+            m_config.window_size,
+            batch_count
+        );
+        
+        ulong end_time = m_config.enable_profiling ? GetMicrosecondCount() : 0;
+        
+        if(!GpuStatusIsOk(status)) {
+            result.success = false;
+            return false;
+        }
+        
+        int result_size = m_config.window_size * batch_count;
+        ArrayResize(result.real_data, result_size);
+        ArrayResize(result.imag_data, result_size);
+        
+        ArrayCopy(result.real_data, real_buf, 0, 0, result_size);
+        ArrayCopy(result.imag_data, imag_buf, 0, 0, result_size);
+        
+        result.processed_count = batch_count;
+        result.window_size = m_config.window_size;
+        result.batch_size = batch_count;
+        result.execution_time_us = end_time - start_time;
+        result.success = true;
+        
+        m_total_processed += batch_count;
+        m_total_batches++;
+        m_total_execution_time_us += result.execution_time_us;
+        
+        return true;
+    }
+    
+    int ProcessRollingWindows(const double &prices[], 
+                              GpuBatchResult &results[]) {
+        
+        if(!m_gpu_initialized || !m_gpu_configured) {
+            return -1;
+        }
+        
+        int total_bars = ArraySize(prices);
+        if(total_bars < m_config.window_size) {
+            return -1;
+        }
+        
+        int total_windows = total_bars - m_config.window_size + 1;
+        int total_batches = (int)MathCeil((double)total_windows / (double)m_config.batch_size);
+        
+        ArrayResize(results, total_batches);
+        
+        int processed_windows = 0;
+        int batch_index = 0;
+        
+        while(processed_windows < total_windows) {
+            int current_batch_size = (int)MathMin(
+                m_config.batch_size,
+                total_windows - processed_windows
+            );
+            
+            if(!ProcessBatch(prices, processed_windows, current_batch_size, results[batch_index])) {
+                return -1;
+            }
+            
+            processed_windows += current_batch_size;
+            batch_index++;
+        }
+        
+        return processed_windows;
+    }
+    
+    bool ProcessSingleWindow(const double &window_data[], 
+                             double &fft_real[],
+                             double &fft_imag[]) {
+        
+        if(!m_gpu_initialized || !m_gpu_configured) {
+            return false;
+        }
+        
+        if(ArraySize(window_data) != m_config.window_size) {
+            return false;
+        }
+        
+        ArrayResize(fft_real, m_config.window_size);
+        ArrayResize(fft_imag, m_config.window_size);
+        
+        int status = RunWaveformFft(
+            window_data,
+            fft_real,
+            fft_imag,
+            m_config.window_size
+        );
+        
+        return GpuStatusIsOk(status);
+    }
+    
+    void Shutdown() {
+        m_buffer_pool.Release();
+        
+        if(m_gpu_initialized) {
+            GpuSessionClose();
+            m_gpu_initialized = false;
+            m_gpu_configured = false;
+        }
+    }
+    
+    void GetStatistics(ulong &total_processed, ulong &total_batches, ulong &total_time_us) {
+        total_processed = m_total_processed;
+        total_batches = m_total_batches;
+        total_time_us = m_total_execution_time_us;
+    }
+    
+    double GetAverageProcessingTimeMs() {
+        if(m_total_batches == 0) return 0.0;
+        return (double)m_total_execution_time_us / (double)m_total_batches / 1000.0;
+    }
+    
+    double GetThroughputFFTsPerSecond() {
+        if(m_total_execution_time_us == 0) return 0.0;
+        return (double)m_total_processed / ((double)m_total_execution_time_us / 1000000.0);
+    }
+    
+    void ResetStatistics() {
+        m_total_processed = 0;
+        m_total_batches = 0;
+        m_total_execution_time_us = 0;
+    }
+    
+    bool IsInitialized() const { return m_gpu_initialized; }
+    bool IsConfigured() const { return m_gpu_configured; }
+    
+    int GetConfiguredWindowSize() const { return m_config.window_size; }
+    int GetConfiguredBatchSize() const { return m_config.batch_size; }
+    
+    bool UpdateBatchSize(int new_batch_size) {
+        if(new_batch_size < GPU_MIN_BATCH_SIZE || new_batch_size > GPU_MAX_BATCH_SIZE) {
+            return false;
+        }
+        
+        m_config.batch_size = new_batch_size;
+        return PrepareBuffers();
+    }
+    
+    bool ExtractWindowResult(const GpuBatchResult &batch_result,
+                             int window_index,
+                             double &fft_real[],
+                             double &fft_imag[]) {
+        
+        if(window_index < 0 || window_index >= batch_result.processed_count) {
+            return false;
+        }
+        
+        ArrayResize(fft_real, batch_result.window_size);
+        ArrayResize(fft_imag, batch_result.window_size);
+        
+        int src_offset = window_index * batch_result.window_size;
+        
+        for(int i = 0; i < batch_result.window_size; i++) {
+            fft_real[i] = batch_result.real_data[src_offset + i];
+            fft_imag[i] = batch_result.imag_data[src_offset + i];
+        }
+        
+        return true;
+    }
+    
+    bool GetMagnitudeSpectrum(const double &fft_real[],
+                              const double &fft_imag[],
+                              double &magnitude[]) {
+        int size = ArraySize(fft_real);
+        ArrayResize(magnitude, size);
+
+        int status = ComputeMagnitudeSpectrumGpu(fft_real, fft_imag, magnitude, size, 1);
+        return GpuStatusIsOk(status);
+    }
+
+    bool GetPhaseSpectrum(const double &fft_real[],
+                          const double &fft_imag[],
+                          double &phase[]) {
+        int size = ArraySize(fft_real);
+        ArrayResize(phase, size);
+
+        int status = ComputePhaseSpectrumGpu(fft_real, fft_imag, phase, size, 1);
+        return GpuStatusIsOk(status);
+    }
+
+    bool GetPowerSpectrum(const double &fft_real[],
+                          const double &fft_imag[],
+                          double &power[]) {
+        int size = ArraySize(fft_real);
+        ArrayResize(power, size);
+
+        int status = ComputePowerSpectrumGpu(fft_real, fft_imag, power, size, 1);
+        return GpuStatusIsOk(status);
+    }
+
+    bool GetMagnitudeSpectrumBatch(const GpuBatchResult &batch_result,
+                                    double &magnitude[]) {
+        int total_size = batch_result.window_size * batch_result.processed_count;
+        ArrayResize(magnitude, total_size);
+
+        int status = ComputeMagnitudeSpectrumGpu(
+            batch_result.real_data,
+            batch_result.imag_data,
+            magnitude,
+            batch_result.window_size,
+            batch_result.processed_count
+        );
+
+        return GpuStatusIsOk(status);
+    }
+
+    bool GetPowerSpectrumBatch(const GpuBatchResult &batch_result,
+                                double &power[]) {
+        int total_size = batch_result.window_size * batch_result.processed_count;
+        ArrayResize(power, total_size);
+
+        int status = ComputePowerSpectrumGpu(
+            batch_result.real_data,
+            batch_result.imag_data,
+            power,
+            batch_result.window_size,
+            batch_result.processed_count
+        );
+
+        return GpuStatusIsOk(status);
+    }
+};
+
+//+------------------------------------------------------------------+
+//| Helper Functions                                                  |
+//+------------------------------------------------------------------+
+string GpuBatchResultToString(const GpuBatchResult &result) {
+    return StringFormat(
+        "Batch: %d windows, window_size=%d, time=%.3f ms, success=%s",
+        result.processed_count,
+        result.window_size,
+        (double)result.execution_time_us / 1000.0,
+        result.success ? "true" : "false"
+    );
+}
+
+void CalculateFrequencyBins(int fft_size, double sampling_rate, double &frequencies[]) {
+    ArrayResize(frequencies, fft_size);
+    
+    double freq_resolution = sampling_rate / (double)fft_size;
+    
+    for(int i = 0; i < fft_size; i++) {
+        frequencies[i] = i * freq_resolution;
+    }
+}
+
+int FindDominantFrequencyIndex(const double &magnitude[]) {
+    int size = ArraySize(magnitude);
+    if(size == 0) return -1;
+    
+    int max_idx = 0;
+    double max_val = magnitude[0];
+    
+    for(int i = 1; i < size; i++) {
+        if(magnitude[i] > max_val) {
+            max_val = magnitude[i];
+            max_idx = i;
+        }
+    }
+    
+    return max_idx;
+}
+
+double CalculateTotalPower(const double &power_spectrum[]) {
+    double total = 0.0;
+    int size = ArraySize(power_spectrum);
+    
+    for(int i = 0; i < size; i++) {
+        total += power_spectrum[i];
+    }
+    
+    return total;
+}
+//+------------------------------------------------------------------+
