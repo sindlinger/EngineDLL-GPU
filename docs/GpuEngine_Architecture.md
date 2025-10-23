@@ -59,10 +59,12 @@ int  GpuEngine_PollStatus(uint64_t handle, int* out_status);
 int  GpuEngine_FetchResult(uint64_t handle,
                            double* wave_out, double* preview_out,
                            double* cycles_out, double* noise_out,
-                           double* phase_out, double* amplitude_out,
-                           double* period_out, double* eta_out,
-                           double* recon_out, double* confidence_out,
-                           double* amp_delta_out,
+                           double* phase_out, double* phase_unwrapped_out,
+                           double* amplitude_out, double* period_out,
+                           double* frequency_out, double* eta_out,
+                           double* recon_out, double* kalman_out,
+                           double* confidence_out, double* amp_delta_out,
+                           double* turn_signal_out,
                            ResultInfo* info);
 int  GpuEngine_GetStats(double* avg_ms, double* max_ms);
 int  GpuEngine_GetLastError(char* buffer, int buffer_len);
