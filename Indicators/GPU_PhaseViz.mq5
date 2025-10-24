@@ -5,8 +5,8 @@
 #property copyright "2025"
 #property version   "1.000"
 #property indicator_separate_window
-#property indicator_buffers 7
-#property indicator_plots   7
+#property indicator_buffers 12
+#property indicator_plots   12
 
 #property indicator_label1  "Phase(deg)"
 #property indicator_type1   DRAW_LINE
@@ -37,6 +37,27 @@
 #property indicator_type7   DRAW_LINE
 #property indicator_color7  clrMediumVioletRed
 
+#property indicator_label8  "Phase Unwrapped"
+#property indicator_type8   DRAW_LINE
+#property indicator_color8  clrSlateBlue
+
+#property indicator_label9  "Kalman"
+#property indicator_type9   DRAW_LINE
+#property indicator_color9  clrYellow
+#property indicator_width9  2
+
+#property indicator_label10 "TurnPulse"
+#property indicator_type10  DRAW_HISTOGRAM
+#property indicator_color10 clrOrangeRed
+#property indicator_width10 2
+
+#property indicator_label11 "Countdown"
+#property indicator_type11  DRAW_LINE
+#property indicator_color11 clrTomato
+
+#property indicator_label12 "Direction"
+#property indicator_type12  DRAW_NONE
+
 #include <GPU/GPU_Shared.mqh>
 
 double g_bufPhase[];
@@ -46,24 +67,39 @@ double g_bufEta[];
 double g_bufRecon[];
 double g_bufConfidence[];
 double g_bufAmpDelta[];
+double g_bufPhaseUnwrapped[];
+double g_bufKalman[];
+double g_bufTurn[];
+double g_bufCountdown[];
+double g_bufDirection[];
 
 int OnInit()
   {
-   SetIndexBuffer(0, g_bufPhase,      INDICATOR_DATA);
-   SetIndexBuffer(1, g_bufAmplitude,  INDICATOR_DATA);
-   SetIndexBuffer(2, g_bufPeriod,     INDICATOR_DATA);
-   SetIndexBuffer(3, g_bufEta,        INDICATOR_DATA);
-   SetIndexBuffer(4, g_bufRecon,      INDICATOR_DATA);
-   SetIndexBuffer(5, g_bufConfidence, INDICATOR_DATA);
-   SetIndexBuffer(6, g_bufAmpDelta,   INDICATOR_DATA);
+   SetIndexBuffer(0, g_bufPhase,         INDICATOR_DATA);
+   SetIndexBuffer(1, g_bufAmplitude,     INDICATOR_DATA);
+   SetIndexBuffer(2, g_bufPeriod,        INDICATOR_DATA);
+   SetIndexBuffer(3, g_bufEta,           INDICATOR_DATA);
+   SetIndexBuffer(4, g_bufRecon,         INDICATOR_DATA);
+   SetIndexBuffer(5, g_bufConfidence,    INDICATOR_DATA);
+   SetIndexBuffer(6, g_bufAmpDelta,      INDICATOR_DATA);
+   SetIndexBuffer(7, g_bufPhaseUnwrapped,INDICATOR_DATA);
+   SetIndexBuffer(8, g_bufKalman,        INDICATOR_DATA);
+   SetIndexBuffer(9, g_bufTurn,          INDICATOR_DATA);
+   SetIndexBuffer(10, g_bufCountdown,    INDICATOR_DATA);
+   SetIndexBuffer(11, g_bufDirection,    INDICATOR_DATA);
 
-   ArraySetAsSeries(g_bufPhase,      true);
-   ArraySetAsSeries(g_bufAmplitude,  true);
-   ArraySetAsSeries(g_bufPeriod,     true);
-   ArraySetAsSeries(g_bufEta,        true);
-   ArraySetAsSeries(g_bufRecon,      true);
-   ArraySetAsSeries(g_bufConfidence, true);
-   ArraySetAsSeries(g_bufAmpDelta,   true);
+   ArraySetAsSeries(g_bufPhase,         true);
+   ArraySetAsSeries(g_bufAmplitude,     true);
+   ArraySetAsSeries(g_bufPeriod,        true);
+   ArraySetAsSeries(g_bufEta,           true);
+   ArraySetAsSeries(g_bufRecon,         true);
+   ArraySetAsSeries(g_bufConfidence,    true);
+   ArraySetAsSeries(g_bufAmpDelta,      true);
+   ArraySetAsSeries(g_bufPhaseUnwrapped,true);
+   ArraySetAsSeries(g_bufKalman,        true);
+   ArraySetAsSeries(g_bufTurn,          true);
+   ArraySetAsSeries(g_bufCountdown,     true);
+   ArraySetAsSeries(g_bufDirection,     true);
 
    IndicatorSetString(INDICATOR_SHORTNAME, "GPU PhaseViz");
 
@@ -88,49 +124,67 @@ int OnCalculate(const int rates_total,
    const int frame_length = GPUShared::frame_length;
    if(frame_count <= 0 || frame_length <= 0)
      {
-      g_bufPhase[0]      = EMPTY_VALUE;
-      g_bufAmplitude[0]  = EMPTY_VALUE;
-      g_bufPeriod[0]     = EMPTY_VALUE;
-      g_bufEta[0]        = EMPTY_VALUE;
-      g_bufRecon[0]      = EMPTY_VALUE;
-      g_bufConfidence[0] = EMPTY_VALUE;
-      g_bufAmpDelta[0]   = EMPTY_VALUE;
+      g_bufPhase[0]          = EMPTY_VALUE;
+      g_bufAmplitude[0]      = EMPTY_VALUE;
+      g_bufPeriod[0]         = EMPTY_VALUE;
+      g_bufEta[0]            = EMPTY_VALUE;
+      g_bufRecon[0]          = EMPTY_VALUE;
+      g_bufConfidence[0]     = EMPTY_VALUE;
+      g_bufAmpDelta[0]       = EMPTY_VALUE;
+      g_bufPhaseUnwrapped[0] = EMPTY_VALUE;
+      g_bufKalman[0]         = EMPTY_VALUE;
+      g_bufTurn[0]           = EMPTY_VALUE;
       return rates_total;
      }
 
    const int total = frame_count * frame_length;
    if(ArraySize(GPUShared::phase) < total ||
+      ArraySize(GPUShared::phase_unwrapped) < total ||
       ArraySize(GPUShared::amplitude) < total ||
       ArraySize(GPUShared::period) < total ||
       ArraySize(GPUShared::eta) < total ||
+      ArraySize(GPUShared::countdown) < total ||
       ArraySize(GPUShared::recon) < total ||
+      ArraySize(GPUShared::kalman) < total ||
+      ArraySize(GPUShared::turn) < total ||
       ArraySize(GPUShared::confidence) < total ||
-      ArraySize(GPUShared::amp_delta) < total)
+      ArraySize(GPUShared::amp_delta) < total ||
+      ArraySize(GPUShared::direction) < total)
      {
       return rates_total;
      }
 
    if(GPUShared::last_info.dominant_cycle < 0)
      {
-      g_bufPhase[0]      = EMPTY_VALUE;
-      g_bufAmplitude[0]  = EMPTY_VALUE;
-      g_bufPeriod[0]     = EMPTY_VALUE;
-      g_bufEta[0]        = EMPTY_VALUE;
-      g_bufRecon[0]      = EMPTY_VALUE;
-      g_bufConfidence[0] = EMPTY_VALUE;
-      g_bufAmpDelta[0]   = EMPTY_VALUE;
+      g_bufPhase[0]          = EMPTY_VALUE;
+      g_bufAmplitude[0]      = EMPTY_VALUE;
+      g_bufPeriod[0]         = EMPTY_VALUE;
+      g_bufEta[0]            = EMPTY_VALUE;
+      g_bufCountdown[0]      = EMPTY_VALUE;
+      g_bufRecon[0]          = EMPTY_VALUE;
+      g_bufConfidence[0]     = EMPTY_VALUE;
+      g_bufAmpDelta[0]       = EMPTY_VALUE;
+      g_bufPhaseUnwrapped[0] = EMPTY_VALUE;
+      g_bufKalman[0]         = EMPTY_VALUE;
+      g_bufTurn[0]           = EMPTY_VALUE;
+      g_bufDirection[0]      = EMPTY_VALUE;
       return rates_total;
      }
 
    const int src_index = total - 1;
 
-   g_bufPhase[0]      = GPUShared::phase[src_index];
-   g_bufAmplitude[0]  = GPUShared::amplitude[src_index];
-   g_bufPeriod[0]     = GPUShared::period[src_index];
-   g_bufEta[0]        = GPUShared::eta[src_index];
-   g_bufRecon[0]      = GPUShared::recon[src_index];
-   g_bufConfidence[0] = GPUShared::confidence[src_index];
-   g_bufAmpDelta[0]   = GPUShared::amp_delta[src_index];
+   g_bufPhase[0]          = GPUShared::phase[src_index];
+   g_bufAmplitude[0]      = GPUShared::amplitude[src_index];
+   g_bufPeriod[0]         = GPUShared::period[src_index];
+   g_bufEta[0]            = GPUShared::eta[src_index];
+   g_bufCountdown[0]      = GPUShared::countdown[src_index];
+   g_bufRecon[0]          = GPUShared::recon[src_index];
+   g_bufConfidence[0]     = GPUShared::confidence[src_index];
+   g_bufAmpDelta[0]       = GPUShared::amp_delta[src_index];
+   g_bufPhaseUnwrapped[0] = GPUShared::phase_unwrapped[src_index];
+   g_bufKalman[0]         = GPUShared::kalman[src_index];
+   g_bufTurn[0]           = GPUShared::turn[src_index];
+   g_bufDirection[0]      = GPUShared::direction[src_index];
 
    return rates_total;
   }

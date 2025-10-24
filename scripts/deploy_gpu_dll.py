@@ -37,9 +37,9 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Deploy GpuEngine.dll to MT5 agents")
     parser.add_argument(
         "--source",
-        default=repo_root / "gpu_engine" / "build" / "Release" / "GpuEngine.dll",
+        default=repo_root / "bin" / "GpuEngine.dll",
         type=Path,
-        help="Path to GpuEngine.dll (default: gpu_engine/build/Release/GpuEngine.dll)",
+        help="Path to GpuEngine.dll (default: bin/GpuEngine.dll)",
     )
     parser.add_argument(
         "--targets",

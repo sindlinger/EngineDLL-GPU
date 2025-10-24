@@ -1,14 +1,20 @@
 param(
-    [string]$SourceDll = "..\gpu_engine\build\Release\GpuEngine.dll",
-    [string]$TargetsFile = "scripts/targets.txt"
+    [string]$SourceDir = "..\bin\Release",
+    [string]$TargetsFile = "targets.txt"
 )
 
-function Resolve-Source {
+function Resolve-SourceDir {
     param([string]$Path)
-    if(-not (Test-Path $Path)) {
-        throw "Source DLL not found: $Path"
+    if(Test-Path $Path) {
+        return (Resolve-Path $Path).Path
     }
-    return (Resolve-Path $Path).Path
+    $fallback = Split-Path $Path -Parent
+    $fallbackResolved = Resolve-Path $fallback -ErrorAction SilentlyContinue
+    if($null -ne $fallbackResolved) {
+        Write-Warning "Source directory $Path não encontrado. Usando $($fallbackResolved.Path) como origem."
+        return $fallbackResolved.Path
+    }
+    throw "Source directory not found: $Path (fallback ..\bin também indisponível)"
 }
 
 function Load-Targets {
@@ -28,10 +34,17 @@ function Ensure-Directory {
     }
 }
 
-$resolvedSource = Resolve-Source $SourceDll
-$targets = Load-Targets $TargetsFile
+$scriptRoot    = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$resolvedSource = Resolve-SourceDir (Join-Path $scriptRoot $SourceDir)
+$targets = Load-Targets (Join-Path $scriptRoot $TargetsFile)
 
-Write-Host "Deploying $resolvedSource to $($targets.Count) target(s)..."
+$filesToCopy = @(
+    "GpuEngine.dll",
+    "GpuEngineClient.dll",
+    "GpuEngineService.exe"
+)
+
+Write-Host "Deploying assets from $resolvedSource to $($targets.Count) target(s)..."
 
 foreach($target in $targets) {
     if(-not (Test-Path $target)) {
@@ -39,20 +52,22 @@ foreach($target in $targets) {
         continue
     }
 
-    $destinations = @(
-        Join-Path $target "Libraries",
-        Join-Path $target "MQL5\Libraries"
-    )
+    $binPath = Join-Path $target "MQL5\WaveSpecGPU\bin"
+    Ensure-Directory $binPath
 
-    foreach($dest in $destinations) {
+    foreach($file in $filesToCopy) {
+        $sourceFile = Join-Path $resolvedSource $file
+        if(-not (Test-Path $sourceFile)) {
+            Write-Warning "Source file not found: $sourceFile"
+            continue
+        }
+        $destination = Join-Path $binPath $file
         try {
-            Ensure-Directory $dest
-            $destFile = Join-Path $dest "GpuEngine.dll"
-            Copy-Item -Path $resolvedSource -Destination $destFile -Force
-            Write-Host "  -> $destFile" -ForegroundColor Cyan
+            Copy-Item -Path $sourceFile -Destination $destination -Force
+            Write-Host "  -> $destination" -ForegroundColor Cyan
         }
         catch {
-            Write-Warning "Failed to copy to $dest : $_"
+            Write-Warning "Failed to copy to $destination : $_"
         }
     }
 }

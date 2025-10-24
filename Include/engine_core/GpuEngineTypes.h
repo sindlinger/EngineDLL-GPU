@@ -23,16 +23,19 @@ struct Config
     int     window_size      = 0;
     int     hop_size         = 0;
     int     max_batch_size   = 0;
-    int     max_cycle_count  = 12;
+    int     max_cycle_count  = 24;
     int     stream_count     = 2;
     bool    enable_profiling = false;
 };
 
 struct MaskParams
 {
-    double sigma_period = 48.0;  // period (bars) translated to gaussian sigma in bins
-    double threshold    = 0.05;  // relative magnitude threshold
-    double softness     = 0.2;   // gain curve softness
+    double sigma_period   = 48.0;  // period (bars) translated to gaussian sigma in bins
+    double threshold      = 0.05;  // relative magnitude threshold
+    double softness       = 0.2;   // gain curve softness
+    double min_period     = 8.0;   // lower bound (bars) for band-pass
+    double max_period     = 512.0; // upper bound (bars) for band-pass
+    int    max_candidates = 24;    // number of spectral peaks to keep when auto-selecting cycles
 };
 
 struct CycleParams
@@ -42,17 +45,23 @@ struct CycleParams
     double        width     = 0.25;    // fractional width relative to centre frequency
 };
 
-struct PhaseParams
+enum class KalmanPreset : int
 {
-    double blend            = 0.65;
-    double phase_gain       = 0.08;
-    double freq_gain        = 0.002;
-    double amp_gain         = 0.08;
-    double freq_prior_blend = 0.15;
-    double min_period       = 8.0;
-    double max_period       = 512.0;
-    double snr_floor        = 0.25;
-    int    frames_for_snr   = 1;
+    Smooth   = 0,
+    Balanced = 1,
+    Reactive = 2,
+    Manual   = 3
+};
+
+struct KalmanParams
+{
+    KalmanPreset preset            = KalmanPreset::Balanced;
+    double       process_noise     = 1.0e-4;
+    double       measurement_noise = 2.5e-3;
+    double       init_variance     = 0.5;
+    double       plv_threshold     = 0.65;
+    int          max_iterations    = 48;
+    double       convergence_eps   = 1.0e-4;
 };
 
 struct JobDesc
@@ -66,7 +75,7 @@ struct JobDesc
     int           upscale       = 1;
     MaskParams    mask{};
     CycleParams   cycles{};
-    PhaseParams   phase{};
+    KalmanParams  kalman{};
 };
 
 struct ResultInfo
@@ -78,12 +87,14 @@ struct ResultInfo
     int           dominant_cycle= -1;
     double        dominant_period = 0.0;
     double        dominant_snr    = 0.0;
-    double        pll_phase_deg   = 0.0;
-    double        pll_amplitude   = 0.0;
-    double        pll_period      = 0.0;
-    double        pll_eta         = 0.0;
-    double        pll_confidence  = 0.0;
-    double        pll_reconstructed = 0.0;
+    double        dominant_plv    = 0.0;
+    double        dominant_confidence = 0.0;
+    double        line_phase_deg   = 0.0;
+    double        line_amplitude   = 0.0;
+    double        line_period      = 0.0;
+    double        line_eta         = 0.0;
+    double        line_confidence  = 0.0;
+    double        line_value       = 0.0;
     double        elapsed_ms    = 0.0;
     int           status        = STATUS_ERROR;
 };

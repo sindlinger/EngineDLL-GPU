@@ -1,3 +1,17 @@
 gpu_engine/build/
 gpu_engine/build-wsl/
 grepo/
+*.ex5
+*.log
+*.dll
+*.pdb
+*.exp
+*.lib
+*.exe
+Indicators/GPU_WaveViz/
+MQL-GPU/Libraries/
+bin/
+build*/
+logs/
+legacy/
+tooling/python/__pycache__/

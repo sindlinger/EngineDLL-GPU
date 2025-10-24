@@ -19,9 +19,12 @@ struct Config {
 };
 
 struct MaskParams {
-    double sigma_period = 48.0;
-    double threshold    = 0.05;
-    double softness     = 0.20;
+    double sigma_period   = 48.0;
+    double threshold      = 0.05;
+    double softness       = 0.20;
+    double min_period     = 8.0;
+    double max_period     = 512.0;
+    int    max_candidates = 12;
 };
 
 struct CycleParams {
@@ -30,16 +33,21 @@ struct CycleParams {
     double        width   = 0.25;
 };
 
-struct PhaseParams {
-    double blend            = 0.65;
-    double phase_gain       = 0.08;
-    double freq_gain        = 0.002;
-    double amp_gain         = 0.08;
-    double freq_prior_blend = 0.15;
-    double min_period       = 8.0;
-    double max_period       = 512.0;
-    double snr_floor        = 0.25;
-    int    frames_for_snr   = 1;
+enum class KalmanPreset : int {
+    Smooth   = 0,
+    Balanced = 1,
+    Reactive = 2,
+    Manual   = 3
+};
+
+struct KalmanParams {
+    KalmanPreset preset            = KalmanPreset::Balanced;
+    double       process_noise     = 1.0e-4;
+    double       measurement_noise = 2.5e-3;
+    double       init_variance     = 0.5;
+    double       plv_threshold     = 0.65;
+    int          max_iterations    = 48;
+    double       convergence_eps   = 1.0e-4;
 };
 
 struct JobDesc {
@@ -52,7 +60,7 @@ struct JobDesc {
     int           upscale       = 1;
     MaskParams    mask{};
     CycleParams   cycles{};
-    PhaseParams   phase{};
+    KalmanParams  kalman{};
 };
 
 struct ResultInfo {
@@ -63,12 +71,13 @@ struct ResultInfo {
     int           dominant_cycle = -1;
     double        dominant_period = 0.0;
     double        dominant_snr = 0.0;
-    double        pll_phase_deg = 0.0;
-    double        pll_amplitude = 0.0;
-    double        pll_period = 0.0;
-    double        pll_eta = 0.0;
-    double        pll_confidence = 0.0;
-    double        pll_reconstructed = 0.0;
+    double        dominant_confidence = 0.0;
+    double        line_phase_deg = 0.0;
+    double        line_amplitude = 0.0;
+    double        line_period = 0.0;
+    double        line_eta = 0.0;
+    double        line_confidence = 0.0;
+    double        line_value = 0.0;
     double        elapsed_ms  = 0.0;
     int           status      = STATUS_ERROR;
 };
@@ -98,19 +107,19 @@ GPU_EXPORT int  GpuEngine_SubmitJob(const double* frames,
                                     double mask_sigma_period,
                                     double mask_threshold,
                                     double mask_softness,
+                                    double mask_min_period,
+                                    double mask_max_period,
                                     int upscale_factor,
                                     const double* cycle_periods,
                                     int cycle_count,
                                     double cycle_width,
-                                    double phase_blend,
-                                    double phase_gain,
-                                    double freq_gain,
-                                    double amp_gain,
-                                    double freq_prior_blend,
-                                    double min_period,
-                                    double max_period,
-                                    double snr_floor,
-                                    int    frames_for_snr,
+                                    int kalman_preset,
+                                    double kalman_process_noise,
+                                    double kalman_measurement_noise,
+                                    double kalman_init_variance,
+                                    double kalman_plv_threshold,
+                                    int    kalman_max_iterations,
+                                    double kalman_epsilon,
                                     std::uint64_t* out_handle);
 
 GPU_EXPORT int  GpuEngine_PollStatus(std::uint64_t handle_value,
@@ -122,12 +131,16 @@ GPU_EXPORT int  GpuEngine_FetchResult(std::uint64_t handle_value,
                                       double* cycles_out,
                                       double* noise_out,
                                       double* phase_out,
+                                      double* phase_unwrapped_out,
                                       double* amplitude_out,
                                       double* period_out,
+                                      double* frequency_out,
                                       double* eta_out,
                                       double* recon_out,
+                                      double* kalman_out,
                                       double* confidence_out,
                                       double* amp_delta_out,
+                                      double* turn_signal_out,
                                       gpuengine::ResultInfo* info);
 
 GPU_EXPORT int  GpuEngine_GetStats(double* avg_ms,
@@ -141,11 +154,11 @@ GPU_EXPORT int  GpuEngine_GetLastError(char* buffer,
 ### Convenções e Notas
 - `frame_length` deve casar com `window_size` definido em `GpuEngine_Init`.
 - `frames` deve conter `frame_count * frame_length` amostras contíguas (frames ordenados do mais antigo para o mais recente).
-- `preview_mask` pode ser `nullptr`; a DLL gera automaticamente uma máscara gaussiana baseada em `mask_sigma_period`, `mask_threshold` e `mask_softness`.
-- `cycle_periods` pode ser `nullptr` quando `cycle_count == 0`.
+- `preview_mask` pode ser `nullptr`; a DLL gera automaticamente uma máscara gaussiana baseada em `mask_sigma_period`, `mask_threshold`, `mask_softness`, `mask_min_period` e `mask_max_period`.
+- `cycle_periods` pode ser `nullptr`. Quando `cycle_count > 0` e o primeiro elemento não é `EMPTY_VALUE`, os períodos são tratados como fixos. Caso contrário (`cycle_periods == nullptr` ou contém `EMPTY_VALUE`), o motor seleciona automaticamente os `cycle_count` bins de maior energia dentro da banda.
 - O chamador deve garantir que `cycles_out` tenha `frame_count * frame_length * cycle_count` posições. Quando `cycle_count == 0`, passe `nullptr`.
-- Parâmetros adicionais (phase"): `phase_blend`, `phase_gain`, `freq_gain`, `amp_gain`, `freq_prior_blend`, `min_period`, `max_period`, `snr_floor` e `frames_for_snr` controlam o PLL embarcado que gera fase/amplitude/ETA.
-- Os buffers `phase_out`, `amplitude_out`, `period_out`, `eta_out`, `recon_out`, `confidence_out` e `amp_delta_out` devem ter `frame_count * frame_length` posições; passe `nullptr` para omitir alguma cópia.
+- Parâmetros adicionais (Kalman/EKF): `kalman_preset` seleciona uma configuração (`0` suave, `1` balanceada, `2` reativa, `3` manual). Quando em modo manual, os valores informados em `kalman_process_noise`, `kalman_measurement_noise`, `kalman_init_variance`, `kalman_plv_threshold`, `kalman_max_iterations` e `kalman_epsilon` são utilizados para o filtro estocástico que estima fase/amplitude/ETA sem PLL.
+- Os buffers `phase_out`, `phase_unwrapped_out`, `amplitude_out`, `period_out`, `frequency_out`, `eta_out`, `recon_out`, `kalman_out`, `confidence_out`, `amp_delta_out` e `turn_signal_out` devem ter `frame_count * frame_length` posições; passe `nullptr` para omitir alguma cópia.
 - `flags` aceita `JOB_FLAG_STFT (1)` e `JOB_FLAG_CYCLES (2)`; novos bits podem ser adicionados no futuro.
 
 ### Status
@@ -157,10 +170,10 @@ GPU_EXPORT int  GpuEngine_GetLastError(char* buffer,
 ## Sequência Interna (Resumo)
 1. Cópia host→device (`cudaMemcpyAsync`) para o lote.
 2. Execução do plano `cuFFT_D2Z` batelado.
-3. Aplicação da máscara adaptativa ou personalizada (`preview_mask`).
+3. Supressão do componente DC e aplicação da máscara gaussiana/banda definida por `mask_*`.
 4. Reconstrução com `cuFFT_Z2D`, normalização e cálculo do ruído (original − filtrado).
-5. Para cada ciclo configurado: aplica-se máscara gaussiana centrada no bin do período e executa-se `cuFFT_Z2D` dedicado.
-6. No host, a DLL avalia o SNR de cada ciclo, seleciona o dominante e roda o PLL/Adaptive Notch com os parâmetros enviados (blend, ganhos, limites de período). Isso gera fase, amplitude, período instantâneo, ETA, linha reconstruída, confiança e Δamplitude para cada amostra do frame.
+5. O espectro mascarado é copiado para o host, agrega-se energia por bin e são mantidos os `max_candidates` de maior energia dentro dos limites de período solicitados. Para cada candidato selecionado é aplicada uma máscara gaussiana dedicada e executado `cuFFT_Z2D` para gerar o ciclo no domínio do tempo.
+6. No host, cada ciclo passa por um filtro de Kalman harmônico (preset ou manual). O EKF gera fase/amplitude/ETA/contagem, calcula o PLV e descarta automaticamente ciclos que não convergem ou ficam abaixo do `plv_threshold`. O ciclo dominante alimenta os buffers “linha” (fase, amplitude, período, confiança, valor reconstruído).
 7. Cópia device→host e atualização de `ResultInfo`, incluindo métricas do ciclo dominante.
 
 ## Integração MQL5

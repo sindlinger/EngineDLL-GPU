@@ -1,19 +1,16 @@
 # Deploying `GpuEngine.dll` to Multiple MT5 Agents
 
-Depois de compilar a DLL (`gpu_engine/build/Release/GpuEngine.dll`), use o script PowerShell
-`scripts/DeployGpuDLL.ps1` para copiá-la em lote para todas as instâncias/agents do MetaTrader 5.
+Depois de compilar o projeto (`WaveSpecGPURefactor/bin/GpuEngine.dll`), use o script PowerShell
+`scripts/DeployGpuDLL.ps1` para copiá-lo em lote para todas as instâncias/agents do MetaTrader 5.
 
 ## Passos
-1. **Compile** a DLL com CMake + CUDA Toolkit (11.8+). Exemplo rápido:
+1. **Compile** o projeto com CMake + CUDA Toolkit (11.8+). Exemplo rápido:
    ```powershell
-   cd gpu_engine
+   cd WaveSpecGPURefactor
    cmake -S . -B build -G "Visual Studio 17 2022" -A x64
    cmake --build build --config Release
    ```
-   O artefato final fica em:
-   ```
-   gpu_engine\build\Release\GpuEngine.dll
-   ```
+   O artefato final fica em `WaveSpecGPURefactor\bin\GpuEngine.dll`
 2. **Edite** `scripts/targets.txt`, listando um caminho raiz por linha. Para cada caminho o script copia a DLL para:
    - `<raiz>\Libraries`
    - `<raiz>\MQL5\Libraries`
@@ -51,7 +48,7 @@ powershell -ExecutionPolicy Bypass -File scripts/DeployGpuDLL.ps1 `
     -SourceDll "C:\caminho\custom\GpuEngine.dll" `
     -TargetsFile "scripts\meus_targets.txt"
 ```
-- `-SourceDll`: caminho completo da DLL a copiar (por padrão usa `gpu_engine\build\Release\GpuEngine.dll`).
+- `-SourceDll`: caminho completo da DLL a copiar (por padrão usa `bin\GpuEngine.dll`).
 - `-TargetsFile`: arquivo com a lista de caminhos (por padrão `scripts/targets.txt`).
 
 ## Observações

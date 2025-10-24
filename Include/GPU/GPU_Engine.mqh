@@ -17,12 +17,14 @@ struct GpuEngineResultInfo
   int     dominant_cycle;
   double  dominant_period;
   double  dominant_snr;
-  double  pll_phase_deg;
-  double  pll_amplitude;
-  double  pll_period;
-  double  pll_eta;
-  double  pll_confidence;
-  double  pll_reconstructed;
+  double  dominant_plv;
+  double  dominant_confidence;
+  double  line_phase_deg;
+  double  line_amplitude;
+  double  line_period;
+  double  line_eta;
+  double  line_confidence;
+  double  line_value;
   double  elapsed_ms;
   int     status;        // mirror of the last status code
   };
@@ -52,19 +54,19 @@ int  GpuEngine_SubmitJob(const double &frames[],
                          double mask_sigma_period,
                          double mask_threshold,
                          double mask_softness,
+                         double mask_min_period,
+                         double mask_max_period,
                          int upscale_factor,
                          const double &cycle_periods[],
                          int cycle_count,
                          double cycle_width,
-                         double phase_blend,
-                         double phase_gain,
-                         double freq_gain,
-                         double amp_gain,
-                         double freq_prior_blend,
-                         double min_period,
-                         double max_period,
-                         double snr_floor,
-                         int    frames_for_snr,
+                         int    kalman_preset,
+                         double kalman_process_noise,
+                         double kalman_measurement_noise,
+                         double kalman_init_variance,
+                         double kalman_plv_threshold,
+                         int    kalman_max_iterations,
+                         double kalman_epsilon,
                          ulong &out_handle);
 int  GpuEngine_PollStatus(ulong handle,
                           int &out_status);
@@ -74,12 +76,32 @@ int  GpuEngine_FetchResult(ulong handle,
                            double &cycles_out[],
                            double &noise_out[],
                            double &phase_out[],
+                           double &phase_unwrapped_out[],
                            double &amplitude_out[],
                            double &period_out[],
+                           double &frequency_out[],
                            double &eta_out[],
+                           double &countdown_out[],
                            double &recon_out[],
+                           double &kalman_out[],
                            double &confidence_out[],
                            double &amp_delta_out[],
+                           double &turn_signal_out[],
+                           double &phase_all_out[],
+                           double &phase_unwrapped_all_out[],
+                           double &amplitude_all_out[],
+                           double &period_all_out[],
+                           double &frequency_all_out[],
+                           double &eta_all_out[],
+                           double &countdown_all_out[],
+                           double &direction_all_out[],
+                           double &recon_all_out[],
+                           double &kalman_all_out[],
+                           double &turn_all_out[],
+                           double &confidence_all_out[],
+                           double &amp_delta_all_out[],
+                           double &power_all_out[],
+                           double &velocity_all_out[],
                            GpuEngineResultInfo &info);
 int  GpuEngine_GetStats(double &avg_ms,
                         double &max_ms);
@@ -161,44 +183,55 @@ public:
                                   48.0,
                                   0.05,
                                   0.20,
-                                  1,
-                                  0.65,
-                                  0.08,
-                                  0.002,
-                                  0.08,
-                                  0.15,
                                   8.0,
                                   512.0,
-                                  0.25,
                                   1,
+                                  1,
+                                  1.0e-4,
+                                  2.5e-3,
+                                  0.5,
+                                  0.65,
+                                  48,
+                                  1.0e-4,
                                   out_handle);
             }
 
-   bool     SubmitJobEx(const double &frames[],
-                        const int frame_count,
-                        const ulong user_tag,
-                        const uint flags,
-                        const double &preview_mask[],
-                        const double &cycle_periods[],
-                        const int cycle_count,
-                        const double cycle_width,
-                        const double mask_sigma_period,
-                        const double mask_threshold,
-                        const double mask_softness,
+  bool     SubmitJobEx(const double &frames[],
+                       const int frame_count,
+                       const ulong user_tag,
+                       const uint flags,
+                       const double &preview_mask[],
+                       const double &cycle_periods[],
+                       const int cycle_count,
+                       const double cycle_width,
+                       const double mask_sigma_period,
+                       const double mask_threshold,
+                       const double mask_softness,
+                        const double mask_min_period,
+                        const double mask_max_period,
                         const int upscale_factor,
-                        const double phase_blend,
-                        const double phase_gain,
-                        const double freq_gain,
-                        const double amp_gain,
-                        const double freq_prior_blend,
-                        const double min_period,
-                        const double max_period,
-                        const double snr_floor,
-                        const int    frames_for_snr,
+                        const int kalman_preset,
+                        const double kalman_process_noise,
+                        const double kalman_measurement_noise,
+                        const double kalman_init_variance,
+                        const double kalman_plv_threshold,
+                        const int    kalman_max_iterations,
+                        const double kalman_epsilon,
                         ulong &out_handle)
             {
                if(!m_ready)
                   return false;
+
+               double safe_mask_min = MathMax(1.0, mask_min_period);
+               double safe_mask_max = MathMax(safe_mask_min, mask_max_period);
+               int    safe_upscale  = MathMax(upscale_factor, 1);
+               int    safe_preset   = (int)MathMax(0, MathMin(3, kalman_preset));
+               double safe_process  = MathMax(1.0e-8, kalman_process_noise);
+               double safe_measure  = MathMax(1.0e-8, kalman_measurement_noise);
+               double safe_init_var = MathMax(1.0e-6, kalman_init_variance);
+               double safe_plv      = MathMax(0.0, MathMin(1.0, kalman_plv_threshold));
+               int    safe_iters    = MathMax(1, kalman_max_iterations);
+               double safe_eps      = MathMax(1.0e-6, kalman_epsilon);
 
                int status = GpuEngine_SubmitJob(frames,
                                                 frame_count,
@@ -209,20 +242,20 @@ public:
                                                 mask_sigma_period,
                                                 mask_threshold,
                                                 mask_softness,
-                                                upscale_factor,
+                                                safe_mask_min,
+                                                safe_mask_max,
+                                                safe_upscale,
                                                 cycle_periods,
                                                 cycle_count,
                                                 cycle_width,
-                                                phase_blend,
-                                                phase_gain,
-                                                freq_gain,
-                                                amp_gain,
-                                                freq_prior_blend,
-                                                min_period,
-                                                max_period,
-                                                snr_floor,
-                                                frames_for_snr,
-                                                 out_handle);
+                                                safe_preset,
+                                                safe_process,
+                                                safe_measure,
+                                                safe_init_var,
+                                                safe_plv,
+                                                safe_iters,
+                                                safe_eps,
+                                                out_handle);
                if(status != GPU_ENGINE_OK)
                  {
                   LogError("GpuEngine_SubmitJob", status);
@@ -240,19 +273,44 @@ public:
                return GpuEngine_PollStatus(handle, out_status);
             }
 
-   bool     FetchResult(const ulong handle,
-                        double &wave_out[],
-                        double &preview_out[],
-                        double &cycles_out[],
-                        double &noise_out[],
-                        double &phase_out[],
-                        double &amplitude_out[],
-                        double &period_out[],
-                        double &eta_out[],
-                        double &recon_out[],
-                        double &confidence_out[],
-                        double &amp_delta_out[],
-                        GpuEngineResultInfo &info)
+  bool     FetchResult(const ulong handle,
+                       double &wave_out[],
+                       double &preview_out[],
+                       double &cycles_out[],
+                       double &noise_out[],
+                       double &phase_out[],
+                       double &phase_unwrapped_out[],
+                       double &amplitude_out[],
+                       double &period_out[],
+                       double &frequency_out[],
+                       double &eta_out[],
+                       double &countdown_out[],
+                       double &recon_out[],
+                       double &kalman_out[],
+                       double &confidence_out[],
+                       double &amp_delta_out[],
+                       double &turn_signal_out[],
+                       double &direction_out[],
+                       double &power_out[],
+                       double &velocity_out[],
+                       double &phase_all_out[],
+                       double &phase_unwrapped_all_out[],
+                       double &amplitude_all_out[],
+                       double &period_all_out[],
+                       double &frequency_all_out[],
+                       double &eta_all_out[],
+                       double &countdown_all_out[],
+                       double &direction_all_out[],
+                       double &recon_all_out[],
+                       double &kalman_all_out[],
+                       double &turn_all_out[],
+                       double &confidence_all_out[],
+                       double &amp_delta_all_out[],
+                       double &power_all_out[],
+                       double &velocity_all_out[],
+                       double &plv_cycles_out[],
+                       double &snr_cycles_out[],
+                       GpuEngineResultInfo &info)
             {
                if(!m_ready)
                   return false;
@@ -262,12 +320,37 @@ public:
                                                    cycles_out,
                                                    noise_out,
                                                    phase_out,
+                                                   phase_unwrapped_out,
                                                    amplitude_out,
                                                    period_out,
+                                                   frequency_out,
                                                    eta_out,
+                                                   countdown_out,
                                                    recon_out,
+                                                   kalman_out,
                                                    confidence_out,
                                                    amp_delta_out,
+                                                   turn_signal_out,
+                                                   direction_out,
+                                                   power_out,
+                                                   velocity_out,
+                                                   phase_all_out,
+                                                   phase_unwrapped_all_out,
+                                                   amplitude_all_out,
+                                                   period_all_out,
+                                                   frequency_all_out,
+                                                   eta_all_out,
+                                                   countdown_all_out,
+                                                   direction_all_out,
+                                                   recon_all_out,
+                                                   kalman_all_out,
+                                                   turn_all_out,
+                                                   confidence_all_out,
+                                                   amp_delta_all_out,
+                                                   power_all_out,
+                                                   velocity_all_out,
+                                                   plv_cycles_out,
+                                                   snr_cycles_out,
                                                    info);
                if(status != GPU_ENGINE_OK)
                  {

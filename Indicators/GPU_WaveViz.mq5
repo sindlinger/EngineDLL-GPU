@@ -176,9 +176,10 @@ int OnCalculate(const int rates_total,
                 const int &spread[])
   {
    const int frame_length = GPUShared::frame_length;
-    const int frame_count  = GPUShared::frame_count;
-    const int total_span   = frame_length * frame_count;
-    const int cycle_count  = MathMin(GPUShared::cycle_count, MathMax(InpMaxCycles, 0));
+   const int frame_count  = GPUShared::frame_count;
+   const int total_span   = frame_length * frame_count;
+   const int total_cycle_count = GPUShared::cycle_count;
+   const int cycle_count  = MathMin(MathMin(MathMax(InpMaxCycles, 0), 12), total_cycle_count);
 
    ArrayInitialize(g_bufWave,  EMPTY_VALUE);
    ArrayInitialize(g_bufNoise, EMPTY_VALUE);
@@ -195,21 +196,96 @@ int OnCalculate(const int rates_total,
    const int available = MathMin(samples_total, rates_total);
    const int frame_offset = (frame_count - 1) * frame_length;
 
+   int selected_count = 0;
+   int selected_indices[];
+   bool has_plv = (total_cycle_count > 0 && ArraySize(GPUShared::plv_cycles) >= total_cycle_count);
+   if(cycle_count > 0)
+     {
+      ArrayResize(selected_indices, cycle_count);
+      if(has_plv)
+        {
+         bool used[];
+         ArrayResize(used, total_cycle_count);
+         ArrayInitialize(used, false);
+         for(int rank=0; rank<cycle_count; ++rank)
+           {
+            double best = -DBL_MAX;
+            int best_idx = -1;
+            for(int c=0; c<total_cycle_count; ++c)
+              {
+               if(used[c])
+                  continue;
+               double plv_val = GPUShared::plv_cycles[c];
+               if(plv_val > best)
+                 {
+                  best = plv_val;
+                  best_idx = c;
+                 }
+              }
+            if(best_idx < 0)
+               break;
+            selected_indices[selected_count++] = best_idx;
+            used[best_idx] = true;
+           }
+        }
+      else
+        {
+         for(int rank=0; rank<cycle_count; ++rank)
+            selected_indices[selected_count++] = rank;
+        }
+      ArrayResize(selected_indices, selected_count);
+     }
+
+   for(int plot=0; plot<12; ++plot)
+     {
+      string label = StringFormat("Cycle%d (off)", plot+1);
+      if(plot < selected_count)
+        {
+         int idx = selected_indices[plot];
+         double period = (ArraySize(GPUShared::cycle_periods) > idx ? GPUShared::cycle_periods[idx] : 0.0);
+         double plv_val = (has_plv && idx < ArraySize(GPUShared::plv_cycles)) ? GPUShared::plv_cycles[idx] : EMPTY_VALUE;
+         if(has_plv)
+            label = StringFormat("#%d T=%.1f PLV=%.3f", idx+1, period, plv_val);
+         else
+            label = StringFormat("#%d T=%.1f", idx+1, period);
+        }
+      PlotIndexSetString(2+plot, PLOT_LABEL, label);
+     }
+
    for(int i=0; i<available; ++i)
      {
       const int src_index = frame_offset + i;
       g_bufWave[i] = GPUShared::wave[src_index];
       if(InpShowNoise)
          g_bufNoise[i] = GPUShared::noise[src_index];
-      if(InpShowCycles && cycle_count > 0 && ArraySize(GPUShared::cycles) >= total_span * cycle_count)
+      if(InpShowCycles && selected_count > 0)
         {
-         for(int c=0; c<cycle_count; ++c)
+         const int needed = total_span * total_cycle_count;
+         bool has_recon_all = (ArraySize(GPUShared::recon_all) >= needed);
+         bool has_cycles_all = (ArraySize(GPUShared::cycles) >= needed);
+         for(int rank=0; rank<selected_count && rank<12; ++rank)
            {
-            const int cycle_base = c * total_span;
-            SetCycleValue(c, i, GPUShared::cycles[cycle_base + src_index]);
+            const int cyc_idx = selected_indices[rank];
+            const int cycle_base = cyc_idx * total_span;
+            double value = EMPTY_VALUE;
+            if(has_recon_all)
+               value = GPUShared::recon_all[cycle_base + src_index];
+            else if(has_cycles_all)
+               value = GPUShared::cycles[cycle_base + src_index];
+            SetCycleValue(rank, i, value);
            }
         }
      }
+
+   if(selected_count > 0)
+     {
+      int best_index = selected_indices[0];
+      double best_period = (ArraySize(GPUShared::cycle_periods) > best_index ? GPUShared::cycle_periods[best_index] : 0.0);
+      double best_plv = (has_plv && best_index < ArraySize(GPUShared::plv_cycles)) ? GPUShared::plv_cycles[best_index] : 0.0;
+      IndicatorSetString(INDICATOR_SHORTNAME, StringFormat("GPU WaveViz (Top #%d | T=%.1f | PLV=%.3f)", best_index+1, best_period, best_plv));
+     }
+   else
+     IndicatorSetString(INDICATOR_SHORTNAME, "GPU WaveViz (sem PLV)");
 
    return rates_total;
   }

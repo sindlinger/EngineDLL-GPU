@@ -5,6 +5,8 @@
 #include <cufft.h>
 #include <cuComplex.h>
 
+#include <algorithm>
+#include <vector>
 #include <cmath>
 
 namespace gpuengine
@@ -13,6 +15,7 @@ namespace gpuengine
 namespace
 {
 constexpr double kEps = 1e-12;
+constexpr double kEmptyValueSentinel = 2147483647.0;
 
 #define CUDA_CHECK(cmd)                                                      \
     do                                                                       \
@@ -38,23 +41,37 @@ constexpr double kEps = 1e-12;
             return STATUS_ERROR;                                             \
     } while(false)
 
-__global__ void BuildLowpassMaskKernel(double* mask,
-                                       int freq_bins,
-                                       double sigma_bins,
-                                       double threshold,
-                                       double softness)
+__global__ void BuildBandpassMaskKernel(double* mask,
+                                        int freq_bins,
+                                        double min_bin,
+                                        double max_bin,
+                                        double centre_bin,
+                                        double sigma_bins,
+                                        double threshold,
+                                        double softness)
 {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if(idx >= freq_bins)
         return;
 
-    double x = static_cast<double>(idx);
-    double sigma = fmax(sigma_bins, 1.0);
-    double gaussian = exp(-0.5 * (x / sigma) * (x / sigma));
-    double weight = gaussian;
     if(idx == 0)
-        weight = 1.0;
-    else if(weight < threshold)
+    {
+        mask[idx] = 0.0;
+        return;
+    }
+
+    double bin = static_cast<double>(idx);
+    if(bin < min_bin || bin > max_bin)
+    {
+        mask[idx] = 0.0;
+        return;
+    }
+
+    double sigma = fmax(sigma_bins, 1.0);
+    double diff  = (bin - centre_bin) / sigma;
+    double gaussian = exp(-0.5 * diff * diff);
+    double weight = gaussian;
+    if(weight < threshold)
     {
         double ratio = fmax(weight, kEps) / fmax(threshold, kEps);
         weight = pow(ratio, 1.0 + softness * 4.0);
@@ -79,6 +96,17 @@ __global__ void ApplyMaskKernel(const cuDoubleComplex* __restrict__ in_spec,
     cuDoubleComplex value = in_spec[idx];
     out_spec[idx] = make_cuDoubleComplex(value.x * gain,
                                          value.y * gain);
+}
+
+__global__ void ZeroDcKernel(cuDoubleComplex* spec,
+                             int freq_bins,
+                             int batch)
+{
+    int frame = blockIdx.x * blockDim.x + threadIdx.x;
+    if(frame >= batch)
+        return;
+
+    spec[frame * freq_bins] = make_cuDoubleComplex(0.0, 0.0);
 }
 
 __global__ void ScaleRealKernel(double* data, double scale, int total)
@@ -215,10 +243,11 @@ int CudaProcessor::EnsureBuffers(const Config& cfg)
     m_cycle_capacity = cycle_required;
     m_freq_cycle_stride = freq_bins * cfg.max_batch_size;
 
-    CUDA_CHECK(cudaMalloc(reinterpret_cast<void**>(&m_d_time_in),       m_time_capacity * sizeof(double)));
-    CUDA_CHECK(cudaMalloc(reinterpret_cast<void**>(&m_d_time_filtered), m_time_capacity * sizeof(double)));
-    CUDA_CHECK(cudaMalloc(reinterpret_cast<void**>(&m_d_time_noise),    m_time_capacity * sizeof(double)));
-    CUDA_CHECK(cudaMalloc(reinterpret_cast<void**>(&m_d_time_cycles),   m_time_capacity * cfg.max_cycle_count * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(reinterpret_cast<void**>(&m_d_time_in),        m_time_capacity * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(reinterpret_cast<void**>(&m_d_time_original),  m_time_capacity * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(reinterpret_cast<void**>(&m_d_time_filtered),  m_time_capacity * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(reinterpret_cast<void**>(&m_d_time_noise),     m_time_capacity * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(reinterpret_cast<void**>(&m_d_time_cycles),    m_time_capacity * cfg.max_cycle_count * sizeof(double)));
 
     CUDA_CHECK(cudaMalloc(reinterpret_cast<void**>(&m_d_preview_mask), freq_bins * sizeof(double)));
     CUDA_CHECK(cudaMalloc(reinterpret_cast<void**>(&m_d_cycle_masks),  m_cycle_capacity * sizeof(double)));
@@ -243,6 +272,7 @@ void CudaProcessor::ReleaseBuffers()
     };
 
     release(reinterpret_cast<void*&>(m_d_time_in));
+    release(reinterpret_cast<void*&>(m_d_time_original));
     release(reinterpret_cast<void*&>(m_d_time_filtered));
     release(reinterpret_cast<void*&>(m_d_time_noise));
     release(reinterpret_cast<void*&>(m_d_time_cycles));
@@ -346,8 +376,28 @@ int CudaProcessor::ProcessInternal(JobRecord& job, PlanBundle& plan)
     const std::size_t total_samples = static_cast<std::size_t>(batch) * frame_len;
     const std::size_t freq_samples  = static_cast<std::size_t>(batch) * freq_bins;
 
-    CUDA_CHECK(cudaMemcpyAsync(m_d_time_in,
+    std::vector<double> demeaned(total_samples, 0.0);
+    for(int frame = 0; frame < batch; ++frame)
+    {
+        const std::size_t offset = static_cast<std::size_t>(frame) * frame_len;
+        const double* src = job.input_copy.data() + offset;
+        double* dst = demeaned.data() + offset;
+        double sum = 0.0;
+        for(int i = 0; i < frame_len; ++i)
+            sum += src[i];
+        const double mean = (frame_len > 0 ? sum / static_cast<double>(frame_len) : 0.0);
+        for(int i = 0; i < frame_len; ++i)
+            dst[i] = src[i] - mean;
+    }
+
+    CUDA_CHECK(cudaMemcpyAsync(m_d_time_original,
                                job.input_copy.data(),
+                               total_samples * sizeof(double),
+                               cudaMemcpyHostToDevice,
+                               m_main_stream));
+
+    CUDA_CHECK(cudaMemcpyAsync(m_d_time_in,
+                               demeaned.data(),
                                total_samples * sizeof(double),
                                cudaMemcpyHostToDevice,
                                m_main_stream));
@@ -357,6 +407,20 @@ int CudaProcessor::ProcessInternal(JobRecord& job, PlanBundle& plan)
         job.preview_mask.assign(job.desc.preview_mask,
                                 job.desc.preview_mask + freq_bins);
     }
+
+    double min_period = std::max(job.desc.mask.min_period, 1.0);
+    double max_period = std::max(job.desc.mask.max_period, min_period);
+    if(max_period < min_period)
+        std::swap(max_period, min_period);
+    double min_bin = static_cast<double>(frame_len) / std::max(max_period, 1.0);
+    double max_bin = static_cast<double>(frame_len) / std::max(min_period, 1.0);
+    min_bin = std::max(1.0, std::min(min_bin, static_cast<double>(freq_bins - 1)));
+    max_bin = std::max(min_bin, std::min(max_bin, static_cast<double>(freq_bins - 1)));
+    double centre_bin = 0.5 * (min_bin + max_bin);
+    double sigma_bins = (job.desc.mask.sigma_period > 0.0)
+                            ? static_cast<double>(frame_len) / job.desc.mask.sigma_period
+                            : std::max((max_bin - min_bin) / 2.0, 1.0);
+    sigma_bins = std::max(sigma_bins, 1.0);
 
     if(!job.preview_mask.empty())
     {
@@ -368,12 +432,14 @@ int CudaProcessor::ProcessInternal(JobRecord& job, PlanBundle& plan)
     }
     else
     {
-        double sigma_bins = static_cast<double>(frame_len) / fmax(job.desc.mask.sigma_period, 1.0);
         int threads = 256;
         int blocks  = (freq_bins + threads - 1) / threads;
-        BuildLowpassMaskKernel<<<blocks, threads, 0, m_main_stream>>>(
+        BuildBandpassMaskKernel<<<blocks, threads, 0, m_main_stream>>>(
             m_d_preview_mask,
             freq_bins,
+            min_bin,
+            max_bin,
+            centre_bin,
             sigma_bins,
             job.desc.mask.threshold,
             job.desc.mask.softness);
@@ -395,6 +461,19 @@ int CudaProcessor::ProcessInternal(JobRecord& job, PlanBundle& plan)
                                freq_samples * sizeof(cuDoubleComplex),
                                cudaMemcpyDeviceToDevice,
                                m_main_stream));
+
+    dim3 threadsDc(128, 1, 1);
+    dim3 blocksDc((batch + threadsDc.x - 1) / threadsDc.x, 1, 1);
+    ZeroDcKernel<<<blocksDc, threadsDc, 0, m_main_stream>>>(
+        m_d_freq_original,
+        freq_bins,
+        batch);
+    CUDA_CHECK(cudaGetLastError());
+    ZeroDcKernel<<<blocksDc, threadsDc, 0, m_main_stream>>>(
+        m_d_freq_filtered,
+        freq_bins,
+        batch);
+    CUDA_CHECK(cudaGetLastError());
 
     dim3 threadsMask(256, 1, 1);
     dim3 blocksMask((freq_bins + threadsMask.x - 1) / threadsMask.x,
@@ -423,15 +502,115 @@ int CudaProcessor::ProcessInternal(JobRecord& job, PlanBundle& plan)
     CUDA_CHECK(cudaGetLastError());
 
     ComputeNoiseKernel<<<blocksScale, threadsScale, 0, m_main_stream>>>(
-        m_d_time_in,
+        m_d_time_original,
         m_d_time_filtered,
         m_d_time_noise,
         static_cast<int>(total_samples));
     CUDA_CHECK(cudaGetLastError());
 
-    int cycle_count = job.desc.cycles.count;
-    if(cycle_count > 0 && static_cast<int>(job.cycle_periods.size()) < cycle_count)
-        return STATUS_INVALID_CONFIG;
+    job.cycle_periods.clear();
+    const bool manual_cycles = (job.desc.cycles.periods != nullptr &&
+                                job.desc.cycles.count > 0 &&
+                                job.desc.cycles.periods[0] != kEmptyValueSentinel);
+
+    if(manual_cycles)
+    {
+        const int manual_count = std::min(job.desc.cycles.count, m_config.max_cycle_count);
+        for(int i = 0; i < manual_count; ++i)
+        {
+            double period = job.desc.cycles.periods[i];
+            if(period > 0.0 && std::isfinite(period))
+                job.cycle_periods.push_back(period);
+        }
+    }
+    else
+    {
+        int target_candidates = job.desc.cycles.count > 0 ? job.desc.cycles.count : job.desc.mask.max_candidates;
+        if(target_candidates <= 0)
+            target_candidates = job.desc.mask.max_candidates;
+        target_candidates = std::max(0, std::min(target_candidates, m_config.max_cycle_count));
+
+        if(target_candidates > 0)
+        {
+            std::vector<cuDoubleComplex> host_spectrum(freq_samples);
+            CUDA_CHECK(cudaMemcpyAsync(host_spectrum.data(),
+                                       m_d_freq_filtered,
+                                       freq_samples * sizeof(cuDoubleComplex),
+                                       cudaMemcpyDeviceToHost,
+                                       m_main_stream));
+            CUDA_CHECK(cudaStreamSynchronize(m_main_stream));
+
+            std::vector<double> energy(freq_bins, 0.0);
+            for(int frame = 0; frame < batch; ++frame)
+            {
+                const cuDoubleComplex* frame_spec = host_spectrum.data() + frame * freq_bins;
+                for(int bin = 1; bin < freq_bins; ++bin)
+                {
+                    double period = static_cast<double>(frame_len) / std::max<double>(bin, 1.0);
+                    if(period < min_period || period > max_period)
+                        continue;
+                    cuDoubleComplex value = frame_spec[bin];
+                    double mag2 = value.x * value.x + value.y * value.y;
+                    energy[bin] += mag2;
+                }
+            }
+
+            std::vector<int> bins;
+            bins.reserve(freq_bins);
+            for(int bin = 1; bin < freq_bins; ++bin)
+            {
+                if(energy[bin] > 0.0)
+                    bins.push_back(bin);
+            }
+            if(bins.empty())
+            {
+                for(int bin = 1; bin < freq_bins; ++bin)
+                    bins.push_back(bin);
+            }
+
+            std::sort(bins.begin(), bins.end(), [&](int a, int b) {
+                return energy[a] > energy[b];
+            });
+
+            std::vector<int> selected_bins;
+            for(int bin : bins)
+            {
+                bool too_close = false;
+                for(int existing : selected_bins)
+                {
+                    if(std::abs(existing - bin) <= 1)
+                    {
+                        too_close = true;
+                        break;
+                    }
+                }
+                if(too_close)
+                    continue;
+                selected_bins.push_back(bin);
+                if(static_cast<int>(selected_bins.size()) >= target_candidates)
+                    break;
+            }
+
+            if(selected_bins.empty() && !bins.empty())
+                selected_bins.push_back(bins.front());
+
+            std::vector<double> auto_periods;
+            auto_periods.reserve(selected_bins.size());
+            for(int bin : selected_bins)
+            {
+                double period = static_cast<double>(frame_len) / std::max<double>(bin, 1.0);
+                if(period > 0.0 && std::isfinite(period))
+                    auto_periods.push_back(period);
+            }
+
+            std::sort(auto_periods.begin(), auto_periods.end());
+            if(static_cast<int>(auto_periods.size()) > m_config.max_cycle_count)
+                auto_periods.resize(m_config.max_cycle_count);
+            job.cycle_periods = std::move(auto_periods);
+        }
+    }
+
+    int cycle_count = static_cast<int>(job.cycle_periods.size());
     if(cycle_count > 0)
     {
         CUDA_CHECK(cudaMemcpyAsync(m_d_cycle_periods,
